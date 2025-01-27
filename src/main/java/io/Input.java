@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
  * Input class to handle the reading of all user inputs
  */
 class Input {
-    private final BufferedReader BUFFERED_READER = new BUFFERED_READER(new InputStreamReader(System.in));
+    private final BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * Constructor
