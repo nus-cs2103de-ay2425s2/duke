@@ -8,13 +8,12 @@ import java.io.InputStreamReader;
  * Input class to handle the reading of all user inputs
  */
 class Input {
-    private BufferedReader bufferedReader;
+    private final BufferedReader BUFFERED_READER = new BUFFERED_READER(new InputStreamReader(System.in));
 
     /**
      * Constructor
      */
     public Input() {
-        this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     }
 
     /**
@@ -23,7 +22,7 @@ class Input {
      * @throws IOException when IO fails
      */
     private String getUserInput() throws IOException {
-        return this.bufferedReader.readLine();
+        return this.BUFFERED_READER.readLine();
     }
 
     /**
