@@ -9,13 +9,12 @@ import java.util.List;
  * Class that handles all outputs to the console
  */
 class Output {
-    private BufferedWriter bufferedWriter;
+    private final BufferedWriter BUFFERED_WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
 
     /**
      * Constructor
      */
     public Output() {
-        this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
     }
 
     /**
@@ -24,11 +23,12 @@ class Output {
      * @param sep Separator used between each String in the List
      * @throws IOException IO fails
      */
-    public void printOutput(List<String> outputStrings, String sep) throws IOException {
+    public void printOutput(List<String> outputStrings, String sep, String end) throws IOException {
         for (String s: outputStrings) {
-            this.bufferedWriter.write(s);
-            this.bufferedWriter.write(sep);
+            this.BUFFERED_WRITER.write(s);
+            this.BUFFERED_WRITER.write(sep);
         }
-        this.bufferedWriter.flush();
+        this.BUFFERED_WRITER.write(end);
+        this.BUFFERED_WRITER.flush();
     }
 }
