@@ -39,6 +39,10 @@ public class UI {
         OUTPUT.printOutput(messages, "\n", "\n");
     }
 
+    /**
+     * Display welcome message to the console
+     * @throws IOException When IO fails
+     */
     public void displayWelcomeMessage() throws IOException {
         List<String> welcomeMessages = new ArrayList<>();
         welcomeMessages.add(this.DIVIDER);
@@ -48,6 +52,10 @@ public class UI {
         OUTPUT.printOutput(welcomeMessages, "\n", "\n");
     }
 
+    /**
+     * Display exit message to the console
+     * @throws IOException When IO fails
+     */
     public void displayExitMessage() throws IOException{
         List<String> exitMessages = new ArrayList<>();
         exitMessages.add(this.DIVIDER);
