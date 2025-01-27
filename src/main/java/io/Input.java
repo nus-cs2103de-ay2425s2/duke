@@ -45,7 +45,7 @@ class Input {
 
         do {
             try {
-                userInput = this.getUserInput();
+                userInput = this.cleanUserInput(this.getUserInput());
                 if (this.isInputValid(userInput)) {
                     isUserInputValid = true;
                 }
@@ -58,5 +58,14 @@ class Input {
 
         return userInput;
 
+    }
+
+    /**
+     * Remove leading and trailing whitespaces
+     * @param userInput userInput String
+     * @return String with no trailing or leading whitespaces
+     */
+    private String cleanUserInput(String userInput) {
+        return userInput.strip();
     }
 }
