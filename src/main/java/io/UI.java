@@ -20,11 +20,31 @@ public class UI {
         this.CHATBOT_NAME = botName;
     }
 
+    /**
+     * Get valid user input from console
+     * @return User input String
+     */
+    public String getUserInput() {
+        return INPUT.getValidUserInput();
+    }
+
+    /**
+     * Displays custom message to the console
+     * @param messages list of messages to output to console
+     * @throws IOException When IO fails
+     */
+    public void displayMessage(List<String> messages) throws IOException {
+        messages.addFirst(this.DIVIDER);
+        messages.add(this.DIVIDER);
+        OUTPUT.printOutput(messages, "\n", "\n");
+    }
+
     public void displayWelcomeMessage() throws IOException {
         List<String> welcomeMessages = new ArrayList<>();
         welcomeMessages.add(this.DIVIDER);
         welcomeMessages.add(String.format("Hello! I'm %s", this.CHATBOT_NAME));
         welcomeMessages.add("What can I do for you?");
+        welcomeMessages.add(this.DIVIDER);
         OUTPUT.printOutput(welcomeMessages, "\n", "\n");
     }
 
