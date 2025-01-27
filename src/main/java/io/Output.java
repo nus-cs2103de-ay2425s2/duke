@@ -24,9 +24,11 @@ class Output {
      * @throws IOException IO fails
      */
     public void printOutput(List<String> outputStrings, String sep, String end) throws IOException {
-        for (String s: outputStrings) {
-            this.BUFFERED_WRITER.write(s);
-            this.BUFFERED_WRITER.write(sep);
+        for (int i = 0; i < outputStrings.size(); i++) {
+            this.BUFFERED_WRITER.write(outputStrings.get(i));
+            if (i != outputStrings.size() - 1) {
+                this.BUFFERED_WRITER.write(sep);
+            }
         }
         this.BUFFERED_WRITER.write(end);
         this.BUFFERED_WRITER.flush();
