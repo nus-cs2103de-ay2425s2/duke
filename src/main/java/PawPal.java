@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class PawPal {
@@ -13,14 +11,28 @@ public class PawPal {
         System.out.println("-----------------------------------------");
 
         while (true) {
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().trim();
 
-            if (input.equalsIgnoreCase("bye")){
+            if (input.equalsIgnoreCase("bye")) {
                 System.out.println("Bye. Hope to see you again soon! Meow");
                 break;
-            } else if (input.equalsIgnoreCase("list")){
+            } else if (input.equalsIgnoreCase("list")) {
                 taskManager.listTasks();
-            } else{
+            } else if (input.startsWith("mark")) {
+                try {
+                    int taskNumber = Integer.parseInt(input.split(" ")[1]);
+                    taskManager.markTask(taskNumber);
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                    System.out.println("That's not a valid number!");
+                }
+            } else if (input.startsWith("unmark")) {
+                try {
+                    int taskNumber = Integer.parseInt(input.split(" ")[1]);
+                    taskManager.unmarkTask(taskNumber);
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                    System.out.println("That's not a valid number!");
+                }
+            } else {
                 taskManager.addTask(input);
             }
         }
