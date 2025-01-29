@@ -33,9 +33,13 @@ public class UI {
      * @param messages list of messages to output to console
      * @throws IOException When IO fails
      */
-    public void displayMessage(List<String> messages) throws IOException {
+    public void displayMessageWithDivider(List<String> messages) throws IOException {
         messages.addFirst(this.DIVIDER);
         messages.add(this.DIVIDER);
+        OUTPUT.printOutput(messages, "\n", "\n");
+    }
+
+    public void displayMessage(List<String> messages) throws IOException {
         OUTPUT.printOutput(messages, "\n", "\n");
     }
 
