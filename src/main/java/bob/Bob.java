@@ -18,8 +18,12 @@ public class Bob {
         UI ui = new UI(bob.getCHATBOT_NAME());
 
         ui.displayWelcomeMessage();
+
         while (true) {
             String userInput = ui.getUserInput();
+            // pass in user input to taskHandler?
+            // then taskHandler process the input and map it accordingly
+            // define tasks in taskHandler which can be accessed by Input to do input validation
 
             // check if userInput bye
             if (userInput.equals("bye")) {
@@ -29,7 +33,7 @@ public class Bob {
             List<String> outputMessages = new ArrayList<>();
             outputMessages.add(userInput);
 
-            ui.displayMessage(outputMessages);
+            ui.displayMessageWithDivider(outputMessages);
         }
 
         ui.displayExitMessage();
