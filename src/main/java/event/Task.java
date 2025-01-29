@@ -9,7 +9,7 @@ public abstract class Task {
         ERROR
     }
 
-    protected String getTaskName() {
+    public String getTaskName() {
         return this.taskName.toString();
     }
 
@@ -21,5 +21,5 @@ public abstract class Task {
         };
     }
 
-    abstract String getTaskDetail();
+    public abstract String getTaskDetail();
 }
