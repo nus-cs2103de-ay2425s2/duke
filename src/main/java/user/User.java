@@ -20,7 +20,7 @@ public class User {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < taskList.size(); i++) {
             Task task = taskList.get(i);
-            stringBuilder.append("%s. %s %s".formatted(i + 1, task.getTaskName(), task.getTaskDetail()));
+            stringBuilder.append("%s. %s %s\n".formatted(i + 1, task.getTaskName(), task.getTaskDetail()));
         }
         return stringBuilder.toString();
     }
