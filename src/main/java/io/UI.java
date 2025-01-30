@@ -53,51 +53,51 @@ public class UI {
      * @return boolean to indicate if it is a valid userInput
      */
     private boolean isInputValid(String userInput) {
-        String[] userInputTokens = userInput.split(" ");
+        List<String> userInputTokens = Arrays.asList(userInput.split(" "));
 
-        if (userInputTokens[0].equalsIgnoreCase(Action.LIST.toString())
-                || userInputTokens[0].equalsIgnoreCase(Action.BYE.toString())) {
-            return userInputTokens.length == 1;
+        if (userInputTokens.getFirst().equalsIgnoreCase(Action.LIST.toString())
+                || userInputTokens.getFirst().equalsIgnoreCase(Action.BYE.toString())) {
+            return userInputTokens.size() == 1;
         }
-        else if (userInputTokens[0].equalsIgnoreCase(Action.MARK.toString())
-                || (userInputTokens[0].equalsIgnoreCase(Action.UNMARK.toString()))) {
-            if (userInputTokens.length == 1) {
+        else if (userInputTokens.getFirst().equalsIgnoreCase(Action.MARK.toString())
+                || (userInputTokens.getFirst().equalsIgnoreCase(Action.UNMARK.toString()))) {
+            if (userInputTokens.size() == 1) {
                 return false;
             }
-            else if (userInputTokens.length > 2) {
+            else if (userInputTokens.size() > 2) {
                 return false;
             }
 
             try {
-                Integer.parseInt(userInputTokens[1]);
+                Integer.parseInt(userInputTokens.get(1));
                 return true;
             } catch (NumberFormatException e) {
                 return false;
             }
 
         }
-        else if (userInputTokens[0].equalsIgnoreCase(Action.TODO.toString())) {
-            return userInputTokens.length > 1;
+        else if (userInputTokens.getFirst().equalsIgnoreCase(Action.TODO.toString())) {
+            return userInputTokens.size() > 1;
         }
-        else if (userInputTokens[0].equalsIgnoreCase(Action.DEADLINE.toString())) {
-            if (userInputTokens.length == 1) {
+        else if (userInputTokens.getFirst().equalsIgnoreCase(Action.DEADLINE.toString())) {
+            if (userInputTokens.size() == 1) {
                 return false;
             }
 
-            if (!Arrays.asList(userInputTokens).contains("/by")) {
+            if (!userInputTokens.contains("/by")) {
                 return false;
             }
 
-            int deadLineIndex = Arrays.asList(userInputTokens).indexOf("/by") + 1;
+            int deadLineIndex = userInputTokens.indexOf("/by") + 1;
 
-            if (deadLineIndex == userInputTokens.length) {
+            if (deadLineIndex == userInputTokens.size()) {
                 return false;
             }
 
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = deadLineIndex; i < userInputTokens.length; i++)  {
-                stringBuilder.append(userInputTokens[i]);
-                if (i != userInputTokens.length - 1) {
+            for (int i = deadLineIndex; i < userInputTokens.size(); i++)  {
+                stringBuilder.append(userInputTokens.get(i));
+                if (i != userInputTokens.size() - 1) {
                     stringBuilder.append(" ");
                 }
             }
@@ -105,18 +105,18 @@ public class UI {
 
             return isValidDay(stringDateTime) || isValidDateTime(stringDateTime);
         }
-        else if (userInputTokens[0].equalsIgnoreCase(Action.EVENT.toString())) {
-            if (!(Arrays.asList(userInputTokens).contains("/from") && Arrays.asList(userInputTokens).contains("/to"))) {
+        else if (userInputTokens.getFirst().equalsIgnoreCase(Action.EVENT.toString())) {
+            if (!(userInputTokens.contains("/from") && userInputTokens.contains("/to"))) {
                 return false;
             }
 
-            int fromIndex = Arrays.asList(userInputTokens).indexOf("/from");
-            int toIndex = Arrays.asList(userInputTokens).indexOf("/to");
+            int fromIndex = userInputTokens.indexOf("/from");
+            int toIndex = userInputTokens.indexOf("/to");
 
             StringBuilder stringBuilder = new StringBuilder();
 
             for (int i = fromIndex + 1; i < toIndex; i++) {
-                stringBuilder.append(userInputTokens[i]);
+                stringBuilder.append(userInputTokens.get(i));
                 if (i != toIndex - 1) {
                     stringBuilder.append(" ");
                 }
@@ -129,9 +129,9 @@ public class UI {
 
             stringBuilder.setLength(0);
 
-            for (int i = toIndex + 1; i < userInputTokens.length; i++) {
-                stringBuilder.append(userInputTokens[i]);
-                if (i != userInputTokens.length - 1) {
+            for (int i = toIndex + 1; i < userInputTokens.size(); i++) {
+                stringBuilder.append(userInputTokens.get(i));
+                if (i != userInputTokens.size() - 1) {
                     stringBuilder.append(" ");
                 }
             }
