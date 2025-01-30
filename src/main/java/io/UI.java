@@ -2,6 +2,8 @@ package io;
 
 import action.ActionHandler.Action;
 
+import io.ValidationToken.InputError;
+
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -38,8 +40,14 @@ public class UI {
 
         do {
             userInput = INPUT.getUserInput();
-            if (this.isInputValid(userInput)) {
+            ValidationToken validationToken = this.isInputValid(userInput);
+            if (validationToken.isValid()) {
                 isUserInputValid = true;
+            }
+            else {
+                List<String> outputMessage = new ArrayList<>();
+                outputMessage.add(validationToken.getErrorMessage());
+                displayMessageWithDivider(outputMessage);
             }
         }
         while (!isUserInputValid);
@@ -52,46 +60,70 @@ public class UI {
      * @param userInput Input string provided by the user with no trailing or leading whitespaces
      * @return boolean to indicate if it is a valid userInput
      */
-    private boolean isInputValid(String userInput) {
+    private ValidationToken isInputValid(String userInput) {
         List<String> userInputTokens = Arrays.asList(userInput.split(" "));
 
         if (userInputTokens.getFirst().equalsIgnoreCase(Action.LIST.toString())
                 || userInputTokens.getFirst().equalsIgnoreCase(Action.BYE.toString())) {
-            return userInputTokens.size() == 1;
+            if (userInputTokens.size() == 1) {
+                return new ValidationToken(true);
+            };
+
+            if (userInputTokens.getFirst().equalsIgnoreCase(Action.LIST.toString())) {
+                return new ValidationToken(false, InputError.LIST_TOO_MANY_ARGUMENTS);
+            }
+
+            return new ValidationToken(false, InputError.BYE_TOO_MANY_ARGUMENTS);
         }
         else if (userInputTokens.getFirst().equalsIgnoreCase(Action.MARK.toString())
                 || (userInputTokens.getFirst().equalsIgnoreCase(Action.UNMARK.toString()))) {
             if (userInputTokens.size() == 1) {
-                return false;
+                if (userInputTokens.getFirst().equalsIgnoreCase(Action.MARK.toString())) {
+                    return new ValidationToken(false, InputError.MARK_TOO_LITTLE_ARGUMENTS);
+                }
+
+                return new ValidationToken(false, InputError.UNMARK_TOO_LITTLE_ARGUMENTS);
             }
             else if (userInputTokens.size() > 2) {
-                return false;
+                if (userInputTokens.getFirst().equalsIgnoreCase(Action.MARK.toString())) {
+                    return new ValidationToken(false, InputError.MARK_TOO_MANY_ARGUMENTS);
+                }
+
+                return new ValidationToken(false, InputError.UNMARK_TOO_MANY_ARGUMENTS);
             }
 
             try {
                 Integer.parseInt(userInputTokens.get(1));
-                return true;
+                return new ValidationToken(true);
             } catch (NumberFormatException e) {
-                return false;
+                if (userInputTokens.getFirst().equalsIgnoreCase(Action.MARK.toString())) {
+                    return new ValidationToken(false, InputError.MARK_INCORRECT_ARGUMENT);
+                }
+
+                return new ValidationToken(false, InputError.UNMARK_INCORRECT_ARGUMENT);
             }
 
         }
         else if (userInputTokens.getFirst().equalsIgnoreCase(Action.TODO.toString())) {
-            return userInputTokens.size() > 1;
+            if (userInputTokens.size() == 1) {
+                return new ValidationToken(false, InputError.TODO_TOO_LITTLE_ARGUMENTS);
+            }
+
+            return new ValidationToken(true);
         }
         else if (userInputTokens.getFirst().equalsIgnoreCase(Action.DEADLINE.toString())) {
-            if (userInputTokens.size() == 1) {
-                return false;
+            if (userInputTokens.size() <= 2) {
+                return new ValidationToken(false, InputError.DEADLINE_TOO_LITTLE_ARGUMENTS);
             }
 
             if (!userInputTokens.contains("/by")) {
-                return false;
+                return new ValidationToken(false, InputError.DEADLINE_MISSING_BY);
             }
 
             int deadLineIndex = userInputTokens.indexOf("/by") + 1;
 
             if (deadLineIndex == userInputTokens.size()) {
-                return false;
+                return new ValidationToken(false, InputError.DEADLINE_MISSING_DEADLINE);
             }
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -103,11 +135,15 @@ public class UI {
             }
             String stringDateTime = stringBuilder.toString();
 
-            return isValidDay(stringDateTime) || isValidDateTime(stringDateTime);
+            if (!(isValidDay(stringDateTime) || isValidDateTime(stringDateTime))) {
+                return new ValidationToken(false, InputError.DEADLINE_INVALID_DATETIME);
+            }
+
+            return new ValidationToken(true);
         }
         else if (userInputTokens.getFirst().equalsIgnoreCase(Action.EVENT.toString())) {
             if (!(userInputTokens.contains("/from") && userInputTokens.contains("/to"))) {
-                return false;
+                return new ValidationToken(false, InputError.EVENT_MISSING_FROM_TO_ARGUMENTS);
             }
 
             int fromIndex = userInputTokens.indexOf("/from");
@@ -124,7 +160,7 @@ public class UI {
             String fromDateTime = stringBuilder.toString();
 
             if (!(isValidDay(fromDateTime) || isValidDateTime(fromDateTime))) {
-                return false;
+                return new ValidationToken(false, InputError.EVENT_INVALID_DATETIME);
             }
 
             stringBuilder.setLength(0);
@@ -137,9 +173,13 @@ public class UI {
             }
             String toDateTime = stringBuilder.toString();
 
-            return isValidDay(toDateTime) || isValidDateTime(toDateTime);
+            if (!(isValidDay(toDateTime) || isValidDateTime(toDateTime))) {
+                return new ValidationToken(false, InputError.EVENT_INVALID_DATETIME);
+            }
+
+            return new ValidationToken(true);
         }
-        return false;
+        return new ValidationToken(false, InputError.INVALID_COMMAND);
     }
 
     private boolean isValidDateTime(String stringDateTime) {
