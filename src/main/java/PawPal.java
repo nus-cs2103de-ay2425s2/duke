@@ -32,8 +32,25 @@ public class PawPal {
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                     System.out.println("That's not a valid number!");
                 }
+            } else if (input.startsWith("todo ")) {
+                String description = input.substring(5).trim();
+                taskManager.addToDo(description);
+            } else if (input.startsWith("deadline")) {
+                String[] parts = input.substring(9).split(" /by ",2);
+                if (parts.length == 2) {
+                    taskManager.addDeadline(parts[0].trim(), parts[1].trim());
+                } else {
+                    System.out.println("That's not a valid deadline! Use deadline <description> /by <deadline>");
+                }
+            } else if (input.startsWith("event")) {
+                String[] parts = input.substring(6).split(" /from | /to ",3);
+                if (parts.length == 3) {
+                    taskManager.addEvent(parts[0].trim(), parts[1].trim(), parts[2].trim());
+                } else {
+                    System.out.println("That's not a valid deadline! Use event <description> /from <start> /to <end>");
+                }
             } else {
-                taskManager.addTask(input);
+                System.out.println("Sorry, that's not a valid command!");
             }
         }
     }

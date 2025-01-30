@@ -10,10 +10,25 @@ public class TaskManager {
     }
 
     // addition of tasks
-    public void addTask(String task) {
-        Task newTask = new Task(task);
+    public void addToDo(String description) {
+        Task newTask = new ToDo(description);
         tasks.add(newTask);
-        System.out.println("Purr-sonally, I’d rather nap, but your " + task + " task is on the list now! ");
+        System.out.println("Purr-sonally, I’d rather nap, but your " + description + " task is on the list now!");
+        System.out.println("Now you have " + tasks.size() + " tasks.");
+    }
+
+    public void addDeadline(String description, String deadline) {
+        Task newTask = new Deadline(description, deadline);
+        tasks.add(newTask);
+        System.out.println("Purr-sonally, I’d rather nap, but your " + description + " task is on the list now!");
+        System.out.println("Now you have " + tasks.size() + " tasks.");
+    }
+
+    public void addEvent(String description, String from, String to) {
+        Task newTask = new Event(description, from, to);
+        tasks.add(newTask);
+        System.out.println("Purr-sonally, I’d rather nap, but your " + description + " task is on the list now!");
+        System.out.println("Now you have " + tasks.size() + " tasks.");
     }
 
     // listing out tasks
