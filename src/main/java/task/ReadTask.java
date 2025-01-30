@@ -1,10 +1,10 @@
-package event;
+package task;
 
-public class ReturnTask extends Task {
+public class ReadTask extends Task {
     private String taskDetail;
 
-    public ReturnTask (String taskDetail) {
-        this.taskName = TaskName.RETURN;
+    public ReadTask(String taskDetail) {
+        this.taskName = TaskName.READ;
         this.taskDetail = taskDetail;
     }
 

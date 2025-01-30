@@ -1,4 +1,4 @@
-package event;
+package task;
 
 public abstract class Task {
     protected TaskName taskName;

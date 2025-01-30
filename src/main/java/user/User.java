@@ -1,6 +1,6 @@
 package user;
 
-import event.Task;
+import task.Task;
 
 import java.util.LinkedList;
 import java.util.List;
