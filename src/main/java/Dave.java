@@ -17,6 +17,8 @@ public class Dave {
 
         List<String> greetings = Arrays.asList("hello", "hi", "hey", "yo");
         List<String> goodbyes = Arrays.asList("bye", "goodbye");
+        String[] tasks = new String[100];
+        int taskCount = 0;
 
         while (true) {
             // Read user input
@@ -37,10 +39,32 @@ public class Dave {
                 continue;
             }
 
-            // Echos commands entered by the user
-            System.out.println("    ____________________________________________________________");
-            System.out.println("      " + userInput);
-            System.out.println("    ____________________________________________________________");
+            // Display list when requested
+            if (userInput.equalsIgnoreCase("list")) {
+                System.out.println("    ____________________________________________________________");
+                if (taskCount == 0) {
+                    System.out.println("No tasks to display.");
+                } else {
+                    for (int i = 0; i < taskCount; i++) {
+                        System.out.println("    " + (i + 1) + ". " + tasks[i]);
+                    }
+                }
+                System.out.println("    ____________________________________________________________");
+                continue;
+            }
+
+            // Store text entered by user in list if less than 100 tasks
+            if (taskCount < 100) {
+                tasks[taskCount++] = userInput;
+                System.out.println("    ____________________________________________________________");
+                System.out.println("      added: " + userInput);
+                System.out.println("    ____________________________________________________________");
+            } else {
+                System.out.println("    ____________________________________________________________");
+                System.out.println("      Task list is full. Unable to add more tasks.");
+                System.out.println("    ____________________________________________________________");
+            }
+            continue;
         }
 
         // Close scanner
