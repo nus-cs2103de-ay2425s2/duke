@@ -19,7 +19,7 @@ public class EventTask extends Task implements HasStart, HasDeadline {
 
     @Override
     public String getStartDateTime() {
-        return this.getToDateTime();
+        return this.getFromDateTime();
     }
 
     private String getFromDateTime() {
