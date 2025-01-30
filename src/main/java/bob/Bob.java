@@ -25,14 +25,7 @@ public class Bob {
 
         while (true) {
             String userInput = ui.getValidUserInput();
-            // check for input validity at the UI class?
-            // so can route the error message to the output
 
-            // when user input has been validated, we assume that it follows a specific sequence "taskName taskDetails"
-
-
-            // then eventHandler process the input and map it accordingly
-            // define tasks in abstract class Task which can be accessed by Input to do input validation
             outputMessages = actionHandler.processEvent(userInput, user);
 
             if (outputMessages.isEmpty()) {
