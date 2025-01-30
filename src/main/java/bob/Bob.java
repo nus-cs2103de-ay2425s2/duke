@@ -1,6 +1,8 @@
 package bob;
 
+import event.EventHandler;
 import io.UI;
+import user.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,27 +18,32 @@ public class Bob {
     public static void main(String[] args) throws IOException {
         Bob bob = new Bob();
         UI ui = new UI(bob.getCHATBOT_NAME());
+        User user = new User();
+        EventHandler eventHandler = new EventHandler();
+        List<String> outputMessages;
 
         ui.displayWelcomeMessage();
 
         while (true) {
-            String userInput = ui.getUserInput();
-            // pass in user input to taskHandler?
-            // then taskHandler process the input and map it accordingly
-            // define tasks in taskHandler which can be accessed by Input to do input validation
+            String userInput = ui.getValidUserInput();
+            // check for input validity at the UI class?
+            // so can route the error message to the output
 
-            // check if userInput bye
-            if (userInput.equals("bye")) {
+            // when user input has been validated, we assume that it follows a specific sequence "taskName taskDetails"
+
+
+            // then eventHandler process the input and map it accordingly
+            // define tasks in abstract class Task which can be accessed by Input to do input validation
+            outputMessages = eventHandler.processEvent(userInput, user);
+
+            if (outputMessages.isEmpty()) {
+                ui.displayExitMessage();
                 break;
             }
-
-            List<String> outputMessages = new ArrayList<>();
-            outputMessages.add(userInput);
 
             ui.displayMessageWithDivider(outputMessages);
         }
 
-        ui.displayExitMessage();
     }
 
 
