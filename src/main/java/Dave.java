@@ -145,7 +145,14 @@ public class Dave {
             }
             // Add To-Do tasks
             else if (userInput.toLowerCase().startsWith("todo ")) {
-                taskManager.addTask("T", userInput.substring(5).trim(), null);
+                String todoInfo = userInput.substring(5).trim();
+                if (!todoInfo.isEmpty()) {
+                    taskManager.addTask("T", todoInfo, null);
+                } else {
+                    System.out.println("    ____________________________________________________________");
+                    System.out.println("      Invalid format. Use: todo <task>");
+                    System.out.println("    ____________________________________________________________");
+                }
             }
             // Add Deadline tasks
             else if (userInput.toLowerCase().startsWith("deadline ")) {
