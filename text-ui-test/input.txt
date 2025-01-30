@@ -1,0 +1,7 @@
+todo buy groceries
+deadline fix lightbulb /by Monday 3pm
+event bestfriend's wedding /start Saturday 9am /end Saturday 10pm
+list
+mark 3
+list
+Bye
