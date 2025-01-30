@@ -47,6 +47,17 @@ class TaskManager {
         System.out.println("    ____________________________________________________________");
     }
 
+    public void deleteTask(int taskNumber) {
+        if (isValidTaskNumber(taskNumber)) {
+            Task removedTask = tasks.remove(taskNumber - 1);
+            System.out.println("    ____________________________________________________________");
+            System.out.println("      Noted. I've removed this task:");
+            System.out.println("         " + removedTask);
+            System.out.println("      Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println("    ____________________________________________________________");
+        }
+    }
+
     public void listTasks() {
         System.out.println("    ____________________________________________________________");
         if (tasks.isEmpty()) {
@@ -181,13 +192,36 @@ public class Dave {
                     System.out.println("    ____________________________________________________________");
                 }
             }
+            // Delete tasks
+            else if (userInput.toLowerCase().startsWith("delete ")) {
+                if (userInput.substring(7).trim().isEmpty()) {
+                    System.out.println("    ____________________________________________________________");
+                    System.out.println("      Task Number cannot be empty.");
+                    System.out.println("    ____________________________________________________________");
+                    continue;
+                }
+                int taskNumber = Integer.parseInt(userInput.substring(7).trim());
+                taskManager.deleteTask(taskNumber);
+            }
             // Mark tasks as done
             else if (userInput.toLowerCase().startsWith("mark ")) {
+                if (userInput.substring(5).trim().isEmpty()) {
+                    System.out.println("    ____________________________________________________________");
+                    System.out.println("      Task Number cannot be empty.");
+                    System.out.println("    ____________________________________________________________");
+                    continue;
+                }
                 int taskNumber = Integer.parseInt(userInput.substring(5).trim());
                 taskManager.markTask(taskNumber);
             }
             // Unmark tasks as not done
             else if (userInput.toLowerCase().startsWith("unmark ")) {
+                if (userInput.substring(7).trim().isEmpty()) {
+                    System.out.println("    ____________________________________________________________");
+                    System.out.println("      Task Number cannot be empty.");
+                    System.out.println("    ____________________________________________________________");
+                    continue;
+                }
                 int taskNumber = Integer.parseInt(userInput.substring(7).trim());
                 taskManager.unmarkTask(taskNumber);
             }
