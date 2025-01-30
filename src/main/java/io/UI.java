@@ -1,6 +1,6 @@
 package io;
 
-import action.ActionHandler.Event;
+import action.ActionHandler.Action;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,12 +50,12 @@ public class UI {
     private boolean isInputValid(String userInput) {
         String[] userInputTokens = userInput.split(" ");
 
-        if (userInputTokens[0].equalsIgnoreCase(Event.LIST.toString())
-                || userInputTokens[0].equalsIgnoreCase(Event.BYE.toString())) {
+        if (userInputTokens[0].equalsIgnoreCase(Action.LIST.toString())
+                || userInputTokens[0].equalsIgnoreCase(Action.BYE.toString())) {
             return userInputTokens.length == 1;
         }
-        else if (userInputTokens[0].equalsIgnoreCase(Event.MARK.toString())
-                || (userInputTokens[0].equalsIgnoreCase(Event.UNMARK.toString()))) {
+        else if (userInputTokens[0].equalsIgnoreCase(Action.MARK.toString())
+                || (userInputTokens[0].equalsIgnoreCase(Action.UNMARK.toString()))) {
             if (userInputTokens.length == 1) {
                 return false;
             }

@@ -14,7 +14,7 @@ import static java.lang.Integer.parseInt;
  */
 public class ActionHandler {
 
-    public enum Event {
+    public enum Action {
         LIST,
         MARK,
         UNMARK,
@@ -36,18 +36,18 @@ public class ActionHandler {
 
         String[] eventStringTokens = eventString.split(" ");
 
-        if (eventStringTokens[0].equalsIgnoreCase(Event.LIST.toString())) {
+        if (eventStringTokens[0].equalsIgnoreCase(Action.LIST.toString())) {
             outputMessages.add("Here are the tasks in your list: ");
             outputMessages.add(user.getTaskList());
         }
-        else if (eventStringTokens[0].equalsIgnoreCase(Event.BYE.toString())) {
+        else if (eventStringTokens[0].equalsIgnoreCase(Action.BYE.toString())) {
             return outputMessages;
         }
-        else if (eventStringTokens[0].equalsIgnoreCase(Event.MARK.toString())) {
+        else if (eventStringTokens[0].equalsIgnoreCase(Action.MARK.toString())) {
             outputMessages.add("Nice! I've marked this task as done:");
             outputMessages.add(user.markTaskAsDone(parseInt(eventStringTokens[1]) - 1));
         }
-        else if (eventStringTokens[0].equalsIgnoreCase(Event.UNMARK.toString())) {
+        else if (eventStringTokens[0].equalsIgnoreCase(Action.UNMARK.toString())) {
             outputMessages.add("OK, I've marked this task as not done yet:");
             outputMessages.add(user.markTaskAsNotDone(parseInt(eventStringTokens[1]) - 1));
         }

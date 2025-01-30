@@ -1,11 +1,11 @@
 package task;
 
-import action.ActionHandler.Event;
+import action.ActionHandler.Action;
 
 public class Task {
     private String taskDetail;
     private boolean isTaskDone;
-    private Event taskType;
+    private Action taskType;
 
     public Task(String taskDetail) {
         this.taskDetail = taskDetail;
@@ -13,7 +13,7 @@ public class Task {
         this.taskType = null;
     }
 
-    public Task(String taskDetail, Event taskType) {
+    public Task(String taskDetail, Action taskType) {
         this.taskDetail = taskDetail;
         this.isTaskDone = false;
         this.taskType = taskType;
@@ -33,9 +33,9 @@ public class Task {
 
     public String getTaskType() {
         return switch (this.taskType) {
-            case Event.TODO -> "T";
-            case Event.DEADLINE -> "D";
-            case Event.EVENT -> "E";
+            case Action.TODO -> "T";
+            case Action.DEADLINE -> "D";
+            case Action.EVENT -> "E";
             default -> "";
         };
     }
