@@ -1,5 +1,7 @@
 package user;
 
+import task.DeadLineTask;
+import task.EventTask;
 import task.Task;
 
 import java.util.LinkedList;
@@ -13,17 +15,25 @@ public class User {
     }
 
     public void addTask(Task task) {
-        this.taskList.add(task);
+        this.taskList.addLast(task);
     }
+
+    public int addTask(Task task, boolean shouldReturnIndex) {
+        this.taskList.addLast(task);
+        if (shouldReturnIndex) {
+            return this.taskList.size() - 1;
+        }
+        return -1;
+    }
+
 
     public String getTaskList() {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < taskList.size(); i++) {
             Task task = taskList.get(i);
-            stringBuilder.append("%s.[%s] %s".formatted(
+            stringBuilder.append("%s. %s".formatted(
                     i + 1,
-                    (task.isTaskDone()) ? "X" : " ",
-                    task.getTaskDetail())
+                    getTaskInformation(i))
             );
             if (i != taskList.size() - 1) {
                 stringBuilder.append("\n");
@@ -32,25 +42,45 @@ public class User {
         return stringBuilder.toString();
     }
 
+    public String getTaskInformation (int taskNumber) {
+        Task task = this.taskList.get(taskNumber);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[%s] [%s] %s".formatted(
+                task.getTaskType(),
+                (task.isTaskDone()) ? "X" : " ",
+                task.getTaskDetail()));
+
+        if (task instanceof DeadLineTask) {
+            stringBuilder.append(" ");
+            stringBuilder.append("(by: %s)".formatted(((DeadLineTask) task).getDeadLine()));
+        }
+
+        else if (task instanceof EventTask) {
+            stringBuilder.append(" ");
+            stringBuilder.append("(from: %s to: %s)".formatted(
+                    ((EventTask) task).getStartDateTime(),
+                    ((EventTask) task).getDeadLine()));
+        }
+        return stringBuilder.toString();
+    }
+
     public String markTaskAsDone(int taskNumber) {
         Task requiredTask = this.taskList.get(taskNumber);
         requiredTask.setTaskDone(true);
 
-        return this.getMarkTaskConsoleOutput(requiredTask.isTaskDone(), requiredTask.getTaskDetail());
+        return this.getTaskInformation(taskNumber);
     }
 
     public String markTaskAsNotDone(int taskNumber) {
         Task requiredTask = this.taskList.get(taskNumber);
         requiredTask.setTaskDone(false);
 
-        return this.getMarkTaskConsoleOutput(requiredTask.isTaskDone(), requiredTask.getTaskDetail());
+        return this.getTaskInformation(taskNumber);
     }
 
-    private String getMarkTaskConsoleOutput(boolean isTaskDone, String taskDetail) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[%s] %s".formatted((isTaskDone) ? "X" : " ", taskDetail));
-        System.out.println("test" + stringBuilder.toString());
-        return stringBuilder.toString();
+    public int getNumberOfTasks() {
+        return this.taskList.size();
     }
 
 }
