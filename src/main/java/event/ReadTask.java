@@ -1,7 +1,6 @@
 package event;
 
 public class ReadTask extends Task {
-    private TaskName taskName;
     private String taskDetail;
 
     public ReadTask(String taskDetail) {

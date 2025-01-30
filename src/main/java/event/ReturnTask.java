@@ -1,7 +1,6 @@
 package event;
 
 public class ReturnTask extends Task {
-    private TaskName taskName;
     private String taskDetail;
 
     public ReturnTask (String taskDetail) {
