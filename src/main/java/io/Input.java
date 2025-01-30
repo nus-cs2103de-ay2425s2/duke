@@ -17,7 +17,7 @@ class Input {
     }
 
     /**
-     * Method to get user input
+     * Method to get cleaned user input with no trailing or leading whitespaces
      * @return Input string that user provides
      * @throws IOException when IO fails
      */
