@@ -1,9 +1,6 @@
 package event;
 
-import task.ReadTask;
-import task.ReturnTask;
 import task.Task;
-import task.Task.TaskName;
 
 import user.User;
 
@@ -11,7 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Class to handle events that should be happen
+ * Class to handle events
  */
 public class EventHandler {
 
@@ -35,10 +32,8 @@ public class EventHandler {
             return outputMessages;
         }
         else {
-            String stringTaskName = eventStringTokens[0];
-
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 1; i < eventStringTokens.length; i++) {
+            for (int i = 0; i < eventStringTokens.length; i++) {
                 stringBuilder.append(eventStringTokens[i]);
 
                 if (i != eventStringTokens.length - 1) {
@@ -48,11 +43,11 @@ public class EventHandler {
 
             String taskDetail = stringBuilder.toString();
 
-            Task task = createTask(eventStringTokens[0], taskDetail);
+            Task task = createTask(taskDetail);
 
             user.addTask(task);
 
-            outputMessages.add("added: %s %s".formatted(stringTaskName, taskDetail));
+            outputMessages.add("added: %s".formatted(taskDetail));
         }
 
         return outputMessages;
@@ -60,23 +55,10 @@ public class EventHandler {
 
     /**
      * Create Task
-     * @param stringTaskName String representation of TaskName enum
      * @param taskDetail String representation for the details of the task
      * @return Task created
      */
-    private Task createTask(String stringTaskName, String taskDetail) {
-        TaskName taskName = Task.mapTaskName(stringTaskName);
-
-        switch (taskName) {
-            case READ -> {
-                return new ReadTask(taskDetail);
-            }
-            case RETURN -> {
-                return new ReturnTask(taskDetail);
-            }
-            default -> {
-                return null;
-            }
-        }
+    private Task createTask(String taskDetail) {
+        return new Task(taskDetail);
     }
 }
