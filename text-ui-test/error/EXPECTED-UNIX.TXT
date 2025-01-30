@@ -1,0 +1,58 @@
+_______________
+Hello! I'm Bob
+What can I do for you?
+_______________
+_______________
+list expects 0 argument but received more than 0 arguments
+_______________
+_______________
+bye expects 0 argument but received more than 0 arguments
+_______________
+_______________
+mark expects 1 argument but received more than 1 argument
+_______________
+_______________
+mark expects 1 argument that is an integer but received an non-integer argument
+_______________
+_______________
+mark expects 1 argument but received 0 arguments
+_______________
+_______________
+unmark expects 1 argument but received more than 1 argument
+_______________
+_______________
+unmark expects 1 argument that is an integer but received an non-integer argument
+_______________
+_______________
+unmark expects 1 argument but received 0 arguments
+_______________
+_______________
+todo expects at least 1 argument but received 0 arguments
+_______________
+_______________
+deadline expects at least 2 arguments
+_______________
+_______________
+deadline expects '/by' as one of its arguments
+_______________
+_______________
+deadline expects at least 1 argument after '/by' but received none
+_______________
+_______________
+deadline expects a datetime argument in the format dd/mm or dd/MM HH:mm or Mon but received something different
+_______________
+_______________
+event expects both /from and /to as arguments but did not receive it
+_______________
+_______________
+event expects a datetime argument in the format dd/mm or dd/MM HH:mm or Mon after /from and /to but received something different
+_______________
+_______________
+event expects a datetime argument in the format dd/mm or dd/MM HH:mm or Mon after /from and /to but received something different
+_______________
+_______________
+command listed does not exists. use todo, mark, unmark, deadline and event instead
+_______________
+_______________
+Bye. Hope to see you again soon!
+_______________

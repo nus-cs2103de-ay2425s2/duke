@@ -1,0 +1,18 @@
+list 1
+bye 1
+mark 1 2
+mark test
+mark
+unmark 1 2
+unmark test
+unmark
+todo
+deadline task
+deadline task task
+deadline task /by
+deadline task /by test
+event task
+event /from monday /to test
+event /from test /to monday
+blah
+bye
