@@ -61,23 +61,28 @@ echo -e "${GREEN}✓ Compilation successful${NC}\n"
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
 echo -e "${BOLD}[4/4] Running tests...${NC}"
-java -classpath ../bin bob.Bob < input.txt > ACTUAL.TXT
-
-# convert to UNIX format
+ls -r |
+for directory_path in $(grep -v "runtest");
+do echo "Running test to test for" $directory_path;
+cd $directory_path;
+java -classpath ../../bin bob.Bob < input.txt > ACTUAL.TXT;
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT 2>/dev/null
+# convert to UNIX format
 
 # compare the output to the expected output
 diff ACTUAL.TXT EXPECTED-UNIX.TXT
 if [ $? -eq 0 ]
 then
     echo -e "\n${GREEN}╔════ SUCCESS ════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║              All tests passed                ║${NC}"
+    echo -e "${GREEN}║                test passed                   ║${NC}"
     echo -e "${GREEN}╚═════════════════════════════════════════════╝${NC}"
-    exit 0
+#    exit 0
 else
     echo -e "\n${RED}╔════ ERROR ══════════════════════════════════╗${NC}"
-    echo -e "${RED}║              Tests FAILED                     ║${NC}"
+    echo -e "${RED}║                  test FAILED                 ║${NC}"
     echo -e "${RED}╚═════════════════════════════════════════════╝${NC}"
-    exit 1
+#    exit 1
 fi
+cd ..;
+done
