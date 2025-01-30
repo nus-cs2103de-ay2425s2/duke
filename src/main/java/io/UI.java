@@ -1,7 +1,6 @@
 package io;
 
-import event.EventHandler;
-import event.EventHandler.Event;
+import action.ActionHandler.Event;
 
 import java.io.IOException;
 import java.util.ArrayList;

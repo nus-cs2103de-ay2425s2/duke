@@ -1,11 +1,10 @@
 package bob;
 
-import event.EventHandler;
+import action.ActionHandler;
 import io.UI;
 import user.User;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bob {
@@ -19,7 +18,7 @@ public class Bob {
         Bob bob = new Bob();
         UI ui = new UI(bob.getCHATBOT_NAME());
         User user = new User();
-        EventHandler eventHandler = new EventHandler();
+        ActionHandler actionHandler = new ActionHandler();
         List<String> outputMessages;
 
         ui.displayWelcomeMessage();
@@ -34,7 +33,7 @@ public class Bob {
 
             // then eventHandler process the input and map it accordingly
             // define tasks in abstract class Task which can be accessed by Input to do input validation
-            outputMessages = eventHandler.processEvent(userInput, user);
+            outputMessages = actionHandler.processEvent(userInput, user);
 
             if (outputMessages.isEmpty()) {
                 ui.displayExitMessage();

@@ -1,4 +1,4 @@
-package event;
+package action;
 
 import task.Task;
 
@@ -12,13 +12,16 @@ import static java.lang.Integer.parseInt;
 /**
  * Class to handle events
  */
-public class EventHandler {
+public class ActionHandler {
 
     public enum Event {
         LIST,
         MARK,
         UNMARK,
-        BYE
+        BYE,
+        TODO,
+        DEADLINE,
+        EVENT
     }
 
     /**
