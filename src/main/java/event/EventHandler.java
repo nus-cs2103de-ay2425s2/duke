@@ -7,10 +7,19 @@ import user.User;
 import java.util.List;
 import java.util.ArrayList;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Class to handle events
  */
 public class EventHandler {
+
+    public enum Event {
+        LIST,
+        MARK,
+        UNMARK,
+        BYE
+    }
 
     /**
      * Method to process events that are input to the user
@@ -24,13 +33,22 @@ public class EventHandler {
 
         String[] eventStringTokens = eventString.split(" ");
 
-        if (eventStringTokens[0].equalsIgnoreCase("list")) {
+        if (eventStringTokens[0].equalsIgnoreCase(Event.LIST.toString())) {
             outputMessages.add("Here are the tasks in your list: ");
             outputMessages.add(user.getTaskList());
         }
-        else if (eventStringTokens[0].equalsIgnoreCase("bye")) {
+        else if (eventStringTokens[0].equalsIgnoreCase(Event.BYE.toString())) {
             return outputMessages;
         }
+        else if (eventStringTokens[0].equalsIgnoreCase(Event.MARK.toString())) {
+            outputMessages.add("Nice! I've marked this task as done:");
+            outputMessages.add(user.markTaskAsDone(parseInt(eventStringTokens[1]) - 1));
+        }
+        else if (eventStringTokens[0].equalsIgnoreCase(Event.UNMARK.toString())) {
+            outputMessages.add("OK, I've marked this task as not done yet:");
+            outputMessages.add(user.markTaskAsNotDone(parseInt(eventStringTokens[1]) - 1));
+        }
+        // by default, should be adding a new task
         else {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < eventStringTokens.length; i++) {
