@@ -4,6 +4,7 @@ import action.ActionHandler.Action;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -69,10 +70,10 @@ public class UI {
 
             try {
                 Integer.parseInt(userInputTokens[1]);
+                return true;
             } catch (NumberFormatException e) {
                 return false;
             }
-            return true;
 
         }
         else if (userInputTokens[0].equalsIgnoreCase(Action.TODO.toString())) {
@@ -96,13 +97,47 @@ public class UI {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = deadLineIndex; i < userInputTokens.length; i++)  {
                 stringBuilder.append(userInputTokens[i]);
+                if (i != userInputTokens.length - 1) {
+                    stringBuilder.append(" ");
+                }
             }
-            String dateTime = stringBuilder.toString();
+            String stringDateTime = stringBuilder.toString();
 
-
+            return isValidDay(stringDateTime) || isValidDateTime(stringDateTime);
         }
         else if (userInputTokens[0].equalsIgnoreCase(Action.EVENT.toString())) {
+            if (!(Arrays.asList(userInputTokens).contains("/from") && Arrays.asList(userInputTokens).contains("/to"))) {
+                return false;
+            }
 
+            int fromIndex = Arrays.asList(userInputTokens).indexOf("/from");
+            int toIndex = Arrays.asList(userInputTokens).indexOf("/to");
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = fromIndex + 1; i < toIndex; i++) {
+                stringBuilder.append(userInputTokens[i]);
+                if (i != toIndex - 1) {
+                    stringBuilder.append(" ");
+                }
+            }
+            String fromDateTime = stringBuilder.toString();
+
+            if (!(isValidDay(fromDateTime) || isValidDateTime(fromDateTime))) {
+                return false;
+            }
+
+            stringBuilder.setLength(0);
+
+            for (int i = toIndex + 1; i < userInputTokens.length; i++) {
+                stringBuilder.append(userInputTokens[i]);
+                if (i != userInputTokens.length - 1) {
+                    stringBuilder.append(" ");
+                }
+            }
+            String toDateTime = stringBuilder.toString();
+
+            return isValidDay(toDateTime) || isValidDateTime(toDateTime);
         }
         return false;
     }
@@ -113,7 +148,16 @@ public class UI {
         DateTimeFormatter month_day_time_formatter = DateTimeFormatter.ofPattern("dd/MM H:m");
 
         try {
-            MonthDay.parse(stringDateTime)
+            MonthDay.parse(stringDateTime, month_day_formatter);
+            return true;
+        } catch (DateTimeParseException e1) {
+            try {
+                MonthDay.parse(stringDateTime, month_day_time_formatter);
+                return true;
+            }
+            catch (DateTimeParseException e2) {
+                return false;
+            }
         }
     }
 
