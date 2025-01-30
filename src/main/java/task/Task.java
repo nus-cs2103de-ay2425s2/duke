@@ -1,25 +1,13 @@
 package task;
 
-public abstract class Task {
-    protected TaskName taskName;
+public class Task {
+    private String taskDetail;
 
-    public enum TaskName {
-        READ,
-        RETURN,
-        ERROR
+    public Task(String taskDetail) {
+        this.taskDetail = taskDetail;
     }
 
-    public String getTaskName() {
-        return this.taskName.toString();
-    }
-
-    public static TaskName mapTaskName(String stringTaskName) {
-        return switch (stringTaskName) {
-            case "read" -> TaskName.READ;
-            case "return" -> TaskName.RETURN;
-            default -> TaskName.ERROR;
-        };
-    }
-
-    public abstract String getTaskDetail();
+    public String getTaskDetail() {
+        return this.taskDetail;
+    };
 }
