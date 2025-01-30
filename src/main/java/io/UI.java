@@ -3,8 +3,12 @@ package io;
 import action.ActionHandler.Action;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.time.DayOfWeek;
+import java.time.MonthDay;
 
 /**
  * UI class to handle tasks related to the User Interface
@@ -62,13 +66,62 @@ public class UI {
             else if (userInputTokens.length > 2) {
                 return false;
             }
-            else {
-                try {
-                    Integer.parseInt(userInputTokens[1]);
-                } catch (NumberFormatException e) {
-                    return false;
-                }
+
+            try {
+                Integer.parseInt(userInputTokens[1]);
+            } catch (NumberFormatException e) {
+                return false;
             }
+            return true;
+
+        }
+        else if (userInputTokens[0].equalsIgnoreCase(Action.TODO.toString())) {
+            return userInputTokens.length > 1;
+        }
+        else if (userInputTokens[0].equalsIgnoreCase(Action.DEADLINE.toString())) {
+            if (userInputTokens.length == 1) {
+                return false;
+            }
+
+            if (!Arrays.asList(userInputTokens).contains("/by")) {
+                return false;
+            }
+
+            int deadLineIndex = Arrays.asList(userInputTokens).indexOf("/by") + 1;
+
+            if (deadLineIndex == userInputTokens.length) {
+                return false;
+            }
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = deadLineIndex; i < userInputTokens.length; i++)  {
+                stringBuilder.append(userInputTokens[i]);
+            }
+            String dateTime = stringBuilder.toString();
+
+
+        }
+        else if (userInputTokens[0].equalsIgnoreCase(Action.EVENT.toString())) {
+
+        }
+        return false;
+    }
+
+    private boolean isValidDateTime(String stringDateTime) {
+        // must be in the format dd/mm or dd/mm H:m
+        DateTimeFormatter month_day_formatter = DateTimeFormatter.ofPattern("dd/MM");
+        DateTimeFormatter month_day_time_formatter = DateTimeFormatter.ofPattern("dd/MM H:m");
+
+        try {
+            MonthDay.parse(stringDateTime)
+        }
+    }
+
+    private boolean isValidDay(String stringDay) {
+        try {
+            DayOfWeek.valueOf(stringDay.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return false;
         }
         return true;
     }
