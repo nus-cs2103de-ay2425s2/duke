@@ -24,9 +24,26 @@ public class UI {
      * Get valid user input from console
      * @return User input String
      */
-    public String getUserInput() {
-        return INPUT.getValidUserInput();
+    public String getValidUserInput() throws IOException {
+        boolean isUserInputValid = false;
+
+        String userInput;
+
+        do {
+            userInput = INPUT.getUserInput();
+            if (this.isInputValid(userInput)) {
+                isUserInputValid = true;
+            }
+        }
+        while (!isUserInputValid);
+
+        return userInput;
     }
+
+    private boolean isInputValid(String userInput) {
+        return true;
+    }
+
 
     /**
      * Displays custom message to the console
