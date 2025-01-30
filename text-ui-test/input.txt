@@ -1,0 +1,8 @@
+todo return book
+deadline return newspaper /by tuesday
+event networking /from 10/12 /to 11/12 12:00
+mark 1
+mark 2
+event new networking /from 11/12 14:00 /to 20/12 09:00
+unmark 1
+bye
