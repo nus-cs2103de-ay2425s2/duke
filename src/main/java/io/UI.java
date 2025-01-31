@@ -97,10 +97,10 @@ public class UI {
                 return new ValidationToken(true);
             } catch (NumberFormatException e) {
                 if (userInputTokens.getFirst().equalsIgnoreCase(Action.MARK.toString())) {
-                    return new ValidationToken(false, InputError.MARK_INCORRECT_ARGUMENT);
+                    return new ValidationToken(false, InputError.MARK_INCORRECT_ARGUMENT_TYPE);
                 }
 
-                return new ValidationToken(false, InputError.UNMARK_INCORRECT_ARGUMENT);
+                return new ValidationToken(false, InputError.UNMARK_INCORRECT_ARGUMENT_TYPE);
             }
 
         }
@@ -179,6 +179,22 @@ public class UI {
 
             return new ValidationToken(true);
         }
+        else if (userInputTokens.getFirst().equalsIgnoreCase(Action.DELETE.toString())) {
+            if (userInputTokens.size() > 2) {
+                // too many arguments
+                return new ValidationToken(false, InputError.DELETE_TOO_MANY_ARGUMENTS);
+            }
+
+            try {
+                Integer.parseInt(userInputTokens.get(1));
+            } catch (NumberFormatException e) {
+                // second argument not a number
+                return new ValidationToken(false, InputError.DELETE_INCORRECT_ARGUMENT_TYPE);
+            }
+
+            return new ValidationToken(true);
+        }
+
         return new ValidationToken(false, InputError.INVALID_COMMAND);
     }
 
