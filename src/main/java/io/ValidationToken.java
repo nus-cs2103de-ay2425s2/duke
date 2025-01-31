@@ -24,7 +24,7 @@ public class ValidationToken {
                 return "mark expects 1 argument but received more than 1 argument";
             }
         },
-        MARK_INCORRECT_ARGUMENT() {
+        MARK_INCORRECT_ARGUMENT_TYPE() {
             @Override
             public String getErrorMessage() {
                 return "mark expects 1 argument that is an integer but received an non-integer argument";
@@ -42,7 +42,7 @@ public class ValidationToken {
                 return "unmark expects 1 argument but received more than 1 argument";
             }
         },
-        UNMARK_INCORRECT_ARGUMENT() {
+        UNMARK_INCORRECT_ARGUMENT_TYPE() {
             @Override
             public String getErrorMessage() {
                 return "unmark expects 1 argument that is an integer but received an non-integer argument";
@@ -95,6 +95,18 @@ public class ValidationToken {
             public String getErrorMessage() {
                 return "event expects a datetime argument in the format dd/mm or dd/MM HH:mm or Mon " +
                         "after /from and /to but received something different";
+            }
+        },
+        DELETE_TOO_MANY_ARGUMENTS() {
+            @Override
+            public String getErrorMessage() {
+                return "delete expects 1 argument but received more than 1 argument";
+            }
+        },
+        DELETE_INCORRECT_ARGUMENT_TYPE {
+            @Override
+            public String getErrorMessage() {
+                return "delete expects an integer argument but received a non-integer argument";
             }
         },
         INVALID_COMMAND {
