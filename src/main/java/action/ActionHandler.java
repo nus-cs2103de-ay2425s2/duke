@@ -80,7 +80,7 @@ public class ActionHandler {
         }
         else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.DELETE.toString())) {
             outputMessages.add("Noted. I've removed this task:");
-            outputMessages.add(user.removeTask(parseInt(eventStringTokens.get(1)) - 1));
+            outputMessages.add(user.deleteTask(parseInt(eventStringTokens.get(1)) - 1));
             outputMessages.add("Now you have %s tasks in your list".formatted(user.getNumberOfTasks()));
         }
 

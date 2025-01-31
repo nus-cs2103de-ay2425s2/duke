@@ -83,4 +83,10 @@ public class User {
         return this.taskList.size();
     }
 
+    public String deleteTask(int taskNumber) {
+        String removedTaskInformation = this.getTaskInformation(taskNumber);
+        this.taskList.remove(taskNumber);
+        return removedTaskInformation;
+    }
+
 }
