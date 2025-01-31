@@ -1,6 +1,6 @@
 -----------------------------------------
 Hello! I'm PawPal
-What can I do for you?
+What can I do for you? 
 
 -----------------------------------------
 Purr-sonally, I’d rather nap, but your borrow book task is on the list now!
@@ -13,29 +13,29 @@ Purr-sonally, I’d rather nap, but your project meeting task is on the list now
 Now you have 3 tasks.
 Here are the tasks in your list you silly cat!
 1.[T][ ] borrow book
-2.[D][ ] return book (by: Sunday)
-3.[E][ ] project meetingfrom: Mon 2pm to: 4pm)
+2.[D][ ] return book (by: Sunday )
+3.[E][ ] project meeting from: Mon 2pm to: 4pm)
 A paw-sitive development! Wanna celebrate with some head pats?
 [T][X] borrow book
 A paw-sitive development! Wanna celebrate with some head pats?
-[D][X] return book (by: Sunday)
+[D][X] return book (by: Sunday )
 Here are the tasks in your list you silly cat!
 1.[T][X] borrow book
-2.[D][X] return book (by: Sunday)
-3.[E][ ] project meetingfrom: Mon 2pm to: 4pm)
+2.[D][X] return book (by: Sunday )
+3.[E][ ] project meeting from: Mon 2pm to: 4pm)
 We don't judge around here.
 [T][ ] borrow book
 Here are the tasks in your list you silly cat!
 1.[T][ ] borrow book
-2.[D][X] return book (by: Sunday)
-3.[E][ ] project meetingfrom: Mon 2pm to: 4pm)
+2.[D][X] return book (by: Sunday )
+3.[E][ ] project meeting from: Mon 2pm to: 4pm)
 Purr-sonally, I’d rather nap, but your read book task is on the list now!
 Now you have 4 tasks.
 A paw-sitive development! Wanna celebrate with some head pats?
-[E][X] project meetingfrom: Mon 2pm to: 4pm)
+[E][X] project meeting from: Mon 2pm to: 4pm)
 Here are the tasks in your list you silly cat!
 1.[T][ ] borrow book
-2.[D][X] return book (by: Sunday)
-3.[E][X] project meetingfrom: Mon 2pm to: 4pm)
+2.[D][X] return book (by: Sunday )
+3.[E][X] project meeting from: Mon 2pm to: 4pm)
 4.[T][ ] read book
 Bye. Hope to see you again soon! Meow
