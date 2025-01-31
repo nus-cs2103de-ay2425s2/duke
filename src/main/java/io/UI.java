@@ -2,6 +2,7 @@ package io;
 
 import action.ActionHandler.Action;
 import io.ValidationToken.InputError;
+import user.User;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -33,14 +34,15 @@ public class UI {
      *
      * @return User input String
      */
-    public String getValidUserInput() throws IOException {
+    // TODO: Add User as a object to be passed into this function so that the input validation can be done wrt the user
+    public String getValidUserInput(User user) throws IOException {
         boolean isUserInputValid = false;
 
         String userInput;
 
         do {
             userInput = INPUT.getUserInput();
-            ValidationToken validationToken = this.isInputValid(userInput);
+            ValidationToken validationToken = this.isInputValid(userInput, user);
             if (validationToken.isValid()) {
                 isUserInputValid = true;
             }
@@ -61,7 +63,8 @@ public class UI {
      * @param userInput Input string provided by the user with no trailing or leading whitespaces
      * @return ValidationToken with isValid status and error message if it is not valid
      */
-    private ValidationToken isInputValid(String userInput) {
+    // TODO: Create a InputValidator class to handle the input validation
+    private ValidationToken isInputValid(String userInput, User user) {
         List<String> userInputTokens = Arrays.asList(userInput.split(" "));
 
         if (userInputTokens.getFirst().equalsIgnoreCase(Action.LIST.toString())
@@ -95,7 +98,6 @@ public class UI {
 
             try {
                 Integer.parseInt(userInputTokens.get(1));
-                return new ValidationToken(true);
             } catch (NumberFormatException e) {
                 if (userInputTokens.getFirst().equalsIgnoreCase(Action.MARK.toString())) {
                     return new ValidationToken(false, InputError.MARK_INCORRECT_ARGUMENT_TYPE);
@@ -104,6 +106,12 @@ public class UI {
                 return new ValidationToken(false, InputError.UNMARK_INCORRECT_ARGUMENT_TYPE);
             }
 
+            if (Integer.parseInt(userInputTokens.get(1)) < 1
+                    || Integer.parseInt(userInputTokens.get(1)) > user.getNumberOfTasks()) {
+                return new ValidationToken(false, InputError.INVALID_TASK_NUMBER);
+            }
+
+            return new ValidationToken(true);
         }
         else if (userInputTokens.getFirst().equalsIgnoreCase(Action.TODO.toString())) {
             if (userInputTokens.size() == 1) {
