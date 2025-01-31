@@ -5,6 +5,23 @@ public class ValidationToken {
     private boolean isValid;
     private InputError errorMessage;
 
+    public ValidationToken(boolean isValid) {
+        this.isValid = isValid;
+    }
+
+    public ValidationToken(boolean isValid, InputError errorMessage) {
+        this.isValid = isValid;
+        this.errorMessage = errorMessage;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage.getErrorMessage();
+    }
+
     public enum InputError {
         LIST_TOO_MANY_ARGUMENTS() {
             @Override
@@ -116,22 +133,5 @@ public class ValidationToken {
         };
 
         public abstract String getErrorMessage();
-    }
-
-    public ValidationToken(boolean isValid) {
-        this.isValid = isValid;
-    }
-
-    public ValidationToken(boolean isValid, InputError errorMessage) {
-        this.isValid = isValid;
-        this.errorMessage = errorMessage;
-    }
-
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage.getErrorMessage();
     }
 }

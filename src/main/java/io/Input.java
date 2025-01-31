@@ -18,6 +18,7 @@ class Input {
 
     /**
      * Method to get cleaned user input with no trailing or leading whitespaces
+     *
      * @return Input string that user provides
      * @throws IOException when IO fails
      */
@@ -27,6 +28,7 @@ class Input {
 
     /**
      * Remove leading and trailing whitespaces
+     *
      * @param userInput userInput String
      * @return String with no trailing or leading whitespaces
      */

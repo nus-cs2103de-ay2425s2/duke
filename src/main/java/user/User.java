@@ -42,7 +42,7 @@ public class User {
         return stringBuilder.toString();
     }
 
-    public String getTaskInformation (int taskNumber) {
+    public String getTaskInformation(int taskNumber) {
         Task task = this.taskList.get(taskNumber);
 
         StringBuilder stringBuilder = new StringBuilder();

@@ -19,8 +19,9 @@ class Output {
 
     /**
      * Writes outputStrings to console separated by sep
+     *
      * @param outputStrings List of Strings to output to the console
-     * @param sep Separator used between each String in the List
+     * @param sep           Separator used between each String in the List
      * @throws IOException IO fails
      */
     public void printOutput(List<String> outputStrings, String sep, String end) throws IOException {

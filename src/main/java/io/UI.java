@@ -1,17 +1,16 @@
 package io;
 
 import action.ActionHandler.Action;
-
 import io.ValidationToken.InputError;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.time.DayOfWeek;
-import java.time.MonthDay;
 
 /**
  * UI class to handle tasks related to the User Interface
@@ -31,6 +30,7 @@ public class UI {
 
     /**
      * Get valid user input from console
+     *
      * @return User input String
      */
     public String getValidUserInput() throws IOException {
@@ -57,6 +57,7 @@ public class UI {
 
     /**
      * Check if user input is valid
+     *
      * @param userInput Input string provided by the user with no trailing or leading whitespaces
      * @return boolean to indicate if it is a valid userInput
      */
@@ -67,7 +68,8 @@ public class UI {
                 || userInputTokens.getFirst().equalsIgnoreCase(Action.BYE.toString())) {
             if (userInputTokens.size() == 1) {
                 return new ValidationToken(true);
-            };
+            }
+            ;
 
             if (userInputTokens.getFirst().equalsIgnoreCase(Action.LIST.toString())) {
                 return new ValidationToken(false, InputError.LIST_TOO_MANY_ARGUMENTS);
@@ -127,7 +129,7 @@ public class UI {
             }
 
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = deadLineIndex; i < userInputTokens.size(); i++)  {
+            for (int i = deadLineIndex; i < userInputTokens.size(); i++) {
                 stringBuilder.append(userInputTokens.get(i));
                 if (i != userInputTokens.size() - 1) {
                     stringBuilder.append(" ");
@@ -210,8 +212,7 @@ public class UI {
             try {
                 MonthDay.parse(stringDateTime, month_day_time_formatter);
                 return true;
-            }
-            catch (DateTimeParseException e2) {
+            } catch (DateTimeParseException e2) {
                 return false;
             }
         }
@@ -229,6 +230,7 @@ public class UI {
 
     /**
      * Displays custom message to the console
+     *
      * @param messages list of messages to output to console
      * @throws IOException When IO fails
      */
@@ -244,6 +246,7 @@ public class UI {
 
     /**
      * Display welcome message to the console
+     *
      * @throws IOException When IO fails
      */
     public void displayWelcomeMessage() throws IOException {
@@ -257,9 +260,10 @@ public class UI {
 
     /**
      * Display exit message to the console
+     *
      * @throws IOException When IO fails
      */
-    public void displayExitMessage() throws IOException{
+    public void displayExitMessage() throws IOException {
         List<String> exitMessages = new ArrayList<>();
         exitMessages.add(this.DIVIDER);
         exitMessages.add("Bye. Hope to see you again soon!");

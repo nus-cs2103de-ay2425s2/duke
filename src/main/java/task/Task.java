@@ -21,7 +21,9 @@ public class Task {
 
     public String getTaskDetail() {
         return this.taskDetail;
-    };
+    }
+
+    ;
 
     public boolean isTaskDone() {
         return this.isTaskDone;
