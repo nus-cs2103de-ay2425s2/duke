@@ -24,7 +24,7 @@ public class Bob {
         ui.displayWelcomeMessage();
 
         while (true) {
-            String userInput = ui.getValidUserInput();
+            String userInput = ui.getValidUserInput(user);
 
             outputMessages = actionHandler.processEvent(userInput, user);
 
