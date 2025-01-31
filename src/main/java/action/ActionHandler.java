@@ -78,24 +78,10 @@ public class ActionHandler {
             );
             outputMessages.add(user.getTaskInformation(taskIndex));
         }
-        // by default, should be adding a new task
-        else {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < eventStringTokens.size(); i++) {
-                stringBuilder.append(eventStringTokens.get(i));
-
-                if (i != eventStringTokens.size() - 1) {
-                    stringBuilder.append(" ");
-                }
-            }
-
-            String taskDetail = stringBuilder.toString();
-
-            Task task = createTask(taskDetail);
-
-            user.addTask(task);
-
-            outputMessages.add("added: %s".formatted(taskDetail));
+        else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.DELETE.toString())) {
+            outputMessages.add("Noted. I've removed this task:");
+            outputMessages.add(user.removeTask(parseInt(eventStringTokens.get(1)) - 1));
+            outputMessages.add("Now you have %s tasks in your list".formatted(user.getNumberOfTasks()));
         }
 
         if (eventStringTokens.getFirst().equalsIgnoreCase(Action.EVENT.toString())
@@ -149,6 +135,7 @@ public class ActionHandler {
         BYE,
         TODO,
         DEADLINE,
-        EVENT
+        EVENT,
+        DELETE
     }
 }
