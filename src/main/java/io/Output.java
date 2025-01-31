@@ -22,6 +22,7 @@ class Output {
      *
      * @param outputStrings List of Strings to output to the console
      * @param sep           Separator used between each String in the List
+     * @param end           End character used after the last string is written
      * @throws IOException IO fails
      */
     public void printOutput(List<String> outputStrings, String sep, String end) throws IOException {

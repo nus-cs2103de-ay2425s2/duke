@@ -1,14 +1,26 @@
 package io;
 
+/**
+ * ValidationToken class that indicates validity of inputs
+ */
 public class ValidationToken {
 
     private boolean isValid;
     private InputError errorMessage;
 
+    /**
+     * Constructor for inputs with no errors
+     * @param isValid boolean that indicates that it is valid
+     */
     public ValidationToken(boolean isValid) {
         this.isValid = isValid;
     }
 
+    /**
+     * Constructor for inputs with errors
+     * @param isValid boolean that indicates that it is not valid
+     * @param errorMessage InputError enum that encapsulates information about the error
+     */
     public ValidationToken(boolean isValid, InputError errorMessage) {
         this.isValid = isValid;
         this.errorMessage = errorMessage;
@@ -22,6 +34,10 @@ public class ValidationToken {
         return errorMessage.getErrorMessage();
     }
 
+    /**
+     * Enum class that indicates all the types of InputErrors
+     * enum field follows the format <action_name>_<problem_information>
+     */
     public enum InputError {
         LIST_TOO_MANY_ARGUMENTS() {
             @Override

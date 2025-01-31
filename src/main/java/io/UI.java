@@ -59,7 +59,7 @@ public class UI {
      * Check if user input is valid
      *
      * @param userInput Input string provided by the user with no trailing or leading whitespaces
-     * @return boolean to indicate if it is a valid userInput
+     * @return ValidationToken with isValid status and error message if it is not valid
      */
     private ValidationToken isInputValid(String userInput) {
         List<String> userInputTokens = Arrays.asList(userInput.split(" "));
@@ -69,7 +69,6 @@ public class UI {
             if (userInputTokens.size() == 1) {
                 return new ValidationToken(true);
             }
-            ;
 
             if (userInputTokens.getFirst().equalsIgnoreCase(Action.LIST.toString())) {
                 return new ValidationToken(false, InputError.LIST_TOO_MANY_ARGUMENTS);
@@ -200,6 +199,11 @@ public class UI {
         return new ValidationToken(false, InputError.INVALID_COMMAND);
     }
 
+    /**
+     * Method to check if the provided string follows the dd/MM or dd/MM H:m format
+     * @param stringDateTime String to be checked
+     * @return boolean that indicates if it is a valid time format
+     */
     private boolean isValidDateTime(String stringDateTime) {
         // must be in the format dd/mm or dd/mm H:m
         DateTimeFormatter month_day_formatter = DateTimeFormatter.ofPattern("dd/MM");
@@ -218,6 +222,11 @@ public class UI {
         }
     }
 
+    /**
+     * Method to check if the provided string is a valid day
+     * @param stringDay String to be checked
+     * @return boolean that indicates if it is a valid day
+     */
     private boolean isValidDay(String stringDay) {
         try {
             DayOfWeek.valueOf(stringDay.toUpperCase());
@@ -229,7 +238,7 @@ public class UI {
 
 
     /**
-     * Displays custom message to the console
+     * Displays custom message to the console with dividers
      *
      * @param messages list of messages to output to console
      * @throws IOException When IO fails
@@ -240,6 +249,12 @@ public class UI {
         OUTPUT.printOutput(messages, "\n", "\n");
     }
 
+    /**
+     * Display custom message to the console without dividers
+     *
+     * @param messages list of messages to output to console
+     * @throws IOException When IO fails
+     */
     public void displayMessage(List<String> messages) throws IOException {
         OUTPUT.printOutput(messages, "\n", "\n");
     }

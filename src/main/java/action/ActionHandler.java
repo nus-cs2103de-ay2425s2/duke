@@ -13,7 +13,7 @@ import java.util.List;
 import static java.lang.Integer.parseInt;
 
 /**
- * Class to handle events
+ * Class to handle actions
  */
 public class ActionHandler {
 
@@ -21,9 +21,9 @@ public class ActionHandler {
      * Method to process events that are input to the user
      * Precondition: eventString is already a valid input by the user
      *
-     * @param eventString Input String provided by the user
+     * @param eventString Valid Input String provided by the user
      * @param user        User class that indicates the current user
-     * @return List of Strings that indicate what needs to be output to the console
+     * @return List of Strings that indicates what needs to be output to the console
      */
     public List<String> processEvent(String eventString, User user) {
         List<String> outputMessages = new ArrayList<>();
@@ -84,6 +84,7 @@ public class ActionHandler {
             outputMessages.add("Now you have %s tasks in your list".formatted(user.getNumberOfTasks()));
         }
 
+        // conditional add that indicates the new number of tasks in the list only when a new task is added
         if (eventStringTokens.getFirst().equalsIgnoreCase(Action.EVENT.toString())
                 || eventStringTokens.getFirst().equalsIgnoreCase(Action.TODO.toString())
                 || eventStringTokens.getFirst().equalsIgnoreCase(Action.DEADLINE.toString())) {
@@ -93,6 +94,12 @@ public class ActionHandler {
         return outputMessages;
     }
 
+    /**
+     * Method to create a TODO/DEADLINE/EVENT task
+     * @param action Action enum field that indicates what is the action to do
+     * @param taskDetails Valid input string provided by the user
+     * @return Task that encapsulates the required information to create TODO/DEADLINE/EVENT task
+     */
     private Task createTask(Action action, List<String> taskDetails) {
         if (action.equals(Action.TODO)) {
             return new ToDoTask(String.join(" ", taskDetails));
