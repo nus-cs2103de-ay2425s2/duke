@@ -142,6 +142,12 @@ public class ValidationToken {
                 return "delete expects an integer argument but received a non-integer argument";
             }
         },
+        INVALID_TASK_NUMBER() {
+            @Override
+            public String getErrorMessage() {
+                return "task number provided does not exist";
+            }
+        },
         INVALID_COMMAND {
             public String getErrorMessage() {
                 return "command listed does not exists. use todo, mark, unmark, deadline and event instead";
