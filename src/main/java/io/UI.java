@@ -127,14 +127,8 @@ public class UI {
                 return new ValidationToken(false, InputError.DEADLINE_MISSING_DEADLINE);
             }
 
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = deadLineIndex; i < userInputTokens.size(); i++) {
-                stringBuilder.append(userInputTokens.get(i));
-                if (i != userInputTokens.size() - 1) {
-                    stringBuilder.append(" ");
-                }
-            }
-            String stringDateTime = stringBuilder.toString();
+            String stringDateTime = String.join(" ",
+                    userInputTokens.subList(deadLineIndex, userInputTokens.size()));
 
             if (!(isValidDay(stringDateTime) || isValidDateTime(stringDateTime))) {
                 return new ValidationToken(false, InputError.DEADLINE_INVALID_DATETIME);
@@ -150,29 +144,14 @@ public class UI {
             int fromIndex = userInputTokens.indexOf("/from");
             int toIndex = userInputTokens.indexOf("/to");
 
-            StringBuilder stringBuilder = new StringBuilder();
-
-            for (int i = fromIndex + 1; i < toIndex; i++) {
-                stringBuilder.append(userInputTokens.get(i));
-                if (i != toIndex - 1) {
-                    stringBuilder.append(" ");
-                }
-            }
-            String fromDateTime = stringBuilder.toString();
+            String fromDateTime = String.join(" ",
+                    userInputTokens.subList(fromIndex + 1, toIndex));
 
             if (!(isValidDay(fromDateTime) || isValidDateTime(fromDateTime))) {
                 return new ValidationToken(false, InputError.EVENT_INVALID_DATETIME);
             }
 
-            stringBuilder.setLength(0);
-
-            for (int i = toIndex + 1; i < userInputTokens.size(); i++) {
-                stringBuilder.append(userInputTokens.get(i));
-                if (i != userInputTokens.size() - 1) {
-                    stringBuilder.append(" ");
-                }
-            }
-            String toDateTime = stringBuilder.toString();
+            String toDateTime = String.join(" ", userInputTokens.subList(toIndex + 1, userInputTokens.size()));
 
             if (!(isValidDay(toDateTime) || isValidDateTime(toDateTime))) {
                 return new ValidationToken(false, InputError.EVENT_INVALID_DATETIME);
