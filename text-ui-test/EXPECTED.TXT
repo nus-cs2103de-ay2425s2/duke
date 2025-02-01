@@ -87,4 +87,20 @@ You need to provide a task description after 'todo'!
 Invalid deadline! Use: deadline <description> /by <deadline>
 Invalid event! Use: event <description> /from <start> /to <end>
 Sorry, I don't understand that command :(
+Sorry, I don't understand that command :(
+Here are the tasks in your list you silly cat!
+1.[T][ ] buy groceries
+2.[D][ ] prepare report (by: Tuesday )
+3.[E][ ] company retreat from: Fri 9am to: Sun 5pm)
+4.[T][ ] clean the house
+5.[T][ ] write journal
+6.[T][ ] organize workspace
+7.[D][ ] plan vacation (by: next month )
+8.[E][ ] family dinner from: Sat 7pm to: 10pm)
+9.[T][ ] go for a walk
+10.[T][ ] read book
+11.[D][ ] holiday plans (by: 2023-12-25 )
+12.[E][ ] tech conference from: 2023-08-10 to: 2023-08-12)
+13.[T][ ] learn Java
+Sorry, I don't understand that command :(
 Bye. Hope to see you again soon! Meow

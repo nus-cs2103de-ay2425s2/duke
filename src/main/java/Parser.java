@@ -28,13 +28,16 @@ class Parser {
         case "event":
             processEventCommand(input);
             break;
+        case "delete":
+            processDeleteCommand(input);
+            break;
         default:
             printer.printInvalidCommand();
             break;
         }
     }
 
-    // method to process "mark" command
+    // method to process "mark" or "unmark" command
     private void processMarkCommand(String input, boolean mark) {
         try {
             String[] parts = input.split(" ", 2);
@@ -47,6 +50,18 @@ class Parser {
             } else {
                 taskManager.unmarkTask(taskNumber);
             }
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            printer.printInvalidTaskNumber();
+        }
+    }
+
+    // Process Delete Command
+    private void processDeleteCommand(String input) {
+        try {
+            String[] parts = input.split(" ", 2);
+            if (parts.length < 2) throw new NumberFormatException();
+            int taskNumber = Integer.parseInt(parts[1].trim());
+            taskManager.deleteTask(taskNumber);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             printer.printInvalidTaskNumber();
         }

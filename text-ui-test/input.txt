@@ -40,5 +40,8 @@ todo learn Java
 todo
 deadline
 event
+delete
+delete 3
+list
 
 bye

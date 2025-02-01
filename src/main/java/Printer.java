@@ -31,6 +31,12 @@ class Printer {
         System.out.println(task);
     }
 
+    // Print a message when a task is deleted
+    public void printTaskDeleted(Task task, int taskCount) {
+        System.out.println("Task removed: " + task);
+        System.out.println("Now you have " + taskCount + " tasks left.");
+    }
+
     // error message for invalid task number
     public void printInvalidTaskNumber() {
         System.out.println("Invalid task number! Are you playing with yarn again?");

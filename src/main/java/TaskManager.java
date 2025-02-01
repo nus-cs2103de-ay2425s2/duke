@@ -32,6 +32,15 @@ class TaskManager {
         printer.printTaskList(tasks);
     }
 
+    public void deleteTask(int taskNumber) {
+        if (taskNumber > 0 && taskNumber <= tasks.size()) {
+            Task task = tasks.remove(taskNumber - 1);
+            printer.printDeletedTask();
+        } else {
+            printer.printInvalidTaskNumber();
+        }
+    }
+
     public void markTask(int taskNumber) {
         if (taskNumber > 0 && taskNumber <= tasks.size()) {
             Task task = tasks.get(taskNumber - 1);
