@@ -9,31 +9,42 @@ class Parser {
 
     // Parse the user input and assign to the appropriate task manager method
     public void parse(String input) {
-        switch (input.split(" ")[0]) {  // Determine the command by splitting input
-        case "list":
+        Command command = parseCommand(input);
+        switch (command) {  // Determine the command by splitting input
+        case LIST:
             taskManager.listTasks();
             break;
-        case "mark":
+        case MARK:
             processMarkCommand(input, true);
             break;
-        case "unmark":
+        case UNMARK:
             processMarkCommand(input, false);
             break;
-        case "todo":
+        case TODO:
             processToDoCommand(input);
             break;
-        case "deadline":
+        case DEADLINE:
             processDeadlineCommand(input);
             break;
-        case "event":
+        case EVENT:
             processEventCommand(input);
             break;
-        case "delete":
+        case DELETE:
             processDeleteCommand(input);
             break;
         default:
             printer.printInvalidCommand();
             break;
+        }
+    }
+
+    // Determine the command type from the input
+    private Command parseCommand(String input) {
+        String commandWord = input.split(" ")[0].toUpperCase();
+        try {
+            return Command.valueOf(commandWord);
+        } catch (IllegalArgumentException e) {
+            return Command.INVALID;
         }
     }
 
