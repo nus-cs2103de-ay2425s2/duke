@@ -1,14 +1,44 @@
-todo borrow book
+todo buy groceries
 list
-deadline return book /by Sunday
-event project meeting /from Mon 2pm /to 4pm
+todo
+todo
+deadline submit assignment
+deadline complete report /by
+deadline prepare report /by Tuesday
+event team meeting
+event conference /from 9am
+event product launch /from 10am /to
+event company retreat /from Fri 9am /to Sun 5pm
 list
+mark
+mark -1
+mark 100
 mark 1
-mark 2
-list
+unmark
+unmark 100
 unmark 1
+todo clean the house
+todo    write journal
+todo organize workspace
+deadline plan vacation /by next month
+event family dinner /from Sat 7pm /to 10pm
+list
+mark 2
+unmark 2
+mark 999
+todo go for a walk
 list
 todo read book
-mark 3
-list
+mark 6
+unmark 7
+unmark 6
+todo
+mark abc
+deadline holiday plans /by 2023-12-25
+event tech conference /from 2023-08-10 /to 2023-08-12
+todo learn Java
+todo
+deadline
+event
+
 bye
