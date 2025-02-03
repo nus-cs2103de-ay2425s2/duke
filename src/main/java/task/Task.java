@@ -60,6 +60,15 @@ public class Task {
         };
     }
 
+    public static Action mapTaskType(String actionString) {
+        return switch(actionString) {
+            case "T" -> Action.TODO;
+            case "D" -> Action.DEADLINE;
+            case "E" -> Action.EVENT;
+            default -> Action.DEFAULT;
+        };
+    }
+
     public String getSaveInformation() {
         List<String> saveInformation = new ArrayList<>();
         saveInformation.add(this.getTaskType());
