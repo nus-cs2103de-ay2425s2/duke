@@ -8,10 +8,13 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class DataHandler {
+    public static String saveDelimeter = "|";
+
     public static void writeFile(Path filePath, List<String> payLoad, boolean isAppend) throws IOException {
         // file does not exist
         if (!Files.exists(filePath)) {
-            Files.writeString(filePath, String.join("\n", payLoad), StandardOpenOption.CREATE_NEW);
+            Files.createFile(filePath);
+            Files.writeString(filePath, String.join("\n", payLoad), StandardOpenOption.APPEND);
             return;
         }
 
@@ -26,7 +29,7 @@ public class DataHandler {
 
     public static List<String> readFile(Path filePath) throws IOException {
         if (!Files.exists(filePath)) {
-            throw new FileNotFoundException("File does not exists");
+            Files.writeString(filePath, "", StandardOpenOption.CREATE);
         }
         return Files.readAllLines(filePath);
     }
