@@ -4,8 +4,10 @@ import task.DeadLineTask;
 import task.EventTask;
 import task.Task;
 
+import java.io.File;
 import java.nio.file.Path;
-import java.util.LinkedList;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +21,12 @@ public class User {
      * Default Constructor for User
      */
     public User() {
-        this.taskList = new LinkedList<>();
+        this.taskList = new ArrayList<>();
+    }
+
+    public User(String userName) {
+        this.taskList = new ArrayList<>();
+        this.dataFilePath = Paths.get("..","data", "%s.txt".formatted(userName));
     }
 
     public void addTask(Task task) {
@@ -128,4 +135,15 @@ public class User {
         return removedTaskInformation;
     }
 
+    public List<String> getSaveData() {
+        List<String> saveInformationList = new ArrayList<>();
+        for (Task task : taskList) {
+            saveInformationList.add(task.getSaveInformation());
+        }
+        return saveInformationList;
+    }
+
+    public Path getDataFilePath() {
+        return dataFilePath;
+    }
 }
