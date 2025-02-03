@@ -1,11 +1,13 @@
 package action;
 
+import data.DataHandler;
 import task.DeadLineTask;
 import task.EventTask;
 import task.Task;
 import task.ToDoTask;
 import user.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -89,6 +91,12 @@ public class ActionHandler {
                 || eventStringTokens.getFirst().equalsIgnoreCase(Action.TODO.toString())
                 || eventStringTokens.getFirst().equalsIgnoreCase(Action.DEADLINE.toString())) {
             outputMessages.add("Now you have %s tasks in your list".formatted(user.getNumberOfTasks()));
+        }
+
+        try {
+            DataHandler.writeFile(user.getDataFilePath(), user.getSaveData(), false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return outputMessages;
