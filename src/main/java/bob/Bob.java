@@ -16,24 +16,24 @@ public class Bob {
     public static void main(String[] args) throws IOException {
         // initial setup
         Bob bob = new Bob();
-        UI ui = new UI(bob.getCHATBOT_NAME());
+        UI uI = new UI(bob.getCHATBOT_NAME());
         User user = new User();
         ActionHandler actionHandler = new ActionHandler();
         List<String> outputMessages;
 
-        ui.displayWelcomeMessage();
+        uI.displayWelcomeMessage();
 
         while (true) {
-            String userInput = ui.getValidUserInput(user);
+            String userInput = uI.getValidUserInput(user);
 
             outputMessages = actionHandler.processEvent(userInput, user);
 
             if (outputMessages.isEmpty()) {
-                ui.displayExitMessage();
+                uI.displayExitMessage();
                 break;
             }
 
-            ui.displayMessageWithDivider(outputMessages);
+            uI.displayMessageWithDivider(outputMessages);
         }
 
     }
