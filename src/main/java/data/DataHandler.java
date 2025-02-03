@@ -1,13 +1,16 @@
 package data;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class DataHandler {
     public static String saveDelimiter = "|";
+    public static Path programRoot = Paths.get("").toAbsolutePath();
 
     public static void writeFile(Path filePath, List<String> payLoad, boolean isAppend) throws IOException {
         // file does not exist
