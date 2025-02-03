@@ -1,5 +1,7 @@
 package user;
 
+import action.ActionHandler;
+import data.DataHandler;
 import task.DeadLineTask;
 import task.EventTask;
 import task.Task;
@@ -26,7 +28,18 @@ public class User {
 
     public User(String userName) {
         this.taskList = new ArrayList<>();
-        this.dataFilePath = Paths.get("..","data", "%s.txt".formatted(userName));
+        this.dataFilePath = Paths.get(String.valueOf(DataHandler.programRoot), "out", "production", "ip", "data",
+                "%s.txt".formatted(userName));
+    }
+
+    private void buildTaskList(List<String> inputDataList) {
+        for (String inputData : inputDataList) {
+            List<String> data = List.of(inputData.split(DataHandler.saveDelimiter));
+            addTask(ActionHandler.createTask(
+                    Task.mapTaskType(data.getFirst()),
+                    data.subList(1, data.size()))
+            );
+        }
     }
 
     public void addTask(Task task) {
