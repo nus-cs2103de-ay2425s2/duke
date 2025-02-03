@@ -32,6 +32,6 @@ public class DeadLineTask extends Task implements HasDeadline {
         List<String> saveInformation = new ArrayList<>();
         saveInformation.add(super.getSaveInformation());
         saveInformation.add(this.getDeadLine());
-        return String.join(DataHandler.saveDelimeter, saveInformation);
+        return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 }

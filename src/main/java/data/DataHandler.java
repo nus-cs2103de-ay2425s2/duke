@@ -1,6 +1,5 @@
 package data;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,7 +7,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class DataHandler {
-    public static String saveDelimeter = "|";
+    public static String saveDelimiter = "|";
 
     public static void writeFile(Path filePath, List<String> payLoad, boolean isAppend) throws IOException {
         // file does not exist

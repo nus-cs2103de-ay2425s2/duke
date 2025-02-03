@@ -49,6 +49,6 @@ public class EventTask extends Task implements HasStart, HasDeadline {
         saveInformation.add(super.getSaveInformation());
         saveInformation.add(this.fromDateTime);
         saveInformation.add(this.toDateTime);
-        return String.join(DataHandler.saveDelimeter, saveInformation);
+        return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 }

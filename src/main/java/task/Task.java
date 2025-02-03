@@ -65,6 +65,6 @@ public class Task {
         saveInformation.add(this.getTaskType());
         saveInformation.add(String.valueOf(this.isTaskDone() ? 1 : 0));
         saveInformation.add(this.taskDetail);
-        return String.join(DataHandler.saveDelimeter, saveInformation);
+        return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 }
