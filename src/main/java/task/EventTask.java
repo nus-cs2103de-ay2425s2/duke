@@ -1,6 +1,10 @@
 package task;
 
 import action.ActionHandler.Action;
+import data.DataHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * EventTask class
@@ -37,5 +41,14 @@ public class EventTask extends Task implements HasStart, HasDeadline {
 
     private String getToDateTime() {
         return this.toDateTime;
+    }
+
+    @Override
+    public String getSaveInformation() {
+        List<String> saveInformation = new ArrayList<>();
+        saveInformation.add(super.getSaveInformation());
+        saveInformation.add(this.fromDateTime);
+        saveInformation.add(this.toDateTime);
+        return String.join(DataHandler.saveDelimeter, saveInformation);
     }
 }

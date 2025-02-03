@@ -13,4 +13,9 @@ public class ToDoTask extends Task {
     public ToDoTask(String taskDetail) {
         super(taskDetail, ActionHandler.Action.TODO);
     }
+
+    @Override
+    public String getSaveInformation() {
+        return super.getSaveInformation();
+    }
 }
