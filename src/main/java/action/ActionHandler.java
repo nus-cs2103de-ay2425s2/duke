@@ -108,7 +108,7 @@ public class ActionHandler {
      * @param taskDetails Valid input string provided by the user
      * @return Task that encapsulates the required information to create TODO/DEADLINE/EVENT task
      */
-    private Task createTask(Action action, List<String> taskDetails) {
+    public static Task createTask(Action action, List<String> taskDetails) {
         if (action.equals(Action.TODO)) {
             return new ToDoTask(String.join(" ", taskDetails));
         }
@@ -151,6 +151,7 @@ public class ActionHandler {
         TODO,
         DEADLINE,
         EVENT,
-        DELETE
+        DELETE,
+        DEFAULT
     }
 }
