@@ -1,6 +1,10 @@
 package task;
 
 import action.ActionHandler.Action;
+import data.DataHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Task class
@@ -54,5 +58,13 @@ public class Task {
             case Action.EVENT -> "E";
             default -> "";
         };
+    }
+
+    public String getSaveInformation() {
+        List<String> saveInformation = new ArrayList<>();
+        saveInformation.add(this.getTaskType());
+        saveInformation.add(String.valueOf(this.isTaskDone() ? 1 : 0));
+        saveInformation.add(this.taskDetail);
+        return String.join(DataHandler.saveDelimeter, saveInformation);
     }
 }
