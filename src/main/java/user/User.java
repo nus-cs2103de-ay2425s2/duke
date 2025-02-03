@@ -4,6 +4,7 @@ import task.DeadLineTask;
 import task.EventTask;
 import task.Task;
 
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  */
 public class User {
     private List<Task> taskList;
+    private Path dataFilePath;
 
     /**
      * Default Constructor for User
