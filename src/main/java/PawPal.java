@@ -1,3 +1,8 @@
+package pawpal;
+
+import utils.TaskManager;
+import utils.Printer;
+
 import java.util.Scanner;
 
 public class PawPal {

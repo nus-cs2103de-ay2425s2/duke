@@ -1,3 +1,8 @@
+package pawpal;
+
+import utils.TaskManager;
+import utils.Printer;
+
 class Parser {
     private final TaskManager taskManager;
     private final Printer printer;
