@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
@@ -24,22 +29,68 @@ class Task {
         this.status = false;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public String getTask() {
+        return task;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    @Override
     public String toString() {
         String taskStatus = status ? "[X]" : "[ ]";
         String taskDetails = details != null ? " " + details : "";
         return "[" + type + "]" + taskStatus + " " + task + (taskDetails);
     }
+
+    // Writing to file
+    public String toFileFormat() {
+        return type + " | " + (status ? "[X]" : "[ ]") + " | " + task + (details != null ? " | " + details : "");
+    }
+
+    // Loading from file
+    public static Task fromFileFormat(String line) {
+        String[] info = line.split("\\s*\\|\\s*");
+        if (info.length < 3) {
+            return null; // Ignore invalid lines
+        }
+        String type = info[0];
+        boolean status = info[1].equals("[X]");
+        String task = info[2];
+        String details = info.length > 3 ? info[3] : null;
+        Task loadedTask = new Task(type, task, details);
+        if (status) {
+            loadedTask.mark();
+        }
+        return loadedTask;
+    }
+
 }
 
 class TaskManager {
     private List<Task> tasks;
+    private static String FILE_PATH = Paths.get("data", "davethebrave.txt").toString();
 
     public TaskManager() {
         this.tasks = new ArrayList<>();
+        checkFileExists();
+        loadTasksFromFile();
+        System.out.println("Previous tasks loaded: ");
+        listTasks();
     }
 
     public void addTask(String type, String task, String details) {
         tasks.add(new Task(type, task, details));
+        saveTasksToFile();
         System.out.println("    ____________________________________________________________");
         System.out.println("      Got it. I've added this task:");
         System.out.println("         " + tasks.getLast());
@@ -50,6 +101,7 @@ class TaskManager {
     public void deleteTask(int taskNumber) {
         if (isValidTaskNumber(taskNumber)) {
             Task removedTask = tasks.remove(taskNumber - 1);
+            saveTasksToFile();
             System.out.println("    ____________________________________________________________");
             System.out.println("      Noted. I've removed this task:");
             System.out.println("         " + removedTask);
@@ -76,6 +128,7 @@ class TaskManager {
             Task task = tasks.get(taskNumber - 1);
             if (!task.toString().contains("[X]")) {
                 task.mark();
+                saveTasksToFile();
                 System.out.println("    ____________________________________________________________");
                 System.out.println("      Nice! I've marked this task as done:");
             } else {
@@ -92,6 +145,7 @@ class TaskManager {
             Task task = tasks.get(taskNumber - 1);
             if (task.toString().contains("[X]")) {
                 task.unmark();
+                saveTasksToFile();
                 System.out.println("    ____________________________________________________________");
                 System.out.println("      OK, I've marked this task as not done yet:");
             } else {
@@ -111,6 +165,43 @@ class TaskManager {
             return false;
         }
         return true;
+    }
+
+    private void saveTasksToFile() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
+            for (Task task : tasks) {
+                writer.println(task.toFileFormat());
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error saving tasks to file: " + e.getMessage());
+        }
+    }
+
+    private void loadTasksFromFile() {
+        try (Scanner scanner = new Scanner(new File(FILE_PATH))){
+            while (scanner.hasNextLine()) {
+                Task task = Task.fromFileFormat(scanner.nextLine());
+                if (task != null) {
+                    tasks.add(task);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading tasks: " + e.getMessage());
+        }
+    }
+
+    // Check if folder and file exists. Create folder and/or file if not.
+    private void checkFileExists() {
+        File file = new File(FILE_PATH);
+        if (!file.exists()) {
+            try {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating file: " + e.getMessage());
+            }
+        }
     }
 }
 
@@ -137,7 +228,7 @@ public class DaveTheBrave {
             // Exit when user types the command 'bye'
             if (goodbyes.contains(userInput.toLowerCase())) {
                 System.out.println("    ____________________________________________________________");
-                System.out.println("      Bye. Hope to see you again soon!");
+                System.out.println("      Bye! Hope I didn't scare you away!");
                 System.out.println("    ____________________________________________________________");
                 break;
             }
