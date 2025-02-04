@@ -2,7 +2,11 @@ package task;
 
 import action.ActionHandler;
 import data.DataHandler;
+import io.InputValidator;
+import io.UI;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +14,8 @@ import java.util.List;
  * DeadLineTask class
  */
 public class DeadLineTask extends Task implements HasDeadline {
-    private String deadLine;
+    private LocalDateTime deadLineDateTime;
+    private LocalDate deadLineDate;
 
     /**
      * Constructor for DeadLineTask
@@ -19,12 +24,21 @@ public class DeadLineTask extends Task implements HasDeadline {
      */
     public DeadLineTask(String taskDetail, String deadLine) {
         super(taskDetail, ActionHandler.Action.DEADLINE);
-        this.deadLine = deadLine;
+        if (InputValidator.isValidDate(deadLine, true)) {
+            this.deadLineDate = super.parseDate(deadLine);
+        }
+        else {
+            this.deadLineDateTime = super.parseDateTime(deadLine);
+        }
     }
 
     @Override
     public String getDeadLine() {
-        return this.deadLine;
+        if (this.deadLineDate == null) {
+            return this.deadLineDateTime.toString();
+        }
+
+        return this.deadLineDate.toString();
     }
 
     @Override

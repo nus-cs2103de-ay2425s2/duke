@@ -2,7 +2,11 @@ package task;
 
 import action.ActionHandler.Action;
 import data.DataHandler;
+import io.InputValidator;
+import io.UI;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +14,10 @@ import java.util.List;
  * EventTask class
  */
 public class EventTask extends Task implements HasStart, HasDeadline {
-    private String fromDateTime;
-    private String toDateTime;
+    private LocalDate fromDate;
+    private LocalDateTime fromDateTime;
+    private LocalDate toDate;
+    private LocalDateTime toDateTime;
 
     /**
      * EventTask constructor
@@ -21,8 +27,19 @@ public class EventTask extends Task implements HasStart, HasDeadline {
      */
     public EventTask(String taskDetail, String fromDateTime, String toDateTime) {
         super(taskDetail, Action.EVENT);
-        this.fromDateTime = fromDateTime;
-        this.toDateTime = toDateTime;
+        if (InputValidator.isValidDate(fromDateTime, false)) {
+            this.fromDate = super.parseDate(fromDateTime);
+        }
+        else {
+            this.fromDateTime = super.parseDateTime(toDateTime);
+        }
+
+        if (InputValidator.isValidDate(toDateTime, true)) {
+            this.toDate = super.parseDate(toDateTime);
+        }
+        else {
+            this.toDateTime = super.parseDateTime(toDateTime);
+        }
     }
 
     @Override
@@ -36,11 +53,17 @@ public class EventTask extends Task implements HasStart, HasDeadline {
     }
 
     private String getFromDateTime() {
-        return this.fromDateTime;
+        if (this.fromDate == null) {
+            return this.fromDateTime.toString();
+        }
+        return this.fromDate.toString();
     }
 
     private String getToDateTime() {
-        return this.toDateTime;
+        if (this.toDate == null) {
+            return this.toDateTime.toString();
+        }
+        return this.toDate.toString();
     }
 
     @Override

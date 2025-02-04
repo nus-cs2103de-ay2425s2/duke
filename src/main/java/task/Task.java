@@ -3,6 +3,11 @@ package task;
 import action.ActionHandler.Action;
 import data.DataHandler;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,4 +87,62 @@ public class Task {
                 (this.isTaskDone()) ? "X" : " ",
                 this.getTaskDetail());
     };
+
+    protected LocalDateTime parseDateTime(String stringDateTime) {
+        DateTimeFormatter dayMonthYearTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:m");
+        DateTimeFormatter dayMonthTimeFormatter = DateTimeFormatter.ofPattern("dd/MM H:m");
+
+        List<DateTimeFormatter> dateYearFormatters = new ArrayList<>();
+        dateYearFormatters.add(dayMonthYearTimeFormatter);
+        dateYearFormatters.add(dayMonthTimeFormatter);
+
+        List<String> stringDateList = new ArrayList<>(List.of(stringDateTime.split(" ")));
+
+        for (DateTimeFormatter formatter : dateYearFormatters) {
+            try {
+                LocalDateTime dateTime;
+                if (formatter.equals(dayMonthTimeFormatter)) {
+                    String date = stringDateList.removeFirst();
+                    stringDateList.addFirst(date + "-" + Year.now());
+                    dateTime = LocalDateTime.parse(String.join(" ", stringDateList), dayMonthYearTimeFormatter);
+                }
+                else {
+                    dateTime = LocalDateTime.parse(stringDateTime, formatter);
+                }
+                return dateTime;
+
+            } catch (DateTimeParseException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
+    protected LocalDate parseDate(String stringDate) {
+        DateTimeFormatter dayMonthYearFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dayMonthFormatter = DateTimeFormatter.ofPattern("dd/MM");
+
+        List<DateTimeFormatter> dateFormatters = new ArrayList<>();
+        dateFormatters.add(dayMonthYearFormatter);
+        dateFormatters.add(dayMonthFormatter);
+
+        // parse information without a year
+        for (DateTimeFormatter formatter : dateFormatters) {
+            try {
+                LocalDate date;
+                if (formatter.equals(dayMonthFormatter)) {
+                    date = LocalDate.parse(stringDate + "/" + Year.now(), dayMonthYearFormatter);
+                }
+                else {
+                    date = LocalDate.parse(stringDate, formatter);
+                }
+                return date;
+
+            } catch (DateTimeParseException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return null;
+    }
 }
