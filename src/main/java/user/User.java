@@ -164,7 +164,7 @@ public class User {
     public List<String> createSaveData() {
         List<String> saveInformationList = new ArrayList<>();
         for (Task task : taskList) {
-            saveInformationList.add(task.getSaveInformation());
+            saveInformationList.add(task.createSaveData());
         }
         return saveInformationList;
     }
