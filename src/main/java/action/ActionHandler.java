@@ -49,36 +49,30 @@ public class ActionHandler {
         }
         else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.TODO.toString())) {
             outputMessages.add("Got it. I've added this todo task:");
-            int taskIndex = user.addTask(
-                    createTask(
-                            Action.TODO,
-                            eventStringTokens.subList(1, eventStringTokens.size())
-                    ),
-                    true
+            Task createdTask = createTask(
+                    Action.TODO,
+                    eventStringTokens.subList(1, eventStringTokens.size())
             );
-            outputMessages.add(user.getTaskInformation(taskIndex));
+            user.addTask(createdTask);
+            outputMessages.add(createdTask.getTaskInformation());
         }
         else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.DEADLINE.toString())) {
             outputMessages.add("Got it. I've added this deadline:");
-            int taskIndex = user.addTask(
-                    createTask(
-                            Action.DEADLINE,
-                            eventStringTokens.subList(1, eventStringTokens.size())
-                    ),
-                    true
+            Task createdTask = createTask(
+                    Action.DEADLINE,
+                    eventStringTokens.subList(1, eventStringTokens.size())
             );
-            outputMessages.add(user.getTaskInformation(taskIndex));
+            user.addTask(createdTask);
+            outputMessages.add(createdTask.getTaskInformation());
         }
         else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.EVENT.toString())) {
             outputMessages.add("Got it. I've added this event:");
-            int taskIndex = user.addTask(
-                    createTask(
-                            Action.EVENT,
-                            eventStringTokens.subList(1, eventStringTokens.size())
-                    ),
-                    true
+            Task createdTask = createTask(
+                    Action.EVENT,
+                    eventStringTokens.subList(1, eventStringTokens.size())
             );
-            outputMessages.add(user.getTaskInformation(taskIndex));
+            user.addTask(createdTask);
+            outputMessages.add(createdTask.getTaskInformation());
         }
         else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.DELETE.toString())) {
             outputMessages.add("Noted. I've removed this task:");
