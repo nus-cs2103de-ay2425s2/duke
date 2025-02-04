@@ -4,23 +4,46 @@ import tasks.*;
 
 import java.util.List;
 
+/**
+ * Handles printing of various messages and task-related outputs to the console.
+ * Provides responses for user commands and error handling feedback.
+ */
 public class Printer {
-    // response for when a task is added
+
+    /**
+     * Prints a response when a new task is added to the list.
+     *
+     * @param description Description of the task added.
+     * @param taskCount   Current number of tasks in the list.
+     */
     public void printTaskAdded(String description, int taskCount) {
         System.out.println("Purr-sonally, I’d rather nap, but your " + description + " task is on the list now!");
         System.out.println("Now you have " + taskCount + " tasks.");
     }
 
+    /**
+     * Prints a greeting message when the chatbot starts.
+     *
+     * @param name The name of the chatbot.
+     */
     public void printGreeting(String name) {
         System.out.println("-----------------------------------------");
         System.out.println("Hello! I'm " + name + "\n" + "What can I do for you? \n");
         System.out.println("-----------------------------------------");
     }
 
-    public void printBye(){
+    /**
+     * Prints a farewell message when the user exits the application.
+     */
+    public void printBye() {
         System.out.println("Bye. Hope to see you again soon! Meow");
     }
-    // method to print the task lists
+
+    /**
+     * Prints the current list of tasks.
+     *
+     * @param tasks The list of tasks to be printed.
+     */
     public void printTaskList(List<Task> tasks) {
         if (tasks.isEmpty()) {
             System.out.println("There are no tasks in your list you silly cat!");
@@ -32,45 +55,68 @@ public class Printer {
         }
     }
 
-    // response for when a task is marked
+    /**
+     * Prints a message when a task is marked as completed.
+     *
+     * @param task The task that has been marked as completed.
+     */
     public void printTaskMarked(Task task) {
         System.out.println("A paw-sitive development! Wanna celebrate with some head pats?");
         System.out.println(task);
     }
 
-    // response for when a task is unmarked
+    /**
+     * Prints a message when a task is unmarked (set to incomplete).
+     *
+     * @param task The task that has been unmarked.
+     */
     public void printTaskUnmarked(Task task) {
         System.out.println("We don't judge around here.");
         System.out.println(task);
     }
 
-    // Print a message when a task is deleted
+    /**
+     * Prints a message when a task is deleted from the list.
+     *
+     * @param task      The task that has been deleted.
+     * @param taskCount The number of tasks remaining in the list.
+     */
     public void printTaskDeleted(Task task, int taskCount) {
         System.out.println("Task removed: " + task);
         System.out.println("Now you have " + taskCount + " tasks left.");
     }
 
-    // error message for invalid task number
+    /**
+     * Prints an error message when the user inputs an invalid task number.
+     */
     public void printInvalidTaskNumber() {
         System.out.println("Invalid task number! Are you playing with yarn again?");
     }
 
-    // error message for invalid command
+    /**
+     * Prints an error message when the user inputs an invalid command.
+     */
     public void printInvalidCommand() {
         System.out.println("Sorry, I don't understand that command :(");
     }
 
-    // error message for missing toDo description
+    /**
+     * Prints an error message when the 'todo' command is missing a description.
+     */
     public void printMissingToDoDetails() {
         System.out.println("You need to provide a task description after 'todo'!");
     }
 
-    // error message for missing deadline details
+    /**
+     * Prints an error message when the 'deadline' command is missing details.
+     */
     public void printMissingDeadlineDetails() {
         System.out.println("Invalid deadline! Use: deadline <description> /by <deadline>");
     }
 
-    // error message for missing event details
+    /**
+     * Prints an error message when the 'event' command is missing details.
+     */
     public void printMissingEventDetails() {
         System.out.println("Invalid event! Use: event <description> /from <start> /to <end>");
     }

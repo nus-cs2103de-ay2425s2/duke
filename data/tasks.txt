@@ -1,2 +1,2 @@
-[T][ ] buy book
-[T][X] buy bread
+[T][ ] buy bread
+[T][X] run
