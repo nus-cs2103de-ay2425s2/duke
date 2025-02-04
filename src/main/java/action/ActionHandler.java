@@ -94,7 +94,7 @@ public class ActionHandler {
         }
 
         try {
-            DataHandler.writeFile(user.getDataFilePath(), user.getSaveData(), false);
+            DataHandler.writeFile(user.getDataFilePath(), user.createSaveData(), false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
