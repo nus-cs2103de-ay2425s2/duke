@@ -69,7 +69,7 @@ public class Task {
         };
     }
 
-    public String getSaveInformation() {
+    public String createSaveData() {
         List<String> saveInformation = new ArrayList<>();
         saveInformation.add(this.getTaskType());
         saveInformation.add(String.valueOf(this.isTaskDone() ? 1 : 0));

@@ -15,7 +15,7 @@ public class ToDoTask extends Task {
     }
 
     @Override
-    public String getSaveInformation() {
-        return super.getSaveInformation();
+    public String createSaveData() {
+        return super.createSaveData();
     }
 }

@@ -44,11 +44,10 @@ public class EventTask extends Task implements HasStart, HasDeadline {
     }
 
     @Override
-    public String getSaveInformation() {
+    public String createSaveData() {
         List<String> saveInformation = new ArrayList<>();
-        saveInformation.add(super.getSaveInformation());
-        saveInformation.add(this.fromDateTime);
-        saveInformation.add(this.toDateTime);
+        saveInformation.add(super.createSaveData());
+        saveInformation.add("/from %s /to %s".formatted(this.getFromDateTime(), this.getToDateTime()));
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 }

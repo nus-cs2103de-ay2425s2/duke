@@ -28,10 +28,10 @@ public class DeadLineTask extends Task implements HasDeadline {
     }
 
     @Override
-    public String getSaveInformation() {
+    public String createSaveData() {
         List<String> saveInformation = new ArrayList<>();
-        saveInformation.add(super.getSaveInformation());
-        saveInformation.add(this.getDeadLine());
+        saveInformation.add(super.createSaveData());
+        saveInformation.add("/by %s".formatted(this.getDeadLine()));
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 }
