@@ -2,6 +2,7 @@ package task;
 
 import action.ActionHandler.Action;
 import data.DataHandler;
+import io.InputValidator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -103,7 +104,7 @@ public class Task {
                 LocalDateTime dateTime;
                 if (formatter.equals(dayMonthTimeFormatter)) {
                     String date = stringDateList.removeFirst();
-                    stringDateList.addFirst(date + "-" + Year.now());
+                    stringDateList.addFirst(date + "/" + Year.now());
                     dateTime = LocalDateTime.parse(String.join(" ", stringDateList), dayMonthYearTimeFormatter);
                 }
                 else {
