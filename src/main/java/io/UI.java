@@ -6,11 +6,14 @@ import user.User;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
-import java.time.MonthDay;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -137,7 +140,8 @@ public class UI {
             String stringDateTime = String.join(" ",
                     userInputTokens.subList(deadLineIndex, userInputTokens.size()));
 
-            if (!(isValidDay(stringDateTime) || isValidDateTime(stringDateTime))) {
+            if (InputValidator.isValidDateTime(stringDateTime, true)
+                    || InputValidator.isValidDate(stringDateTime, true)) {
                 return new ValidationToken(false, InputError.DEADLINE_INVALID_DATETIME);
             }
 
@@ -154,13 +158,15 @@ public class UI {
             String fromDateTime = String.join(" ",
                     userInputTokens.subList(fromIndex + 1, toIndex));
 
-            if (!(isValidDay(fromDateTime) || isValidDateTime(fromDateTime))) {
+            if (InputValidator.isValidDateTime(fromDateTime, false)
+                    || InputValidator.isValidDate(fromDateTime, false)) {
                 return new ValidationToken(false, InputError.EVENT_INVALID_DATETIME);
             }
 
             String toDateTime = String.join(" ", userInputTokens.subList(toIndex + 1, userInputTokens.size()));
 
-            if (!(isValidDay(toDateTime) || isValidDateTime(toDateTime))) {
+            if (InputValidator.isValidDateTime(toDateTime, true)
+                    || InputValidator.isValidDate(fromDateTime, true)) {
                 return new ValidationToken(false, InputError.EVENT_INVALID_DATETIME);
             }
 
@@ -183,43 +189,6 @@ public class UI {
         }
 
         return new ValidationToken(false, InputError.INVALID_COMMAND);
-    }
-
-    /**
-     * Method to check if the provided string follows the dd/MM or dd/MM H:m format
-     * @param stringDateTime String to be checked
-     * @return boolean that indicates if it is a valid time format
-     */
-    private boolean isValidDateTime(String stringDateTime) {
-        // must be in the format dd/mm or dd/mm H:m
-        DateTimeFormatter month_day_formatter = DateTimeFormatter.ofPattern("dd/MM");
-        DateTimeFormatter month_day_time_formatter = DateTimeFormatter.ofPattern("dd/MM H:m");
-
-        try {
-            MonthDay.parse(stringDateTime, month_day_formatter);
-            return true;
-        } catch (DateTimeParseException e1) {
-            try {
-                MonthDay.parse(stringDateTime, month_day_time_formatter);
-                return true;
-            } catch (DateTimeParseException e2) {
-                return false;
-            }
-        }
-    }
-
-    /**
-     * Method to check if the provided string is a valid day
-     * @param stringDay String to be checked
-     * @return boolean that indicates if it is a valid day
-     */
-    private boolean isValidDay(String stringDay) {
-        try {
-            DayOfWeek.valueOf(stringDay.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-        return true;
     }
 
 
