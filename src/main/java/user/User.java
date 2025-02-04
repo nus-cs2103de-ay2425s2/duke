@@ -6,7 +6,7 @@ import task.DeadLineTask;
 import task.EventTask;
 import task.Task;
 
-import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -26,19 +26,32 @@ public class User {
         this.taskList = new ArrayList<>();
     }
 
-    public User(String userName) {
+    public User(String userName) throws IOException {
         this.taskList = new ArrayList<>();
         this.dataFilePath = Paths.get(String.valueOf(DataHandler.programRoot), "out", "production", "ip", "data",
                 "%s.txt".formatted(userName));
+        buildTaskList(DataHandler.readFile(dataFilePath));
     }
 
     private void buildTaskList(List<String> inputDataList) {
         for (String inputData : inputDataList) {
-            List<String> data = List.of(inputData.split(DataHandler.saveDelimiter));
-            addTask(ActionHandler.createTask(
+            // Added escape character for | as "|" is considered as an or operator in regex
+            List<String> data = List.of(inputData.split("\\%s".formatted(DataHandler.saveDelimiter)));
+
+            // Recreate the task details from the saved file
+            // Format of todo save: taskType|isTaskDone|taskDetails
+            // Format of deadline save: taskType|isTaskDone|taskDetails|/by toDateTime
+            // Format of event save: taskType|isTaskDone|taskDetails|/from fromDateTime /to toDateTime
+            List<String> taskDetails = List.of(String.join(" ", data.subList(2, data.size())).split(" "));
+
+            Task taskCreated = ActionHandler.createTask(
                     Task.mapTaskType(data.getFirst()),
-                    data.subList(1, data.size()))
-            );
+                    taskDetails);
+
+            if (taskCreated != null) {
+                taskCreated.setTaskDone(Boolean.parseBoolean(data.get(1)));
+                addTask(taskCreated);
+            }
         }
     }
 
@@ -148,7 +161,7 @@ public class User {
         return removedTaskInformation;
     }
 
-    public List<String> getSaveData() {
+    public List<String> createSaveData() {
         List<String> saveInformationList = new ArrayList<>();
         for (Task task : taskList) {
             saveInformationList.add(task.getSaveInformation());
