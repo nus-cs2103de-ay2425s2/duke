@@ -10,8 +10,8 @@ import java.util.List;
 
 public class InputValidator {
     public static boolean isValidDate(String stringDate, boolean requiresFuture) {
-        DateTimeFormatter dayMonthYearFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-        DateTimeFormatter dayMonthFormatter = DateTimeFormatter.ofPattern("d/M");
+        DateTimeFormatter dayMonthYearFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dayMonthFormatter = DateTimeFormatter.ofPattern("dd/MM");
 
         List<DateTimeFormatter> dateFormatters = new ArrayList<>();
         dateFormatters.add(dayMonthYearFormatter);
