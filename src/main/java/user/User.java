@@ -28,7 +28,7 @@ public class User {
 
     public User(String userName) throws IOException {
         this.taskList = new ArrayList<>();
-        this.dataFilePath = Paths.get(String.valueOf(DataHandler.programRoot), "out", "production", "ip", "data",
+        this.dataFilePath = Paths.get(String.valueOf(DataHandler.programRoot), "data",
                 "%s.txt".formatted(userName));
         buildTaskList(DataHandler.readFile(dataFilePath));
     }
@@ -60,21 +60,6 @@ public class User {
     }
 
     /**
-     * addTask method that returns the index that the task is inserted at
-     * @param task Task to be inserted
-     * @param shouldReturnIndex boolean that indicates if return index should be returned
-     * @return int index where the task is inserted at else -1 if index should not be returned
-     * If index is not to be returned, it is encouraged to use void addTask instead
-     */
-    public int addTask(Task task, boolean shouldReturnIndex) {
-        this.taskList.addLast(task);
-        if (shouldReturnIndex) {
-            return this.taskList.size() - 1;
-        }
-        return -1;
-    }
-
-    /**
      * getTaskList method that returns a string representation of the task list currently
      * @return String that represents the task list currently
      */
@@ -102,7 +87,7 @@ public class User {
         Task requiredTask = this.taskList.get(taskNumber);
         requiredTask.setTaskDone(true);
 
-        return this.getTaskInformation(taskNumber);
+        return requiredTask.getTaskInformation();
     }
 
     /**
@@ -114,7 +99,7 @@ public class User {
         Task requiredTask = this.taskList.get(taskNumber);
         requiredTask.setTaskDone(false);
 
-        return this.getTaskInformation(taskNumber);
+        return requiredTask.getTaskInformation();
     }
 
     public int getNumberOfTasks() {
@@ -123,11 +108,12 @@ public class User {
 
     /**
      * Deletes task from the task list
-     * @param taskNumber int taht indcates the task to delete
+     * @param taskNumber int that indicates the task to delete, taskNumber is 0-indexed
      * @return String representation of deleted task information
      */
     public String deleteTask(int taskNumber) {
-        String removedTaskInformation = this.getTaskInformation(taskNumber);
+        Task requiredTask = this.taskList.get(taskNumber);
+        String removedTaskInformation = requiredTask.getTaskInformation();
         this.taskList.remove(taskNumber);
         return removedTaskInformation;
     }
