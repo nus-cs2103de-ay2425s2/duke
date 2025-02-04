@@ -17,7 +17,7 @@ public class Bob {
         // initial setup
         Bob bob = new Bob();
         UI uI = new UI(bob.getCHATBOT_NAME());
-        User user = new User("andy");
+        User user = new User("bob");
         ActionHandler actionHandler = new ActionHandler();
         List<String> outputMessages;
 
