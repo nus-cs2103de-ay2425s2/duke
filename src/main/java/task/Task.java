@@ -76,4 +76,10 @@ public class Task {
         saveInformation.add(this.taskDetail);
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
+
+    public String getTaskInformation() {
+        return "[%s] [%s] %s".formatted(this.getTaskType(),
+                (this.isTaskDone()) ? "X" : " ",
+                this.getTaskDetail());
+    };
 }

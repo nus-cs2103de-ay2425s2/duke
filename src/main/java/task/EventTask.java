@@ -50,4 +50,14 @@ public class EventTask extends Task implements HasStart, HasDeadline {
         saveInformation.add("/from %s /to %s".formatted(this.getFromDateTime(), this.getToDateTime()));
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
+
+    @Override
+    public String getTaskInformation() {
+        List<String> taskInformationList = new ArrayList<>();
+        taskInformationList.add(super.getTaskInformation());
+        taskInformationList.add("(from: %s to: %s)".formatted(
+                this.getStartDateTime(),
+                this.getDeadLine()));
+        return String.join(" ", taskInformationList);
+    }
 }

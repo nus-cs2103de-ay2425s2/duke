@@ -34,4 +34,12 @@ public class DeadLineTask extends Task implements HasDeadline {
         saveInformation.add("/by %s".formatted(this.getDeadLine()));
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
+
+    @Override
+    public String getTaskInformation() {
+        List<String> taskInformationList = new ArrayList<>();
+        taskInformationList.add(super.getTaskInformation());
+        taskInformationList.add("(by: %s)".formatted(this.getDeadLine()));
+        return String.join(" ", taskInformationList);
+    }
 }
