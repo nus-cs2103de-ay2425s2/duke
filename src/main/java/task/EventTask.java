@@ -5,6 +5,7 @@ import data.DataHandler;
 import io.InputValidator;
 import io.UI;
 
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class EventTask extends Task implements HasStart, HasDeadline {
             this.fromDate = super.parseDate(fromDateTime);
         }
         else {
-            this.fromDateTime = super.parseDateTime(toDateTime);
+            this.fromDateTime = super.parseDateTime(fromDateTime);
         }
 
         if (InputValidator.isValidDate(toDateTime, true)) {
@@ -54,23 +55,37 @@ public class EventTask extends Task implements HasStart, HasDeadline {
 
     private String getFromDateTime() {
         if (this.fromDate == null) {
-            return this.fromDateTime.toString();
+            return HasStart.DATE_TIME_FORMATTER.format(this.fromDateTime);
         }
-        return this.fromDate.toString();
+        return HasStart.DATE_FORMATTER.format(this.fromDate);
     }
 
     private String getToDateTime() {
         if (this.toDate == null) {
-            return this.toDateTime.toString();
+            return HasStart.DATE_TIME_FORMATTER.format(this.toDateTime);
         }
-        return this.toDate.toString();
+        return HasStart.DATE_FORMATTER.format(this.toDate);
+    }
+
+    private String getSaveFromTime() {
+        if (this.fromDate == null) {
+            return DataHandler.dateTimeSaveFormat.format(this.fromDateTime);
+        }
+        return DataHandler.dateSaveFormat.format(this.fromDate);
+    }
+
+    private String getSaveToTime() {
+        if (this.toDate == null) {
+            return DataHandler.dateTimeSaveFormat.format(this.toDateTime);
+        }
+        return DataHandler.dateSaveFormat.format(this.toDate);
     }
 
     @Override
     public String createSaveData() {
         List<String> saveInformation = new ArrayList<>();
         saveInformation.add(super.createSaveData());
-        saveInformation.add("/from %s /to %s".formatted(this.getFromDateTime(), this.getToDateTime()));
+        saveInformation.add("/from %s /to %s".formatted(this.getSaveFromTime(), this.getSaveToTime()));
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 

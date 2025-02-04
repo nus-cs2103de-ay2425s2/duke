@@ -3,7 +3,6 @@ package task;
 import action.ActionHandler;
 import data.DataHandler;
 import io.InputValidator;
-import io.UI;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,17 +34,23 @@ public class DeadLineTask extends Task implements HasDeadline {
     @Override
     public String getDeadLine() {
         if (this.deadLineDate == null) {
-            return this.deadLineDateTime.toString();
+            return HasDeadline.DATE_TIME_FORMATTER.format(this.deadLineDateTime);
         }
+        return HasDeadline.DATE_FORMATTER.format(this.deadLineDate);
+    }
 
-        return this.deadLineDate.toString();
+    private String getSaveDeadLine() {
+        if (this.deadLineDate == null) {
+            return DataHandler.dateTimeSaveFormat.format(this.deadLineDateTime);
+        }
+        return DataHandler.dateSaveFormat.format(this.deadLineDate);
     }
 
     @Override
     public String createSaveData() {
         List<String> saveInformation = new ArrayList<>();
         saveInformation.add(super.createSaveData());
-        saveInformation.add("/by %s".formatted(this.getDeadLine()));
+        saveInformation.add("/by %s".formatted(this.getSaveDeadLine()));
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 
