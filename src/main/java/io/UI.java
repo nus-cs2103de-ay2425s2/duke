@@ -34,7 +34,6 @@ public class UI {
      *
      * @return User input String
      */
-    // TODO: Add User as a object to be passed into this function so that the input validation can be done wrt the user
     public String getValidUserInput(User user) throws IOException {
         boolean isUserInputValid = false;
 

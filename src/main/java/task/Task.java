@@ -1,6 +1,10 @@
 package task;
 
 import action.ActionHandler.Action;
+import data.DataHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Task class
@@ -55,4 +59,27 @@ public class Task {
             default -> "";
         };
     }
+
+    public static Action mapTaskType(String actionString) {
+        return switch(actionString) {
+            case "T" -> Action.TODO;
+            case "D" -> Action.DEADLINE;
+            case "E" -> Action.EVENT;
+            default -> Action.DEFAULT;
+        };
+    }
+
+    public String createSaveData() {
+        List<String> saveInformation = new ArrayList<>();
+        saveInformation.add(this.getTaskType());
+        saveInformation.add(String.valueOf(this.isTaskDone() ? 1 : 0));
+        saveInformation.add(this.taskDetail);
+        return String.join(DataHandler.saveDelimiter, saveInformation);
+    }
+
+    public String getTaskInformation() {
+        return "[%s] [%s] %s".formatted(this.getTaskType(),
+                (this.isTaskDone()) ? "X" : " ",
+                this.getTaskDetail());
+    };
 }

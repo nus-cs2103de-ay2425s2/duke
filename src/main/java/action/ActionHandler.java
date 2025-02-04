@@ -1,11 +1,13 @@
 package action;
 
+import data.DataHandler;
 import task.DeadLineTask;
 import task.EventTask;
 import task.Task;
 import task.ToDoTask;
 import user.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,36 +49,30 @@ public class ActionHandler {
         }
         else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.TODO.toString())) {
             outputMessages.add("Got it. I've added this todo task:");
-            int taskIndex = user.addTask(
-                    createTask(
-                            Action.TODO,
-                            eventStringTokens.subList(1, eventStringTokens.size())
-                    ),
-                    true
+            Task createdTask = createTask(
+                    Action.TODO,
+                    eventStringTokens.subList(1, eventStringTokens.size())
             );
-            outputMessages.add(user.getTaskInformation(taskIndex));
+            user.addTask(createdTask);
+            outputMessages.add(createdTask.getTaskInformation());
         }
         else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.DEADLINE.toString())) {
             outputMessages.add("Got it. I've added this deadline:");
-            int taskIndex = user.addTask(
-                    createTask(
-                            Action.DEADLINE,
-                            eventStringTokens.subList(1, eventStringTokens.size())
-                    ),
-                    true
+            Task createdTask = createTask(
+                    Action.DEADLINE,
+                    eventStringTokens.subList(1, eventStringTokens.size())
             );
-            outputMessages.add(user.getTaskInformation(taskIndex));
+            user.addTask(createdTask);
+            outputMessages.add(createdTask.getTaskInformation());
         }
         else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.EVENT.toString())) {
             outputMessages.add("Got it. I've added this event:");
-            int taskIndex = user.addTask(
-                    createTask(
-                            Action.EVENT,
-                            eventStringTokens.subList(1, eventStringTokens.size())
-                    ),
-                    true
+            Task createdTask = createTask(
+                    Action.EVENT,
+                    eventStringTokens.subList(1, eventStringTokens.size())
             );
-            outputMessages.add(user.getTaskInformation(taskIndex));
+            user.addTask(createdTask);
+            outputMessages.add(createdTask.getTaskInformation());
         }
         else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.DELETE.toString())) {
             outputMessages.add("Noted. I've removed this task:");
@@ -91,6 +87,12 @@ public class ActionHandler {
             outputMessages.add("Now you have %s tasks in your list".formatted(user.getNumberOfTasks()));
         }
 
+        try {
+            DataHandler.writeFile(user.getDataFilePath(), user.createSaveData(), false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         return outputMessages;
     }
 
@@ -100,7 +102,7 @@ public class ActionHandler {
      * @param taskDetails Valid input string provided by the user
      * @return Task that encapsulates the required information to create TODO/DEADLINE/EVENT task
      */
-    private Task createTask(Action action, List<String> taskDetails) {
+    public static Task createTask(Action action, List<String> taskDetails) {
         if (action.equals(Action.TODO)) {
             return new ToDoTask(String.join(" ", taskDetails));
         }
@@ -143,6 +145,7 @@ public class ActionHandler {
         TODO,
         DEADLINE,
         EVENT,
-        DELETE
+        DELETE,
+        DEFAULT
     }
 }
