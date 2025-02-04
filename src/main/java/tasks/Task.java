@@ -1,4 +1,4 @@
-package pawpal.tasks;
+package tasks;
 
 public class Task {
     protected String description;

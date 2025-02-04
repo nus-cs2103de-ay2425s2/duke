@@ -1,22 +1,31 @@
-package pawpal.utils;
+package utils;
 
-import pawpal.tasks.*;
+import tasks.*;
 
 import java.util.List;
 
-class Printer {
+public class Printer {
     // response for when a task is added
     public void printTaskAdded(String description, int taskCount) {
         System.out.println("Purr-sonally, I’d rather nap, but your " + description + " task is on the list now!");
-        System.out.println("Now you have " + taskCount + " pawpal.tasks.");
+        System.out.println("Now you have " + taskCount + " tasks.");
     }
 
+    public void printGreeting(String name) {
+        System.out.println("-----------------------------------------");
+        System.out.println("Hello! I'm " + name + "\n" + "What can I do for you? \n");
+        System.out.println("-----------------------------------------");
+    }
+
+    public void printBye(){
+        System.out.println("Bye. Hope to see you again soon! Meow");
+    }
     // method to print the task lists
     public void printTaskList(List<Task> tasks) {
         if (tasks.isEmpty()) {
-            System.out.println("There are no pawpal.tasks in your list you silly cat!");
+            System.out.println("There are no tasks in your list you silly cat!");
         } else {
-            System.out.println("Here are the pawpal.tasks in your list you silly cat!");
+            System.out.println("Here are the tasks in your list you silly cat!");
             for (int i = 0; i < tasks.size(); i++) {
                 System.out.println((i + 1) + "." + tasks.get(i));
             }
@@ -38,7 +47,7 @@ class Printer {
     // Print a message when a task is deleted
     public void printTaskDeleted(Task task, int taskCount) {
         System.out.println("Task removed: " + task);
-        System.out.println("Now you have " + taskCount + " pawpal.tasks left.");
+        System.out.println("Now you have " + taskCount + " tasks left.");
     }
 
     // error message for invalid task number

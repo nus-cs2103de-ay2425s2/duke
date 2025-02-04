@@ -86,5 +86,21 @@ Now you have 13 tasks.
 You need to provide a task description after 'todo'!
 Invalid deadline! Use: deadline <description> /by <deadline>
 Invalid event! Use: event <description> /from <start> /to <end>
+Invalid task number! Are you playing with yarn again?
+Task removed: [E][ ] company retreat from: Fri 9am to: Sun 5pm)
+Now you have 12 tasks left.
+Here are the tasks in your list you silly cat!
+1.[T][ ] buy groceries
+2.[D][ ] prepare report (by: Tuesday )
+3.[T][ ] clean the house
+4.[T][ ] write journal
+5.[T][ ] organize workspace
+6.[D][ ] plan vacation (by: next month )
+7.[E][ ] family dinner from: Sat 7pm to: 10pm)
+8.[T][ ] go for a walk
+9.[T][ ] read book
+10.[D][ ] holiday plans (by: 2023-12-25 )
+11.[E][ ] tech conference from: 2023-08-10 to: 2023-08-12)
+12.[T][ ] learn Java
 Sorry, I don't understand that command :(
 Bye. Hope to see you again soon! Meow

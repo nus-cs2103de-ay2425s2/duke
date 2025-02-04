@@ -1,5 +1,4 @@
-package pawpal;
-
+import utils.Command;
 import utils.TaskManager;
 import utils.Printer;
 
@@ -71,7 +70,7 @@ class Parser {
         }
     }
 
-    // Process Delete Command
+    // Process Delete utils.Command
     private void processDeleteCommand(String input) {
         try {
             String[] parts = input.split(" ", 2);
