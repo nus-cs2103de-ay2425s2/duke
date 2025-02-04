@@ -1,41 +1,179 @@
 package io;
 
+import action.ActionHandler;
+import user.User;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class InputValidator {
-    public static boolean isValidDate(String stringDate, boolean requiresFuture) {
-        DateTimeFormatter dayMonthYearFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter dayMonthFormatter = DateTimeFormatter.ofPattern("dd/MM");
+    public static final DateTimeFormatter DAY_MONTH_YEAR_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static final DateTimeFormatter DAY_MONTH_YEAR_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-        List<DateTimeFormatter> dateFormatters = new ArrayList<>();
-        dateFormatters.add(dayMonthYearFormatter);
-        dateFormatters.add(dayMonthFormatter);
+    /**
+     * Check if user input is valid
+     *
+     * @param userInput Input string provided by the user with no trailing or leading whitespaces
+     * @return ValidationToken with isValid status and error message if it is not valid
+     */
+    public static ValidationToken isInputValid(String userInput, User user) {
+        List<String> userInputTokens = Arrays.asList(userInput.split(" "));
 
-        // parse information without a year
-        for (DateTimeFormatter formatter : dateFormatters) {
-            try {
-                LocalDate date;
-                if (formatter.equals(dayMonthFormatter)) {
-                    date = LocalDate.parse(stringDate + "/" + Year.now(), dayMonthYearFormatter);
-                }
-                else {
-                    date = LocalDate.parse(stringDate, formatter);
-                }
-
-                if (requiresFuture) {
-                    return date.isAfter(LocalDate.now());
-                }
-                return true;
-            } catch (DateTimeParseException e) {
-                System.out.println(e.getMessage());
+        if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.LIST.toString())
+                || userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.BYE.toString())) {
+            if (userInputTokens.size() == 1) {
+                return new ValidationToken(true);
             }
+
+            if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.LIST.toString())) {
+                return new ValidationToken(false, ValidationToken.InputError.LIST_TOO_MANY_ARGUMENTS);
+            }
+
+            return new ValidationToken(false, ValidationToken.InputError.BYE_TOO_MANY_ARGUMENTS);
         }
+        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.MARK.toString())
+                || (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.UNMARK.toString()))) {
+            if (userInputTokens.size() == 1) {
+                if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.MARK.toString())) {
+                    return new ValidationToken(false, ValidationToken.InputError.MARK_TOO_LITTLE_ARGUMENTS);
+                }
+
+                return new ValidationToken(false, ValidationToken.InputError.UNMARK_TOO_LITTLE_ARGUMENTS);
+            }
+            else if (userInputTokens.size() > 2) {
+                if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.MARK.toString())) {
+                    return new ValidationToken(false, ValidationToken.InputError.MARK_TOO_MANY_ARGUMENTS);
+                }
+
+                return new ValidationToken(false, ValidationToken.InputError.UNMARK_TOO_MANY_ARGUMENTS);
+            }
+
+            try {
+                Integer.parseInt(userInputTokens.get(1));
+            } catch (NumberFormatException e) {
+                if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.MARK.toString())) {
+                    return new ValidationToken(false, ValidationToken.InputError.MARK_INCORRECT_ARGUMENT_TYPE);
+                }
+
+                return new ValidationToken(false, ValidationToken.InputError.UNMARK_INCORRECT_ARGUMENT_TYPE);
+            }
+
+            if (Integer.parseInt(userInputTokens.get(1)) < 1
+                    || Integer.parseInt(userInputTokens.get(1)) > user.getNumberOfTasks()) {
+                return new ValidationToken(false, ValidationToken.InputError.INVALID_TASK_NUMBER);
+            }
+
+            return new ValidationToken(true);
+        }
+        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.TODO.toString())) {
+            if (userInputTokens.size() == 1) {
+                return new ValidationToken(false, ValidationToken.InputError.TODO_TOO_LITTLE_ARGUMENTS);
+            }
+
+            return new ValidationToken(true);
+        }
+        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.DEADLINE.toString())) {
+
+            System.out.println(Arrays.toString(userInputTokens.toArray()));
+            if (userInputTokens.size() <= 2) {
+                return new ValidationToken(false, ValidationToken.InputError.DEADLINE_TOO_LITTLE_ARGUMENTS);
+            }
+
+            if (!userInputTokens.contains("/by")) {
+                return new ValidationToken(false, ValidationToken.InputError.DEADLINE_MISSING_BY);
+            }
+
+            int deadLineIndex = userInputTokens.indexOf("/by") + 1;
+
+            if (deadLineIndex == userInputTokens.size()) {
+                return new ValidationToken(false, ValidationToken.InputError.DEADLINE_MISSING_DEADLINE);
+            }
+
+            String stringDateTime = String.join(" ",
+                    userInputTokens.subList(deadLineIndex, userInputTokens.size()));
+
+            if (!(InputValidator.isValidDateTime(stringDateTime, true)
+                    || InputValidator.isValidDate(stringDateTime, true))) {
+                return new ValidationToken(false, ValidationToken.InputError.DEADLINE_INVALID_DATETIME);
+            }
+
+            return new ValidationToken(true);
+        }
+        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.EVENT.toString())) {
+            if (!(userInputTokens.contains("/from") && userInputTokens.contains("/to"))) {
+                return new ValidationToken(false, ValidationToken.InputError.EVENT_MISSING_FROM_TO_ARGUMENTS);
+            }
+
+            int fromIndex = userInputTokens.indexOf("/from");
+            int toIndex = userInputTokens.indexOf("/to");
+
+            String fromDateTime = String.join(" ",
+                    userInputTokens.subList(fromIndex + 1, toIndex));
+
+            if (!(InputValidator.isValidDateTime(fromDateTime, false)
+                    || InputValidator.isValidDate(fromDateTime, false))) {
+                return new ValidationToken(false, ValidationToken.InputError.EVENT_INVALID_DATETIME);
+            }
+
+            String toDateTime = String.join(" ", userInputTokens.subList(toIndex + 1, userInputTokens.size()));
+
+            if (!(InputValidator.isValidDateTime(toDateTime, true)
+                    || InputValidator.isValidDate(fromDateTime, true))) {
+                return new ValidationToken(false, ValidationToken.InputError.EVENT_INVALID_DATETIME);
+            }
+
+            return new ValidationToken(true);
+        }
+        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.DELETE.toString())) {
+            if (userInputTokens.size() > 2) {
+                // too many arguments
+                return new ValidationToken(false, ValidationToken.InputError.DELETE_TOO_MANY_ARGUMENTS);
+            }
+
+            try {
+                Integer.parseInt(userInputTokens.get(1));
+            } catch (NumberFormatException e) {
+                // second argument not a number
+                return new ValidationToken(false, ValidationToken.InputError.DELETE_INCORRECT_ARGUMENT_TYPE);
+            }
+
+            return new ValidationToken(true);
+        }
+
+        return new ValidationToken(false, ValidationToken.InputError.INVALID_COMMAND);
+    }
+
+    public static boolean isValidDate(String stringDate, boolean requiresFuture) {
+        try {
+            LocalDate date = LocalDate.parse(stringDate + "/" + Year.now(), DAY_MONTH_YEAR_FORMATTER);
+
+            if (requiresFuture) {
+                return date.isAfter(LocalDate.now());
+            }
+
+            return true;
+        } catch (DateTimeParseException e) {
+            e.getMessage();
+        }
+
+        try {
+            LocalDate date = LocalDate.parse(stringDate, DAY_MONTH_YEAR_FORMATTER);
+
+            if(requiresFuture) {
+                return date.isAfter(LocalDate.now());
+            }
+
+            return true;
+        } catch (DateTimeParseException e) {
+            e.getMessage();
+        }
+
         return false;
     }
 
@@ -47,35 +185,36 @@ public class InputValidator {
      * @return boolean that indicates if it is a valid time format
      */
     public static boolean isValidDateTime(String stringDateTime, boolean requiresFuture) {
-        DateTimeFormatter dayMonthYearTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:m");
-        DateTimeFormatter dayMonthTimeFormatter = DateTimeFormatter.ofPattern("dd/MM H:m");
-
-        List<DateTimeFormatter> dateYearFormatters = new ArrayList<>();
-        dateYearFormatters.add(dayMonthYearTimeFormatter);
-        dateYearFormatters.add(dayMonthTimeFormatter);
-
         List<String> stringDateList = new ArrayList<>(List.of(stringDateTime.split(" ")));
 
-        for (DateTimeFormatter formatter : dateYearFormatters) {
-            try {
-                LocalDateTime dateTime;
-                if (formatter.equals(dayMonthTimeFormatter)) {
-                    String date = stringDateList.removeFirst();
-                    stringDateList.addFirst(date + "/" + Year.now());
-                    dateTime = LocalDateTime.parse(String.join(" ", stringDateList), dayMonthYearTimeFormatter);
-                }
-                else {
-                    dateTime = LocalDateTime.parse(stringDateTime, formatter);
-                }
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(String.join(" ", stringDateList),
+                    DAY_MONTH_YEAR_TIME_FORMATTER);
 
-                if (requiresFuture) {
-                    return dateTime.isAfter(LocalDateTime.now());
-                }
-                return true;
-            } catch (DateTimeParseException e) {
-                System.out.println(e.getMessage());
+            if (requiresFuture) {
+                return dateTime.isAfter(LocalDateTime.now());
             }
+
+            return true;
+        } catch (DateTimeParseException e) {
+            System.out.println(e.getMessage());
         }
+
+        try {
+            String removedItem = stringDateList.removeFirst();
+            stringDateList.addFirst(removedItem + "/" + Year.now());
+            LocalDateTime dateTime = LocalDateTime.parse(String.join(" ", stringDateList),
+                    DAY_MONTH_YEAR_TIME_FORMATTER);
+
+            if (requiresFuture) {
+                return dateTime.isAfter(LocalDateTime.now());
+            }
+
+            return true;
+        } catch (DateTimeParseException e) {
+            System.out.println(e.getMessage());
+        }
+
         return false;
     }
 
