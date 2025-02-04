@@ -3,22 +3,37 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.time.*;
 
 class Task {
     private String type; // "T" = To-Do, "D" = Deadline, "E" = Events
     private String task;
     private boolean status; // false = not done, true = done
-    private String details; // Other info for Deadline and Event tasks
+    private String details; // Info for Event tasks
+    private LocalDate deadline; // Info for Deadline tasks
+
+    public static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     public Task(String type, String task, String details) {
         this.type = type;
         this.task = task;
         this.status = false;
         this.details = details;
+
+        if (type.equals("D") && details != null) {
+            try {
+                this.deadline = LocalDate.parse(details.trim(), INPUT_FORMATTER);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format! Please use yyyy-MM-dd (e.g., 2019-10-15).");
+            }
+        }
     }
 
     public void mark() {
@@ -48,8 +63,13 @@ class Task {
     @Override
     public String toString() {
         String taskStatus = status ? "[X]" : "[ ]";
-        String taskDetails = details != null ? " " + details : "";
-        return "[" + type + "]" + taskStatus + " " + task + (taskDetails);
+        if (type.equals("D")) {
+            String taskDetails = details != null ? " (by: " + deadline.format(OUTPUT_FORMATTER) + ")" : "";
+            return "[" + type + "]" + taskStatus + " " + task + taskDetails;
+        } else {
+            String taskDetails = details != null ? " " + details : "";
+            return "[" + type + "]" + taskStatus + " " + task + (taskDetails);
+        }
     }
 
     // Writing to file
@@ -89,6 +109,15 @@ class TaskManager {
     }
 
     public void addTask(String type, String task, String details) {
+        if (type.equals("D") && details != null) {
+            try {
+                LocalDate.parse(details.trim(), Task.INPUT_FORMATTER);
+                System.out.println("Added deadline: " + task + " (by: " + details + ")");
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format! Please use yyyy-MM-dd (e.g., 2019-10-15).");
+                return;
+            }
+        }
         tasks.add(new Task(type, task, details));
         saveTasksToFile();
         System.out.println("    ____________________________________________________________");
@@ -262,10 +291,10 @@ public class DaveTheBrave {
                 if (deadlineInfo.length == 2) {
                     String task = deadlineInfo[0].trim();
                     String deadline = deadlineInfo[1].trim();
-                    taskManager.addTask("D", task, "(by: " + deadline + ")");
+                    taskManager.addTask("D", task, deadline);
                 } else {
                     System.out.println("    ____________________________________________________________");
-                    System.out.println("      Invalid format. Use: deadline <task> /by <deadline date/time>");
+                    System.out.println("      Invalid format. Use: deadline <task> /by yyyy-MM-dd");
                     System.out.println("    ____________________________________________________________");
                 }
             }
@@ -329,6 +358,8 @@ public class DaveTheBrave {
                 System.out.println("      Mark/Unmark tasks in list");
                 System.out.println("            'mark':         mark <task>");
                 System.out.println("            'unmark':       unmark <task>");
+                System.out.println("      Delete task from list");
+                System.out.println("            'delete':       delete <task number>");
                 System.out.println("    ____________________________________________________________");
             }
         }
