@@ -114,9 +114,9 @@ class TaskManager {
     }
 }
 
-public class Dave {
+public class DaveTheBrave {
     public static void main(String[] args) {
-        String name = "Dave";
+        String name = "DaveTheBrave";
         TaskManager taskManager = new TaskManager();
         List<String> greetings = Arrays.asList("hello", "hi", "hey", "yo");
         List<String> goodbyes = Arrays.asList("bye", "goodbye");
@@ -126,7 +126,7 @@ public class Dave {
 
         // Initial greeting
         System.out.println("    ____________________________________________________________");
-        System.out.printf("      Hello! I'm %s%n", name);
+        System.out.printf("      Boooo! I'm %s%n", name);
         System.out.println("      What can I do for you?");
         System.out.println("    ____________________________________________________________");
 
