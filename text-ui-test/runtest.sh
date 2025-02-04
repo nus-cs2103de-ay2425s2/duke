@@ -64,8 +64,9 @@ echo -e "${BOLD}[4/4] Running tests...${NC}"
 ls -r |
 for directory_path in $(grep -v "runtest");
 do echo "Running test to test for" $directory_path;
-cd $directory_path;
-java -classpath ../../bin bob.Bob < input.txt > ACTUAL.TXT;
+cd ../bin;
+java bob.Bob < ../text-ui-test/$directory_path/input.txt > ../text-ui-test/$directory_path/ACTUAL.TXT;
+cd ../text-ui-test/$directory_path;
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT 2>/dev/null
 # convert to UNIX format
