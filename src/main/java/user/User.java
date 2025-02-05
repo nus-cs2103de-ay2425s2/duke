@@ -28,7 +28,7 @@ public class User {
 
     public User(String userName) throws IOException {
         this.taskList = new ArrayList<>();
-        this.dataFilePath = Paths.get(String.valueOf(DataHandler.programRoot), "data",
+        this.dataFilePath = Paths.get(String.valueOf(DataHandler.programRoot), "bin", "data",
                 "%s.txt".formatted(userName));
         buildTaskList(DataHandler.readFile(dataFilePath));
     }
@@ -40,8 +40,8 @@ public class User {
 
             // Recreate the task details from the saved file
             // Format of todo save: taskType|isTaskDone|taskDetails
-            // Format of deadline save: taskType|isTaskDone|taskDetails|/by toDateTime
-            // Format of event save: taskType|isTaskDone|taskDetails|/from fromDateTime /to toDateTime
+            // Format of deadline save: taskType|isTaskDone|taskDetails|/by dateTime
+            // Format of event save: taskType|isTaskDone|taskDetails|/from dateTime /to toDateTime
             List<String> taskDetails = List.of(String.join(" ", data.subList(2, data.size())).split(" "));
 
             Task taskCreated = ActionHandler.createTask(
