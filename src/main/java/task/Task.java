@@ -2,7 +2,12 @@ package task;
 
 import action.ActionHandler.Action;
 import data.DataHandler;
+import io.InputValidator;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Year;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,4 +87,41 @@ public class Task {
                 (this.isTaskDone()) ? "X" : " ",
                 this.getTaskDetail());
     };
+
+    protected LocalDateTime parseDateTime(String stringDateTime) {
+        List<String> stringDateList = new ArrayList<>(List.of(stringDateTime.split(" ")));
+
+        try {
+            return LocalDateTime.parse(String.join(" ", stringDateList), InputValidator.DAY_MONTH_YEAR_TIME_FORMATTER);
+        } catch (DateTimeParseException e) {
+            e.getMessage();
+        }
+
+        try {
+            String removedItem = stringDateList.removeFirst();
+            stringDateList.addFirst(removedItem + "/" + Year.now());
+            return LocalDateTime.parse(String.join(" ", stringDateList), InputValidator.DAY_MONTH_YEAR_TIME_FORMATTER);
+        } catch (DateTimeParseException e) {
+            e.getMessage();
+        }
+
+        throw new IllegalArgumentException("Input is not correct");
+    }
+
+    protected LocalDate parseDate(String stringDate) {
+        // parse information without a year
+        try {
+            return LocalDate.parse(stringDate + "/" + Year.now(), InputValidator.DAY_MONTH_YEAR_FORMATTER);
+        } catch (DateTimeParseException e) {
+            e.getMessage();
+        }
+
+        try {
+            return LocalDate.parse(stringDate, InputValidator.DAY_MONTH_YEAR_FORMATTER);
+        } catch (DateTimeParseException e) {
+            e.getMessage();
+        }
+
+        throw new IllegalArgumentException("Input is not correct");
+    }
 }
