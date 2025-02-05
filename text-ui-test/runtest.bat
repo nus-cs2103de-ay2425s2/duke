@@ -2,7 +2,7 @@
 chcp 65001 > nul
 
 echo ===============================================
-echo                DaveTheBrave Test Runner
+echo                davethebrave.DaveTheBrave Test Runner
 echo ===============================================
 echo.
 
@@ -56,7 +56,7 @@ echo [√] Compilation successful
 echo.
 
 echo [4/4] Running tests...
-java -classpath ..\bin DaveTheBrave < input.txt > ACTUAL.TXT
+java -classpath ..\bin davethebrave.DaveTheBrave < input.txt > ACTUAL.TXT
 
 FC ACTUAL.TXT EXPECTED.TXT > nul
 if ERRORLEVEL 1 (
