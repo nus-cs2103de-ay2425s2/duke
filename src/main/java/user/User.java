@@ -28,7 +28,7 @@ public class User {
 
     public User(String userName) throws IOException {
         this.taskList = new ArrayList<>();
-        this.dataFilePath = Paths.get(String.valueOf(DataHandler.programRoot), "bin", "data",
+        this.dataFilePath = Paths.get(String.valueOf(DataHandler.programRoot), "data",
                 "%s.txt".formatted(userName));
         buildTaskList(DataHandler.readFile(dataFilePath));
     }
