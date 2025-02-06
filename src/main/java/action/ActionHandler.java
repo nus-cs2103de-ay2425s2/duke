@@ -146,6 +146,7 @@ public class ActionHandler {
         DEADLINE,
         EVENT,
         DELETE,
+        FIND,
         DEFAULT
     }
 }
