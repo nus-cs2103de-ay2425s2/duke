@@ -79,6 +79,18 @@ public class ActionHandler {
             outputMessages.add(user.deleteTask(parseInt(eventStringTokens.get(1)) - 1));
             outputMessages.add("Now you have %s tasks in your list".formatted(user.getNumberOfTasks()));
         }
+        else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.FIND.toString())) {
+            List<Task> foundTasks = user.findTaskWithKeyWord(
+                    String.join(" ", eventStringTokens.subList(1, eventStringTokens.size())));
+
+            if (foundTasks.isEmpty()) {
+                outputMessages.add("There are not tasks with that keyword in your list D:");
+            }
+            else {
+                outputMessages.add("Here are the matching tasks in your list:");
+                outputMessages.add(user.getTaskList(foundTasks));
+            }
+        }
 
         // conditional add that indicates the new number of tasks in the list only when a new task is added
         if (eventStringTokens.getFirst().equalsIgnoreCase(Action.EVENT.toString())
