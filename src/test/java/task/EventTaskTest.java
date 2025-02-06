@@ -22,7 +22,7 @@ public class EventTaskTest {
     }
 
     @Test
-    public void testGetDeadline() {
+    public void test_GetDeadline() {
         assertEquals("14 Dec 2025", dateEventTaskOne.getDeadLine());
         assertEquals("14 Dec 2026 02:00pm", dateEventTaskTwo.getDeadLine());
         assertEquals("14 Dec 2025 09:00am", dateTimeEventTaskOne.getDeadLine());
@@ -30,7 +30,7 @@ public class EventTaskTest {
     }
 
     @Test
-    public void testGetStartDateTime() {
+    public void test_GetStartDateTime() {
         assertEquals("12 Dec 2025", dateEventTaskOne.getStartDateTime());
         assertEquals("12 Dec 2026", dateEventTaskTwo.getStartDateTime());
         assertEquals("12 Dec 2025 12:00pm", dateTimeEventTaskOne.getStartDateTime());
@@ -38,7 +38,7 @@ public class EventTaskTest {
     }
 
     @Test
-    public void testCreateSaveData() {
+    public void test_CreateSaveData() {
         assertEquals("E|1|test|/from 12/12/2025 /to 14/12/2025", dateEventTaskOne.createSaveData());
         assertEquals("E|0|test|/from 12/12/2026 /to 14/12/2026 14:00", dateEventTaskTwo.createSaveData());
         assertEquals("E|0|test|/from 12/12/2025 12:00 /to 14/12/2025 09:00", dateTimeEventTaskOne.createSaveData());
@@ -46,7 +46,7 @@ public class EventTaskTest {
     }
 
     @Test
-    public void testGetTaskInformation() {
+    public void test_GetTaskInformation() {
         assertEquals("[E] [X] test (from: 12 Dec 2025 to: 14 Dec 2025)", dateEventTaskOne.getTaskInformation());
         assertEquals("[E] [ ] test (from: 12 Dec 2026 to: 14 Dec 2026 02:00pm)", dateEventTaskTwo.getTaskInformation());
         assertEquals("[E] [ ] test (from: 12 Dec 2025 12:00pm to: 14 Dec 2025 09:00am)", dateTimeEventTaskOne.getTaskInformation());

@@ -22,7 +22,7 @@ public class DeadLineTaskTest {
     }
 
     @Test
-    public void testGetDeadline() {
+    public void test_GetDeadline() {
         assertEquals("12 Dec 2025", dateDeadLineTaskOne.getDeadLine());
         assertEquals("12 Dec 2026", dateDeadLineTaskTwo.getDeadLine());
         assertEquals("12 Dec 2025 12:00pm", dateTimeDeadLineTaskOne.getDeadLine());
@@ -30,7 +30,7 @@ public class DeadLineTaskTest {
     }
 
     @Test
-    public void testCreateSaveData() {
+    public void test_CreateSaveData() {
         assertEquals("D|1|test|/by 12/12/2025", dateDeadLineTaskOne.createSaveData());
         assertEquals("D|0|test|/by 12/12/2026", dateDeadLineTaskTwo.createSaveData());
         assertEquals("D|0|test|/by 12/12/2025 12:00", dateTimeDeadLineTaskOne.createSaveData());
@@ -38,7 +38,7 @@ public class DeadLineTaskTest {
     }
 
     @Test
-    public void testGetTaskInformation() {
+    public void test_GetTaskInformation() {
         assertEquals("[D] [X] test (by: 12 Dec 2025)", dateDeadLineTaskOne.getTaskInformation());
         assertEquals("[D] [ ] test (by: 12 Dec 2026)", dateDeadLineTaskTwo.getTaskInformation());
         assertEquals("[D] [ ] test (by: 12 Dec 2025 12:00pm)", dateTimeDeadLineTaskOne.getTaskInformation());

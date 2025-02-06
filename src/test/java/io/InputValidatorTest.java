@@ -28,7 +28,7 @@ public class InputValidatorTest {
             "abcd, true, false",
             "12/12/2025 14:00, false, false"
     })
-    public void testIsValidDate(String input, boolean requiresFuture, boolean expected) {
+    public void test_IsValidDate(String input, boolean requiresFuture, boolean expected) {
         assertEquals(expected, InputValidator.isValidDate(input, requiresFuture));
     }
 
@@ -41,7 +41,7 @@ public class InputValidatorTest {
             "12/12/2025 12:00, true, true",
             "12/12/2025 80:00, true, false"
     })
-    public void testIsValidDateTime(String input, boolean requiresFuture, boolean expected) {
+    public void test_IsValidDateTime(String input, boolean requiresFuture, boolean expected) {
         assertEquals(expected, InputValidator.isValidDateTime(input, requiresFuture));
     }
 
@@ -55,7 +55,7 @@ public class InputValidatorTest {
             " mark 1, true",
             "mark  1, false"
     })
-    public void testIsMarkInputValid(String userInput, boolean expected) {
+    public void test_IsMarkInputValid(String userInput, boolean expected) {
         assertEquals(expected, InputValidator.isInputValid(userInput, user).isValid());
     }
 
@@ -67,7 +67,7 @@ public class InputValidatorTest {
             "DEADLINE return book /by 12/12, true",
             "DEADline return book /by 12/12, true"
     })
-    public void testIsDeadLineInputValid(String userInput, boolean expected) {
+    public void test_IsDeadLineInputValid(String userInput, boolean expected) {
         assertEquals(expected, InputValidator.isInputValid(userInput, user).isValid());
     }
 
@@ -80,7 +80,7 @@ public class InputValidatorTest {
             "event sleep /from 11/11 /to 12/12 12:00, true",
             "event /from 11/11 /to 12/12, false"
     })
-    public void testIsEventInputValid(String userInput, boolean expected) {
+    public void test_IsEventInputValid(String userInput, boolean expected) {
         assertEquals(expected, InputValidator.isInputValid(userInput, user).isValid());
     }
 
@@ -90,7 +90,7 @@ public class InputValidatorTest {
             "TOdo return book, true",
             " todo return book, true"
     })
-    public void testIsToDoInputValid(String userInput, boolean expected) {
+    public void test_IsToDoInputValid(String userInput, boolean expected) {
         assertEquals(expected, InputValidator.isInputValid(userInput, user).isValid());
     }
 
@@ -101,7 +101,7 @@ public class InputValidatorTest {
             "bye , true",
             " bye , true"
     })
-    public void testIsByeInputValid(String userInput, boolean expected) {
+    public void test_IsByeInputValid(String userInput, boolean expected) {
         assertEquals(expected, InputValidator.isInputValid(userInput, user).isValid());
     }
 
@@ -114,7 +114,7 @@ public class InputValidatorTest {
             " delete 1, true",
             "delete  1, true"
     })
-    public void testIsDeleteInputValid(String userInput, boolean expected) {
+    public void test_IsDeleteInputValid(String userInput, boolean expected) {
         assertEquals(expected, InputValidator.isInputValid(userInput, user).isValid());
     }
 }

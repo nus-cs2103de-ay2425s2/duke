@@ -18,13 +18,13 @@ public class ToDoTaskTest {
     }
 
     @Test
-    public void testCreateSaveData() {
+    public void test_CreateSaveData() {
         assertEquals("T|1|test", toDoTaskOne.createSaveData());
         assertEquals("T|0|get apples", toDoTaskTwo.createSaveData());
     }
 
     @Test
-    public void testGetTaskInformation() {
+    public void test_GetTaskInformation() {
         assertEquals("[T] [X] test", toDoTaskOne.getTaskInformation());
         assertEquals("[T] [ ] get apples", toDoTaskTwo.getTaskInformation());
     }
