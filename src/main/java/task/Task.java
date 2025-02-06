@@ -23,6 +23,7 @@ public class Task {
      * Constructor that creates a task without a type
      * @param taskDetail String that indicates the task information
      */
+    @Deprecated
     public Task(String taskDetail) {
         this.taskDetail = taskDetail;
         this.isTaskDone = false;
@@ -65,6 +66,11 @@ public class Task {
         };
     }
 
+    /**
+     * Maps actionString to an action enum
+     * @param actionString String that indicates the task type
+     * @return Action enum that indicates the enum for that string
+     */
     public static Action mapTaskType(String actionString) {
         return switch(actionString) {
             case "T" -> Action.TODO;
@@ -74,6 +80,10 @@ public class Task {
         };
     }
 
+    /**
+     * Method to create save data for the task
+     * @return String of data to be written to storage
+     */
     public String createSaveData() {
         List<String> saveInformation = new ArrayList<>();
         saveInformation.add(this.getTaskType());
@@ -82,12 +92,22 @@ public class Task {
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 
+    /**
+     * Method to get task information to be displayed to the user
+     * @return String of data that indicates the task information
+     */
     public String getTaskInformation() {
         return "[%s] [%s] %s".formatted(this.getTaskType(),
                 (this.isTaskDone()) ? "X" : " ",
                 this.getTaskDetail());
     };
 
+    /**
+     * Method to parse stringDateTime to a LocalDateTime object
+     * Precondition: stringDateTime must be a valid representation of a LocalDateTime
+     * @param stringDateTime String that indicates the datetime
+     * @return LocalDateTime object of the string representation
+     */
     protected LocalDateTime parseDateTime(String stringDateTime) {
         List<String> stringDateList = new ArrayList<>(List.of(stringDateTime.split(" ")));
 
@@ -108,6 +128,12 @@ public class Task {
         throw new IllegalArgumentException("Input is not correct");
     }
 
+    /**
+     * Method to parse stringDate to a LocalDate object
+     * Precondition: stringDate must be a valid representation of a LocalDate
+     * @param stringDate String that indicates the date
+     * @return LocalDate object of the string representation
+     */
     protected LocalDate parseDate(String stringDate) {
         // parse information without a year
         try {

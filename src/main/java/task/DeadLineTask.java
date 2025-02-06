@@ -46,6 +46,10 @@ public class DeadLineTask extends Task implements HasDeadline {
         return DataHandler.dateSaveFormat.format(this.deadLineDate);
     }
 
+    /**
+     * Method to create the save data for a DeadLineTask
+     * @return String that represents the save data for a DeadLineTask
+     */
     @Override
     public String createSaveData() {
         List<String> saveInformation = new ArrayList<>();
@@ -54,6 +58,10 @@ public class DeadLineTask extends Task implements HasDeadline {
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 
+    /**
+     * Method to get the task information for a DeadLineTask
+     * @return String that represents the task information for a DeadLineTask
+     */
     @Override
     public String getTaskInformation() {
         List<String> taskInformationList = new ArrayList<>();

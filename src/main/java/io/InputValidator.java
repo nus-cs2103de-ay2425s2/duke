@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * InputValidator class that validates all user inputs
+ */
 public class InputValidator {
     public static final DateTimeFormatter DAY_MONTH_YEAR_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static final DateTimeFormatter DAY_MONTH_YEAR_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -149,6 +152,12 @@ public class InputValidator {
         return new ValidationToken(false, ValidationToken.InputError.INVALID_COMMAND);
     }
 
+    /**
+     * Method to check if the provided string follows the dd/MM or dd/MM/yyyy format
+     * @param stringDate String to be checked
+     * @param requiresFuture Indicates if stringDate needs to be in the future
+     * @return boolean that indicates if it is a valid date format
+     */
     public static boolean isValidDate(String stringDate, boolean requiresFuture) {
         try {
             LocalDate date = LocalDate.parse(stringDate + "/" + Year.now(), DAY_MONTH_YEAR_FORMATTER);
@@ -178,7 +187,7 @@ public class InputValidator {
     }
 
     /**
-     * Method to check if the provided string follows the dd/MM or dd/MM H:m format
+     * Method to check if the provided string follows the dd/MM H:m or dd/MM/yyyy H:m format
      *
      * @param stringDateTime String to be checked
      * @param requiresFuture Indicates if stringDateTime needs to be in the future
