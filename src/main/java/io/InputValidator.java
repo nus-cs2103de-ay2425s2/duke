@@ -145,6 +145,12 @@ public class InputValidator {
 
             return new ValidationToken(true);
         }
+        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.FIND.toString())) {
+            if (userInputTokens.size() == 1) {
+                return new ValidationToken(false, ValidationToken.InputError.FIND_TOO_LITTLE_ARGUMENTS);
+            }
+            return new ValidationToken(true);
+        }
 
         return new ValidationToken(false, ValidationToken.InputError.INVALID_COMMAND);
     }
