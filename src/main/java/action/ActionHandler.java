@@ -1,5 +1,6 @@
 package action;
 
+import bob.Bob;
 import data.DataHandler;
 import task.DeadLineTask;
 import task.EventTask;
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import static java.lang.Integer.parseInt;
 
@@ -18,6 +21,7 @@ import static java.lang.Integer.parseInt;
  * Class to handle actions
  */
 public class ActionHandler {
+    private RandomGenerator randomGenerator = new Random();
 
     /**
      * Method to process events that are input to the user
@@ -27,7 +31,7 @@ public class ActionHandler {
      * @param user        User class that indicates the current user
      * @return List of Strings that indicates what needs to be output to the console
      */
-    public List<String> processEvent(String eventString, User user) {
+    public List<String> processEvent(String eventString, User user) throws IOException {
         List<String> outputMessages = new ArrayList<>();
 
         List<String> eventStringTokens = Arrays.asList(eventString.split(" "));
@@ -79,6 +83,9 @@ public class ActionHandler {
             outputMessages.add(user.deleteTask(parseInt(eventStringTokens.get(1)) - 1));
             outputMessages.add("Now you have %s tasks in your list".formatted(user.getNumberOfTasks()));
         }
+        else if (eventStringTokens.getFirst().equalsIgnoreCase(Action.CHEER.toString())) {
+            outputMessages.add(getCheerMessage());
+        }
 
         // conditional add that indicates the new number of tasks in the list only when a new task is added
         if (eventStringTokens.getFirst().equalsIgnoreCase(Action.EVENT.toString())
@@ -94,6 +101,11 @@ public class ActionHandler {
         }
 
         return outputMessages;
+    }
+
+    private String getCheerMessage() throws IOException{
+        List<String> cheerMessages = DataHandler.readFile(DataHandler.cheerPath);
+        return cheerMessages.get(randomGenerator.nextInt(cheerMessages.size()));
     }
 
     /**
@@ -146,6 +158,7 @@ public class ActionHandler {
         DEADLINE,
         EVENT,
         DELETE,
+        CHEER,
         DEFAULT
     }
 }
