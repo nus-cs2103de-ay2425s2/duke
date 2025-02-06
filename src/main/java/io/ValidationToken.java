@@ -149,8 +149,15 @@ public class ValidationToken {
             }
         },
         INVALID_COMMAND {
+            @Override
             public String getErrorMessage() {
                 return "command listed does not exists. use todo, mark, unmark, deadline and event instead";
+            }
+        },
+        CHEER_TOO_MANY_ARGUMENTS() {
+            @Override
+            public String getErrorMessage() {
+                return "cheer expects 0 argument but received at least 1 argument";
             }
         };
 
