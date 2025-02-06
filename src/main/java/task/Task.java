@@ -21,6 +21,7 @@ public class Task {
 
     /**
      * Constructor that creates a task without a type
+     *
      * @param taskDetail String that indicates the task information
      */
     public Task(String taskDetail) {
@@ -31,8 +32,9 @@ public class Task {
 
     /**
      * Constructor that creates a task with a taskType
+     *
      * @param taskDetail String that indicates the task information
-     * @param taskType Action enum that indicates the task type
+     * @param taskType   Action enum that indicates the task type
      */
     public Task(String taskDetail, Action taskType) {
         this.taskDetail = taskDetail;
@@ -54,6 +56,7 @@ public class Task {
 
     /**
      * Maps the task type to a String
+     *
      * @return String of mapped task type
      */
     public String getTaskType() {
@@ -66,7 +69,7 @@ public class Task {
     }
 
     public static Action mapTaskType(String actionString) {
-        return switch(actionString) {
+        return switch (actionString) {
             case "T" -> Action.TODO;
             case "D" -> Action.DEADLINE;
             case "E" -> Action.EVENT;
@@ -86,7 +89,9 @@ public class Task {
         return "[%s] [%s] %s".formatted(this.getTaskType(),
                 (this.isTaskDone()) ? "X" : " ",
                 this.getTaskDetail());
-    };
+    }
+
+    ;
 
     protected LocalDateTime parseDateTime(String stringDateTime) {
         List<String> stringDateList = new ArrayList<>(List.of(stringDateTime.split(" ")));

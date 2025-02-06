@@ -10,6 +10,7 @@ public class ValidationToken {
 
     /**
      * Constructor for inputs with no errors
+     *
      * @param isValid boolean that indicates that it is valid
      */
     public ValidationToken(boolean isValid) {
@@ -18,7 +19,8 @@ public class ValidationToken {
 
     /**
      * Constructor for inputs with errors
-     * @param isValid boolean that indicates that it is not valid
+     *
+     * @param isValid      boolean that indicates that it is not valid
      * @param errorMessage InputError enum that encapsulates information about the error
      */
     public ValidationToken(boolean isValid, InputError errorMessage) {

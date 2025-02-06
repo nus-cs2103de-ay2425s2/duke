@@ -36,8 +36,7 @@ public class InputValidator {
             }
 
             return new ValidationToken(false, ValidationToken.InputError.BYE_TOO_MANY_ARGUMENTS);
-        }
-        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.MARK.toString())
+        } else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.MARK.toString())
                 || (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.UNMARK.toString()))) {
             if (userInputTokens.size() == 1) {
                 if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.MARK.toString())) {
@@ -45,8 +44,7 @@ public class InputValidator {
                 }
 
                 return new ValidationToken(false, ValidationToken.InputError.UNMARK_TOO_LITTLE_ARGUMENTS);
-            }
-            else if (userInputTokens.size() > 2) {
+            } else if (userInputTokens.size() > 2) {
                 if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.MARK.toString())) {
                     return new ValidationToken(false, ValidationToken.InputError.MARK_TOO_MANY_ARGUMENTS);
                 }
@@ -70,15 +68,13 @@ public class InputValidator {
             }
 
             return new ValidationToken(true);
-        }
-        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.TODO.toString())) {
+        } else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.TODO.toString())) {
             if (userInputTokens.size() == 1) {
                 return new ValidationToken(false, ValidationToken.InputError.TODO_TOO_LITTLE_ARGUMENTS);
             }
 
             return new ValidationToken(true);
-        }
-        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.DEADLINE.toString())) {
+        } else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.DEADLINE.toString())) {
 
             System.out.println(Arrays.toString(userInputTokens.toArray()));
             if (userInputTokens.size() <= 2) {
@@ -104,8 +100,7 @@ public class InputValidator {
             }
 
             return new ValidationToken(true);
-        }
-        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.EVENT.toString())) {
+        } else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.EVENT.toString())) {
             if (!(userInputTokens.contains("/from") && userInputTokens.contains("/to"))) {
                 return new ValidationToken(false, ValidationToken.InputError.EVENT_MISSING_FROM_TO_ARGUMENTS);
             }
@@ -129,8 +124,7 @@ public class InputValidator {
             }
 
             return new ValidationToken(true);
-        }
-        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.DELETE.toString())) {
+        } else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.DELETE.toString())) {
             if (userInputTokens.size() > 2) {
                 // too many arguments
                 return new ValidationToken(false, ValidationToken.InputError.DELETE_TOO_MANY_ARGUMENTS);
@@ -165,7 +159,7 @@ public class InputValidator {
         try {
             LocalDate date = LocalDate.parse(stringDate, DAY_MONTH_YEAR_FORMATTER);
 
-            if(requiresFuture) {
+            if (requiresFuture) {
                 return date.isAfter(LocalDate.now());
             }
 
