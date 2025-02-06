@@ -33,6 +33,10 @@ public class DataHandler {
     };
 
     public static List<String> readFile(Path filePath) throws IOException {
+        if (!Files.exists(programRoot.resolve("data"))) {
+            Files.createDirectory(programRoot.resolve("data"));
+        }
+
         if (!Files.exists(filePath)) {
             Files.createFile(filePath);
         }
