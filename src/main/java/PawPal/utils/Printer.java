@@ -134,4 +134,21 @@ public class Printer {
     public void printSavingErrorMessage() {
         System.out.println("There was an error saving the file. Please try again.");
     }
+
+    /*
+     * Prints the list of matching tasks
+     */
+    public void printMatchingTasks(List<Task> tasks) {
+        System.out.println("____________________________________________________________");
+        if (tasks.isEmpty()) {
+            System.out.println("No matching tasks found.");
+        } else {
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println((i + 1) + "." + tasks.get(i));
+            }
+        }
+        System.out.println("____________________________________________________________");
+    }
+
 }
