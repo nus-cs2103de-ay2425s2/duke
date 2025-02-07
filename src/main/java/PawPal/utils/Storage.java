@@ -1,8 +1,14 @@
 package PawPal.utils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import PawPal.tasks.Task;
 import PawPal.tasks.Deadline;
@@ -14,7 +20,8 @@ import PawPal.tasks.ToDo;
  */
 public class Storage {
 
-    private final String filePath;
+    private final String taskFilePath;
+    private final Printer printer;
 
     /**
      * Constructs a new Storage instance.
@@ -22,7 +29,8 @@ public class Storage {
      * @param filePath The path to the file where PawPal.core.PawPal.tasks are stored.
      */
     public Storage(String filePath) {
-        this.filePath = filePath;
+        this.taskFilePath = filePath;
+        this.printer = new Printer();
     }
 
     /**
@@ -33,7 +41,7 @@ public class Storage {
      */
     public List<Task> loadTasks() throws IOException {
         List<Task> tasks = new ArrayList<>();
-        File file = new File(filePath);
+        File file = new File(taskFilePath);
 
         if (!file.exists()) {
             return tasks;  // Return an empty list if the file doesn't exist
@@ -59,7 +67,7 @@ public class Storage {
      * @throws IOException If an error occurs while writing to the file.
      */
     public void saveTasks(List<Task> tasks) throws IOException {
-        File file = new File(filePath);
+        File file = new File(taskFilePath);
         file.getParentFile().mkdirs();  // Ensure the directory exists
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
@@ -111,5 +119,30 @@ public class Storage {
             System.out.println("Skipping malformed task line: " + line);
             return null;
         }
+    }
+
+    public String getRandomQuote(String cheerFilePath) throws IOException {
+        List<String> quotes = new ArrayList<>();
+        File file = new File(cheerFilePath);
+
+        if (!file.exists()) {
+            return printer.printFileNotFound();
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.trim().isEmpty()) {
+                    quotes.add(line.trim());
+                }
+            }
+        }
+
+        if (quotes.isEmpty()) {
+            return printer.printEmptyCheerFile();
+        }
+
+        Random random = new Random();
+        return quotes.get(random.nextInt(quotes.size()));
     }
 }

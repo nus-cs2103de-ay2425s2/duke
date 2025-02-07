@@ -133,6 +133,10 @@ public class TaskList {
         return matchingTasks;
     }
 
+    public String getRandomQuote() throws IOException {
+        String cheerFilePath = "./data/cheer.txt";
+        return storage.getRandomQuote(cheerFilePath);
+    }
     /**
      * Returns the list of tasks.
      *
