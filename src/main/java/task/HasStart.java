@@ -3,7 +3,7 @@ package task;
 import java.time.format.DateTimeFormatter;
 
 /**
- * HasStart interfact
+ * HasStart interface
  */
 public interface HasStart {
     static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy");

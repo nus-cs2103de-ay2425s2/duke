@@ -8,6 +8,9 @@ import java.nio.file.StandardOpenOption;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * DataHandler class that handles Files I/O
+ */
 public class DataHandler {
     public static String saveDelimiter = "|";
     public static Path programRoot = Paths.get("").toAbsolutePath();
@@ -32,6 +35,16 @@ public class DataHandler {
         }
     };
 
+    /**
+     * Method to read data from a file
+     * Precondition: No precondition
+     * Guaranteed result:
+     * 1. Data directory is created at the level of the program root
+     * 2. userName.txt is created
+     * @param filePath Path of the file to be read from
+     * @return List of strings that contains the file contents
+     * @throws IOException When either the directory or file is not created or when the file does not exists
+     */
     public static List<String> readFile(Path filePath) throws IOException {
         if (!Files.exists(programRoot.resolve("data"))) {
             Files.createDirectory(programRoot.resolve("data"));

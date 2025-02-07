@@ -133,6 +133,7 @@ public class ActionHandler {
      * @param taskDetail String representation for the details of the task
      * @return Task created
      */
+    @Deprecated
     private Task createTask(String taskDetail) {
         return new Task(taskDetail);
     }

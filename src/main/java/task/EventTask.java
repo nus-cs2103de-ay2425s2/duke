@@ -81,6 +81,10 @@ public class EventTask extends Task implements HasStart, HasDeadline {
         return DataHandler.dateSaveFormat.format(this.toDate);
     }
 
+    /**
+     * Method to create the save data for an EventTask
+     * @return String that represents the save data for a EventTask
+     */
     @Override
     public String createSaveData() {
         List<String> saveInformation = new ArrayList<>();
@@ -89,6 +93,10 @@ public class EventTask extends Task implements HasStart, HasDeadline {
         return String.join(DataHandler.saveDelimiter, saveInformation);
     }
 
+    /**
+     * Method to get the task information for an EventTask to be shown to the user
+     * @return String that represents the task information for an EventTask
+     */
     @Override
     public String getTaskInformation() {
         List<String> taskInformationList = new ArrayList<>();

@@ -26,12 +26,21 @@ public class User {
         this.taskList = new ArrayList<>();
     }
 
+    /**
+     * Constructor that saves the user data based on the name provided
+     * @param userName String that indicates the name of the user
+     * @throws IOException Thrown when the file does not exist
+     */
     public User(String userName) throws IOException {
         this.taskList = new ArrayList<>();
         this.dataFilePath = DataHandler.programRoot.resolve("data").resolve("%s.txt".formatted(userName));
         buildTaskList(DataHandler.readFile(dataFilePath));
     }
 
+    /**
+     * Method to build the taskList from the input data
+     * @param inputDataList List of String where each entry is the save information for a task
+     */
     private void buildTaskList(List<String> inputDataList) {
         for (String inputData : inputDataList) {
             // Added escape character for | as "|" is considered as an or operator in regex
@@ -117,6 +126,10 @@ public class User {
         return removedTaskInformation;
     }
 
+    /**
+     * Method to create save data for a user
+     * @return List of String that holds the save data for all tasks
+     */
     public List<String> createSaveData() {
         List<String> saveInformationList = new ArrayList<>();
         for (Task task : taskList) {
