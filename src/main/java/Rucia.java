@@ -1,9 +1,8 @@
 import utils.Parser;
 import utils.Storage;
 import tasks.Task;
+import tasks.TaskList;
 import ui.Ui;
-
-import java.util.ArrayList;
 
 /**
  * Rucia is a personal assistant chatbot that helps users with basic commands.
@@ -19,7 +18,7 @@ public class Rucia {
      */
     public static void main(String[] args) {
         Ui ui = new Ui();
-        ArrayList<Task> tasks = Storage.loadTasksFromFile();
+        TaskList taskList = new TaskList(Storage.loadTasksFromFile());
 
         // Greeting message
         ui.showWelcome();
@@ -27,7 +26,7 @@ public class Rucia {
         // Process user input until "bye" is entered
         while (true) {
             String input = ui.readCommand();
-            Parser.parseCommand(input, tasks, ui);
+            Parser.parseCommand(input, taskList, ui);
         }
     }
 }
