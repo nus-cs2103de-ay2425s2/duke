@@ -1,6 +1,6 @@
-package utils;
+package PawPal.utils;
 
-import tasks.*;
+import PawPal.tasks.*;
 
 import java.util.List;
 
@@ -40,9 +40,9 @@ public class Printer {
     }
 
     /**
-     * Prints the current list of tasks.
+     * Prints the current list of PawPal.core.PawPal.tasks.
      *
-     * @param tasks The list of tasks to be printed.
+     * @param tasks The list of PawPal.core.PawPal.tasks to be printed.
      */
     public void printTaskList(List<Task> tasks) {
         if (tasks.isEmpty()) {
@@ -79,7 +79,7 @@ public class Printer {
      * Prints a message when a task is deleted from the list.
      *
      * @param task      The task that has been deleted.
-     * @param taskCount The number of tasks remaining in the list.
+     * @param taskCount The number of PawPal.core.PawPal.tasks remaining in the list.
      */
     public void printTaskDeleted(Task task, int taskCount) {
         System.out.println("Task removed: " + task);
@@ -129,7 +129,7 @@ public class Printer {
     }
 
     /**
-     * Prints an error message when there's saving new tasks into the file.
+     * Prints an error message when there's saving new PawPal.core.PawPal.tasks into the file.
      */
     public void printSavingErrorMessage() {
         System.out.println("There was an error saving the file. Please try again.");

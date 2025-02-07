@@ -1,9 +1,11 @@
-import utils.Command;
-import utils.TaskList;
-import utils.Printer;
+package PawPal.core;
+
+import PawPal.utils.Command;
+import PawPal.utils.TaskList;
+import PawPal.utils.Printer;
 
 /**
- * Parses and processes user input for the PawPal chatbot.
+ * Parses and processes user input for the PawPal.core.PawPal chatbot.
  * Determines the command type and delegates actions to the {@link TaskList}.
  */
 class Parser {
@@ -12,9 +14,9 @@ class Parser {
     private final Printer printer;
 
     /**
-     * Constructs a new {@code Parser} instance.
+     * Constructs a new {@code PawPal.core.Parser} instance.
      *
-     * @param taskList The {@link TaskList} responsible for managing tasks.
+     * @param taskList The {@link TaskList} responsible for managing PawPal.core.PawPal.tasks.
      */
     public Parser(TaskList taskList) {
         this.taskList = taskList;
@@ -30,7 +32,7 @@ class Parser {
         Command command = parseCommand(input);
         switch (command) {
         case LIST:
-            taskList.listTasks();
+            processListCommand();
             break;
         case MARK:
             processMarkCommand(input, true);
@@ -54,6 +56,10 @@ class Parser {
             printer.printInvalidCommand();
             break;
         }
+    }
+
+    private void processListCommand() {
+        printer.printTaskList(taskList.getTasks());
     }
 
     /**

@@ -1,16 +1,16 @@
-package utils;
+package PawPal.utils;
 
-import tasks.Task;
-import tasks.Deadline;
-import tasks.Event;
-import tasks.ToDo;
+import PawPal.tasks.Task;
+import PawPal.tasks.Deadline;
+import PawPal.tasks.Event;
+import PawPal.tasks.ToDo;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles loading and saving tasks from and to a file.
+ * Handles loading and saving PawPal.core.PawPal.tasks from and to a file.
  */
 public class Storage {
 
@@ -19,16 +19,16 @@ public class Storage {
     /**
      * Constructs a new Storage instance.
      *
-     * @param filePath The path to the file where tasks are stored.
+     * @param filePath The path to the file where PawPal.core.PawPal.tasks are stored.
      */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
     /**
-     * Loads tasks from the file and returns them as a list of tasks.
+     * Loads PawPal.core.PawPal.tasks from the file and returns them as a list of PawPal.core.PawPal.tasks.
      *
-     * @return A list of tasks loaded from the file.
+     * @return A list of PawPal.core.PawPal.tasks loaded from the file.
      * @throws IOException If an error occurs while reading the file.
      */
     public List<Task> loadTasks() throws IOException {
@@ -53,9 +53,9 @@ public class Storage {
     }
 
     /**
-     * Saves the current tasks to the file.
+     * Saves the current PawPal.core.PawPal.tasks to the file.
      *
-     * @param tasks The list of tasks to be saved.
+     * @param tasks The list of PawPal.core.PawPal.tasks to be saved.
      * @throws IOException If an error occurs while writing to the file.
      */
     public void saveTasks(List<Task> tasks) throws IOException {

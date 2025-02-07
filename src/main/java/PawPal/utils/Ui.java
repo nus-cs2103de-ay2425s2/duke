@@ -1,6 +1,6 @@
-package utils;
+package PawPal.utils;
 
-import tasks.Task;
+import PawPal.tasks.Task;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,7 +36,7 @@ public class Ui {
     }
 
     /**
-     * Displays an error message when loading tasks fails.
+     * Displays an error message when loading PawPal.core.PawPal.tasks fails.
      */
     public void showLoadingError() {
         printer.printLoadingErrorMessage();
@@ -47,9 +47,9 @@ public class Ui {
     }
 
     /**
-     * Displays a list of tasks to the user.
+     * Displays a list of PawPal.core.PawPal.tasks to the user.
      *
-     * @param tasks The list of tasks to display.
+     * @param tasks The list of PawPal.core.PawPal.tasks to display.
      */
     public void showTaskList(List<Task> tasks) {
         printer.printTaskList(tasks);
@@ -59,7 +59,7 @@ public class Ui {
      * Displays a message when a task is added to the list.
      *
      * @param task      The task that was added.
-     * @param taskCount The current number of tasks in the list.
+     * @param taskCount The current number of PawPal.core.PawPal.tasks in the list.
      */
     public void showTaskAdded(Task task, int taskCount) {
         printer.printTaskAdded(task.getDescription(), taskCount);
@@ -69,7 +69,7 @@ public class Ui {
      * Displays a message when a task is deleted from the list.
      *
      * @param task      The task that was deleted.
-     * @param taskCount The current number of tasks remaining in the list.
+     * @param taskCount The current number of PawPal.core.PawPal.tasks remaining in the list.
      */
     public void showTaskDeleted(Task task, int taskCount) {
         printer.printTaskDeleted(task, taskCount);
