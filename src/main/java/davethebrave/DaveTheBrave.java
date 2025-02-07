@@ -46,6 +46,12 @@ public class DaveTheBrave {
                 continue;
             }
 
+            // Cheer
+            if (command.equalsIgnoreCase("cheer")) {
+                ui.showCheer();
+                continue;
+            }
+
             Parser.parseCommand(command, taskManager);
         }
         // Close scanner
