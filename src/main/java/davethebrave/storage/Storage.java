@@ -44,7 +44,9 @@ public class Storage {
         return tasks;
     }
 
-    // Check if folder and file exists. Create folder and/or file if not.
+    /*
+    Check if folder and file exists. Create folder and/or file if not.
+     */
     public void checkFileExists() {
         File file = new File(filePath);
         if (!file.exists()) {

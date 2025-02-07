@@ -12,6 +12,10 @@ public class TaskManager {
     private Storage storage;
     private Ui ui;
 
+    String todoType = "T";
+    String deadlineType = "D";
+    String eventType = "E";
+
     public TaskManager(List<Task> tasks, Storage storage, Ui ui) {
         this.tasks = tasks;
         this.storage = storage;
@@ -22,7 +26,7 @@ public class TaskManager {
         listTasks();
     }
     public void addTask(String type, String task, String details) {
-        if (type.equals("D") && details != null) {
+        if (type.equals(deadlineType) && details != null) {
             try {
                 LocalDate.parse(details.trim(), Task.INPUT_FORMATTER);
                 System.out.println("Added deadline: " + task + " (by: " + details + ")");
