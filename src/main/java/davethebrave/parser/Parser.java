@@ -8,7 +8,9 @@ import davethebrave.task.TaskManager;
 
 public class Parser {
     public static void parseCommand(String command, TaskManager taskManager) {
-        // Display list when requested
+        /*
+        Display list when requested
+         */
         if (command.equalsIgnoreCase("list")) {
             taskManager.listTasks();
         }
@@ -23,7 +25,9 @@ public class Parser {
                 System.out.println("    ____________________________________________________________");
             }
         }
-        // Add Deadline tasks
+        /*
+        Add Deadline tasks
+         */
         else if (command.toLowerCase().startsWith("deadline ")) {
             String[] deadlineInfo = command.substring(9).split(" /by", 2);
             if (deadlineInfo.length == 2) {
@@ -36,7 +40,9 @@ public class Parser {
                 System.out.println("    ____________________________________________________________");
             }
         }
-        // Add Event tasks
+        /*
+        Add Event tasks
+         */
         else if (command.toLowerCase().startsWith("event ")) {
             String[] eventInfo = command.substring(6).split(" /start | /end ", 3);
             if (eventInfo.length == 3) {
@@ -50,7 +56,9 @@ public class Parser {
                 System.out.println("    ____________________________________________________________");
             }
         }
-        // Delete tasks
+        /*
+        Delete tasks
+         */
         else if (command.toLowerCase().startsWith("delete ")) {
             if (command.substring(7).trim().isEmpty()) {
                 System.out.println("    ____________________________________________________________");
@@ -60,7 +68,9 @@ public class Parser {
             int taskNumber = Integer.parseInt(command.substring(7).trim());
             taskManager.deleteTask(taskNumber);
         }
-        // Mark tasks as done
+        /*
+        Mark tasks as done
+         */
         else if (command.toLowerCase().startsWith("mark ")) {
             if (command.substring(5).trim().isEmpty()) {
                 System.out.println("    ____________________________________________________________");
@@ -70,7 +80,9 @@ public class Parser {
             int taskNumber = Integer.parseInt(command.substring(5).trim());
             taskManager.markTask(taskNumber);
         }
-        // Unmark tasks as not done
+        /*
+        Unmark tasks as not done
+         */
         else if (command.toLowerCase().startsWith("unmark ")) {
             if (command.substring(7).trim().isEmpty()) {
                 System.out.println("    ____________________________________________________________");
@@ -80,7 +92,9 @@ public class Parser {
             int taskNumber = Integer.parseInt(command.substring(7).trim());
             taskManager.unmarkTask(taskNumber);
         }
-        // Handle Invalid Commands
+        /*
+        Handle Invalid Commands
+         */
         else {
             System.out.println("    ____________________________________________________________");
             System.out.println("    --Invalid Command--");

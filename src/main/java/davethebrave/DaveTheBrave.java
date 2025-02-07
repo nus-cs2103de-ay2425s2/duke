@@ -29,22 +29,30 @@ public class DaveTheBrave {
         List<String> greetings = Arrays.asList("hello", "hi", "hey", "yo");
         List<String> goodbyes = Arrays.asList("bye", "goodbye");
 
-        // Scanner object for user input
+        /*
+        Scanner object for user input
+         */
         Scanner scanner = new Scanner(System.in);
 
         ui.showWelcome();
 
         while (true) {
-            // Read user input
+            /*
+            Read user input
+             */
             String command = scanner.nextLine();
 
-            // Exit when user types the command 'bye'
+            /*
+            Exit when user types the command 'bye'
+             */
             if (goodbyes.contains(command.toLowerCase())) {
                 ui.showGoodbye();
                 break;
             }
 
-            // Additional greetings
+            /*
+            Additional greetings
+             */
             if (greetings.contains(command.toLowerCase())) {
                 ui.respondHello();
                 continue;
@@ -52,7 +60,9 @@ public class DaveTheBrave {
 
             Parser.parseCommand(command, taskManager);
         }
-        // Close scanner
+        /*
+        Close scanner
+         */
         scanner.close();
     }
     public static void main(String[] args) {
