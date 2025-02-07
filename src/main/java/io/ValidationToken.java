@@ -161,6 +161,12 @@ public class ValidationToken {
             public String getErrorMessage() {
                 return "find expects at least 1 argument but received 0 arguments";
             }
+        },
+        CHEER_TOO_MANY_ARGUMENTS() {
+            @Override
+            public String getErrorMessage() {
+                return "cheer expects 0 argument but received at least 1 argument";
+            }
         };
 
         public abstract String getErrorMessage();

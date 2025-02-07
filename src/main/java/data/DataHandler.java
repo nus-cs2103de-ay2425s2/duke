@@ -1,12 +1,15 @@
 package data;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
+import java.util.random.RandomGenerator;
 
 /**
  * DataHandler class that handles Files I/O
@@ -16,6 +19,15 @@ public class DataHandler {
     public static Path programRoot = Paths.get("").toAbsolutePath();
     public static DateTimeFormatter dateSaveFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static DateTimeFormatter dateTimeSaveFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    public static Path cheerPath;
+
+    static {
+        try {
+            cheerPath = Paths.get(DataHandler.class.getResource("/cheer.txt").toURI());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Method to write data to a file

@@ -148,6 +148,12 @@ public class InputValidator {
             }
             return new ValidationToken(true);
         }
+        else if (userInputTokens.getFirst().equalsIgnoreCase(ActionHandler.Action.CHEER.toString())) {
+            if (userInputTokens.size() >= 2) {
+                return new ValidationToken(false, ValidationToken.InputError.CHEER_TOO_MANY_ARGUMENTS);
+            }
+            return new ValidationToken(true);
+        }
 
         return new ValidationToken(false, ValidationToken.InputError.INVALID_COMMAND);
     }
