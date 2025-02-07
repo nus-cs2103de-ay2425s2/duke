@@ -6,42 +6,35 @@ Send "Help" or "?" for instructions on how to use me!
 Rucia: All tasks have been cleared.
 Rucia: Here is how you can use me:
 1) add <task> - Add a new ToDo task to your list.
-2) deadline <task> /by <date> - Add a Deadline task.
-3) event <task> /from <start> /to <end> - Add an Event task.
+2) deadline <task> /by <date> - Add a Deadline task. (Format: dd/MM/yyyy HHmm)
+3) event <task> /from <start> /to <end> - Add an Event task. (Format: dd/MM/yyyy HHmm)
 4) list - View all your tasks.
-5) mark <number> - Mark the corresponding task as complete.
-6) unmark <number> - Mark the corresponding task as incomplete.
-7) delete <number> - Delete the corresponding task from the list.
-8) clear - Clear all tasks from the list.
-9) bye - Exit the chatbot.
+5) list_day <date> - List all tasks for the specified day. (Format: dd/MM/yyyy)
+6) mark <number> - Mark the corresponding task as complete.
+7) unmark <number> - Mark the corresponding task as incomplete.
+8) delete <number> - Delete the corresponding task from the list.
+9) clear - Clear all tasks from the list.
+10) bye - Exit the chatbot.
 Rucia: Added ToDo task - Buy groceries
 Rucia: You now have 1 task(s) in your list.
 Rucia: Added ToDo task - Read book
 Rucia: You now have 2 task(s) in your list.
-Rucia: Added Deadline task - Submit assignment (by: Monday)
-Rucia: You now have 3 task(s) in your list.
-Rucia: Added Event task - Team meeting (from: 2pm to: 4pm)
-Rucia: You now have 4 task(s) in your list.
+Rucia: Invalid date format. Use: dd/mm/yyyy HHmm (e.g., 02/03/2019 1800)
+Rucia: Invalid date format. Use: dd/mm/yyyy HHmm (e.g., 02/03/2019 1800)
 Rucia: Here are your tasks:
 1. [T][ ] Buy groceries
 2. [T][ ] Read book
-3. [D][ ] Submit assignment (by: Monday)
-4. [E][ ] Team meeting (from: 2pm to: 4pm)
 Rucia: Marked as done - [T][X] Read book
 Rucia: Marked as not done - [T][ ] Read book
 Rucia: Here are your tasks:
 1. [T][ ] Buy groceries
 2. [T][ ] Read book
-3. [D][ ] Submit assignment (by: Monday)
-4. [E][ ] Team meeting (from: 2pm to: 4pm)
-Rucia: Deleted task - [D][ ] Submit assignment (by: Monday)
-Rucia: You now have 3 task(s) in your list.
+Rucia: Invalid task number.
 Rucia: Here are your tasks:
 1. [T][ ] Buy groceries
 2. [T][ ] Read book
-3. [E][ ] Team meeting (from: 2pm to: 4pm)
 Rucia: Deleted task - [T][ ] Buy groceries
-Rucia: You now have 2 task(s) in your list.
+Rucia: You now have 1 task(s) in your list.
 Rucia: Invalid task number.
 Rucia: Invalid task number.
 Rucia: Invalid task number.
