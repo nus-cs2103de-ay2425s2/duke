@@ -151,11 +151,18 @@ public class ValidationToken {
             }
         },
         INVALID_COMMAND {
+            @Override
             public String getErrorMessage() {
-                return "command listed does not exists. use todo, mark, unmark, deadline and event instead";
+                return "command listed does not exists. use todo, mark, unmark, deadline, event, delete and find instead";
+            }
+        },
+        FIND_TOO_LITTLE_ARGUMENTS() {
+            @Override
+            public String getErrorMessage() {
+                return "find expects at least 1 argument but received 0 arguments";
             }
         };
 
         public abstract String getErrorMessage();
-    }
+    };
 }

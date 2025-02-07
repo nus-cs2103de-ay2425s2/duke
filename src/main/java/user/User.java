@@ -84,6 +84,21 @@ public class User {
         return stringBuilder.toString();
     }
 
+    public String getTaskList(List<Task> taskList) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < taskList.size(); i++) {
+            Task task = taskList.get(i);
+            stringBuilder.append("%s. %s".formatted(
+                    i + 1,
+                    task.getTaskInformation())
+            );
+            if (i != taskList.size() - 1) {
+                stringBuilder.append("\n");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
     /**
      * Sets task to be done
      *
@@ -141,5 +156,19 @@ public class User {
 
     public Path getDataFilePath() {
         return dataFilePath;
+    }
+
+    public List<Task> findTaskWithKeyWord(String keyWord) {
+        List<Task> foundTasks = new ArrayList<>();
+        for (Task task : this.taskList) {
+            // case-insensitive search
+            for (int i = 0; i < task.getTaskDetail().length(); i++) {
+                if (task.getTaskDetail().regionMatches(true, i, keyWord, 0, keyWord.length())) {
+                    foundTasks.add(task);
+                    break;
+                }
+            }
+        }
+        return foundTasks;
     }
 }
