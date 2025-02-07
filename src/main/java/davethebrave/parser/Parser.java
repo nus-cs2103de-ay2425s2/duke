@@ -14,6 +14,16 @@ public class Parser {
         if (command.equalsIgnoreCase("list")) {
             taskManager.listTasks();
         }
+        else if (command.toLowerCase().startsWith("find ")) {
+            String keyword = command.substring(5).trim();
+            if (!keyword.isEmpty()) {
+                taskManager.findTask(keyword);
+            } else {
+                System.out.println("    ____________________________________________________________");
+                System.out.println("      Invalid format. Use: find <keyword>");
+                System.out.println("    ____________________________________________________________");
+            }
+        }
         // Add To-Do tasks
         else if (command.toLowerCase().startsWith("todo ")) {
             String todoInfo = command.substring(5).trim();
@@ -109,6 +119,8 @@ public class Parser {
             System.out.println("            'unmark':       unmark <task>");
             System.out.println("      Delete task from list");
             System.out.println("            'delete':       delete <task number>");
+            System.out.println("      Find task from list");
+            System.out.println("            'find':       find <keyword>");
             System.out.println("    ____________________________________________________________");
         }
     }

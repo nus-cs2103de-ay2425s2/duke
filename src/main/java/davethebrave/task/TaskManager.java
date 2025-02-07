@@ -10,6 +10,7 @@ import davethebrave.ui.Ui;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.ArrayList;
 
 public class TaskManager {
     private List<Task> tasks;
@@ -98,6 +99,29 @@ public class TaskManager {
             System.out.println("    ____________________________________________________________");
         }
     }
+
+    public void findTask(String keyword) {
+        System.out.println("    ____________________________________________________________");
+        List<Task> matchingTasks = new ArrayList<>();
+
+        for (int i = 0; i < tasks.size(); i++) {
+            String taskDesc = tasks.get(i).getTaskDescription().toLowerCase();
+            if (taskDesc.contains(keyword.toLowerCase())) {
+                matchingTasks.add(tasks.get(i));
+            }
+        }
+
+        if (matchingTasks.isEmpty()) {
+            System.out.println("      No matching tasks found.");
+        } else {
+            System.out.println("      Matching tasks found:");
+            for (int i = 0; i < matchingTasks.size(); i++) {
+                System.out.println("      " + (i + 1) + "." + matchingTasks.get(i));
+            }
+        }
+        System.out.println("    ____________________________________________________________");
+    }
+
     private boolean isValidTaskNumber(int taskNumber) {
         if (taskNumber < 1 || taskNumber > tasks.size()) {
             System.out.println("    ____________________________________________________________");
