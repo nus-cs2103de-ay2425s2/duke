@@ -41,6 +41,10 @@ public class Task {
         }
     }
 
+    public String getTaskDescription() {
+        return this.description;
+    }
+
     public void mark() {
         this.status = true;
     }
