@@ -68,7 +68,7 @@ class Parser {
      * @param input The user input string.
      * @return The corresponding Command enum value.
      */
-    private Command parseCommand(String input) {
+    Command parseCommand(String input) {
         String commandWord = input.split(" ")[0].toUpperCase();
         try {
             return Command.valueOf(commandWord);
