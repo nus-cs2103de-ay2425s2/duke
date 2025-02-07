@@ -7,6 +7,10 @@ list
 mark 2
 unmark 2
 list
+delete 3
+list
+delete 1
+delete 5
 mark 5
 unmark 0
 invalid command
