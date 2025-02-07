@@ -1,35 +1,15 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import tasks.Task;
+import tasks.ToDo;
+import tasks.Deadline;
+import tasks.Event;
 
 /**
  * Rucia is a personal assistant chatbot that helps users with basic commands.
  * This class handles greeting the user, managing tasks, providing help, and exiting when requested.
  */
 public class Rucia {
-
-    static class Task {
-        String description;
-        boolean isDone;
-
-        Task(String description) {
-            this.description = description;
-            this.isDone = false;
-        }
-
-        void markAsDone() {
-            this.isDone = true;
-        }
-
-        void markAsNotDone() {
-            this.isDone = false;
-        }
-
-        @Override
-        public String toString() {
-            return (isDone ? "[X] " : "[ ] ") + description;
-        }
-    }
-
     /**
      * The main method that runs the Rucia chatbot.
      * It greets the user, manages tasks, provides help,
@@ -57,15 +37,35 @@ public class Rucia {
                 break;
             } else if (input.equalsIgnoreCase("help") || input.equals("?")) {
                 System.out.println("Rucia: Here’s how you can use me:");
-                System.out.println("1) add <task> - Add a new task to your list.");
-                System.out.println("2) list - View all your tasks.");
-                System.out.println("3) mark <number> - Mark the corresponding task as complete.");
-                System.out.println("4) unmark <number> - Mark the corresponding task as incomplete.");
-                System.out.println("5) bye - Exit the chatbot.");
+                System.out.println("1) add <task> - Add a new ToDo task to your list.");
+                System.out.println("2) deadline <task> /by <date> - Add a Deadline task.");
+                System.out.println("3) event <task> /from <start> /to <end> - Add an Event task.");
+                System.out.println("4) list - View all your tasks.");
+                System.out.println("5) mark <number> - Mark the corresponding task as complete.");
+                System.out.println("6) unmark <number> - Mark the corresponding task as incomplete.");
+                System.out.println("7) bye - Exit the chatbot.");
             } else if (input.startsWith("add ")) {
                 String taskDescription = input.substring(4);
-                tasks.add(new Task(taskDescription));
-                System.out.println("Rucia: Added task - " + taskDescription);
+                tasks.add(new ToDo(taskDescription));
+                System.out.println("Rucia: Added ToDo task - " + taskDescription);
+            } else if (input.startsWith("deadline ")) {
+                try {
+                    String[] parts = input.substring(9).split(" /by ");
+                    tasks.add(new Deadline(parts[0], parts[1]));
+                    System.out.println("Rucia: Added Deadline task - " + parts[0] + " (by: " + parts[1] + ")");
+                } catch (Exception e) {
+                    System.out.println("Rucia: Invalid format. Use: deadline <task> /by <date>");
+                }
+            } else if (input.startsWith("event ")) {
+                try {
+                    String[] parts = input.substring(6).split(" /from ");
+                    String description = parts[0];
+                    String[] timeParts = parts[1].split(" /to ");
+                    tasks.add(new Event(description, timeParts[0], timeParts[1]));
+                    System.out.println("Rucia: Added Event task - " + description + " (from: " + timeParts[0] + " to: " + timeParts[1] + ")");
+                } catch (Exception e) {
+                    System.out.println("Rucia: Invalid format. Use: event <task> /from <start> /to <end>");
+                }
             } else if (input.equalsIgnoreCase("list")) {
                 System.out.println("Rucia: Here are your tasks:");
                 for (int i = 0; i < tasks.size(); i++) {
@@ -99,7 +99,7 @@ public class Rucia {
                     System.out.println("Rucia: Please enter a valid task number.");
                 }
             } else {
-                System.out.println("Rucia: " + input);
+                System.out.println("Rucia: OOPS! I don't recognize that command. Please type \"Help\" or \"?\" to see the list of available commands.");
             }
         }
 
