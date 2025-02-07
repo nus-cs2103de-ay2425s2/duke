@@ -8,6 +8,7 @@ import action.ActionHandler;
 public class ToDoTask extends Task {
     /**
      * Constructor for Todo Task
+     *
      * @param taskDetail String that indicates the task details
      */
     public ToDoTask(String taskDetail) {

@@ -3,9 +3,7 @@ package task;
 import action.ActionHandler.Action;
 import data.DataHandler;
 import io.InputValidator;
-import io.UI;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,23 +20,22 @@ public class EventTask extends Task implements HasStart, HasDeadline {
 
     /**
      * EventTask constructor
-     * @param taskDetail String that indicates the task detail
+     *
+     * @param taskDetail   String that indicates the task detail
      * @param fromDateTime String that is a valid datetime/day format that indicates when the event starts
-     * @param toDateTime String that is a valid datetime/day format that indicates when the event ends
+     * @param toDateTime   String that is a valid datetime/day format that indicates when the event ends
      */
     public EventTask(String taskDetail, String fromDateTime, String toDateTime) {
         super(taskDetail, Action.EVENT);
         if (InputValidator.isValidDate(fromDateTime, false)) {
             this.fromDate = super.parseDate(fromDateTime);
-        }
-        else {
+        } else {
             this.fromDateTime = super.parseDateTime(fromDateTime);
         }
 
         if (InputValidator.isValidDate(toDateTime, true)) {
             this.toDate = super.parseDate(toDateTime);
-        }
-        else {
+        } else {
             this.toDateTime = super.parseDateTime(toDateTime);
         }
     }

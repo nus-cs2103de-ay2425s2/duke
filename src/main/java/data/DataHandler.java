@@ -20,8 +20,9 @@ public class DataHandler {
     /**
      * Method to write data to a file
      * Precondition: File already exists in the system
+     *
      * @param filePath Path object of the file
-     * @param payLoad List of strings to write to the file, each item will be separated by \n
+     * @param payLoad  List of strings to write to the file, each item will be separated by \n
      * @param isAppend Flag to append data instead of rewriting the file
      * @throws IOException IO fails
      */
@@ -29,11 +30,10 @@ public class DataHandler {
         //file exists
         if (isAppend) {
             Files.writeString(filePath, String.join("\n", payLoad), StandardOpenOption.APPEND);
-        }
-        else {
+        } else {
             Files.writeString(filePath, String.join("\n", payLoad), StandardOpenOption.TRUNCATE_EXISTING);
         }
-    };
+    }
 
     /**
      * Method to read data from a file

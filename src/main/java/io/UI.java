@@ -1,19 +1,9 @@
 package io;
 
-import action.ActionHandler.Action;
-import io.ValidationToken.InputError;
 import user.User;
 
 import java.io.IOException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Year;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,8 +37,7 @@ public class UI {
             ValidationToken validationToken = InputValidator.isInputValid(userInput, user);
             if (validationToken.isValid()) {
                 isUserInputValid = true;
-            }
-            else {
+            } else {
                 List<String> outputMessage = new ArrayList<>();
                 outputMessage.add(validationToken.getErrorMessage());
                 displayMessageWithDivider(outputMessage);

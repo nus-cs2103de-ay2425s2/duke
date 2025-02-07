@@ -2,13 +2,10 @@ package user;
 
 import action.ActionHandler;
 import data.DataHandler;
-import task.DeadLineTask;
-import task.EventTask;
 import task.Task;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +66,7 @@ public class User {
 
     /**
      * getTaskList method that returns a string representation of the task list currently
+     *
      * @return String that represents the task list currently
      */
     public String getTaskList() {
@@ -88,6 +86,7 @@ public class User {
 
     /**
      * Sets task to be done
+     *
      * @param taskNumber int that indicates the task to set
      * @return String representation of updated task information
      */
@@ -100,6 +99,7 @@ public class User {
 
     /**
      * Sets task to be not done
+     *
      * @param taskNumber int that indicates the task to set
      * @return String representation of updated task information
      */
@@ -116,6 +116,7 @@ public class User {
 
     /**
      * Deletes task from the task list
+     *
      * @param taskNumber int that indicates the task to delete, taskNumber is 0-indexed
      * @return String representation of deleted task information
      */
