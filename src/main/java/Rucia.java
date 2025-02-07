@@ -15,20 +15,38 @@ import tasks.Event;
  */
 public class Rucia {
 
-    // Constants for commands
-    private static final String COMMAND_BYE = "bye";
-    private static final String COMMAND_HELP = "help";
-    private static final String COMMAND_ADD = "add ";
-    private static final String COMMAND_DEADLINE = "deadline ";
-    private static final String COMMAND_EVENT = "event ";
-    private static final String COMMAND_LIST = "list";
-    private static final String COMMAND_MARK = "mark ";
-    private static final String COMMAND_UNMARK = "unmark ";
-    private static final String COMMAND_DELETE = "delete ";
-    private static final String COMMAND_CLEAR = "clear";
+    // Enum for commands
+    private enum Command {
+        BYE("bye"),
+        HELP("help"),
+        ADD("add "),
+        DEADLINE("deadline "),
+        EVENT("event "),
+        LIST("list"),
+        MARK("mark "),
+        UNMARK("unmark "),
+        DELETE("delete "),
+        CLEAR("clear");
+
+        private final String value;
+
+        Command(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
 
     private static final String DATA_FILE = "./data/tasks.txt";
 
+    /**
+     * The main method to start the chatbot.
+     * Handles user input and command execution.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks = loadTasksFromFile();
@@ -48,9 +66,9 @@ public class Rucia {
             }
             String input = scanner.nextLine();
 
-            if (input.equalsIgnoreCase(COMMAND_BYE)) {
+            if (input.equalsIgnoreCase(Command.BYE.getValue())) {
                 break;
-            } else if (input.equalsIgnoreCase(COMMAND_HELP) || input.equals("?")) {
+            } else if (input.equalsIgnoreCase(Command.HELP.getValue()) || input.equals("?")) {
                 System.out.println("Rucia: Here is how you can use me:");
                 System.out.println("1) add <task> - Add a new ToDo task to your list.");
                 System.out.println("2) deadline <task> /by <date> - Add a Deadline task.");
@@ -61,19 +79,19 @@ public class Rucia {
                 System.out.println("7) delete <number> - Delete the corresponding task from the list.");
                 System.out.println("8) clear - Clear all tasks from the list.");
                 System.out.println("9) bye - Exit the chatbot.");
-            } else if (input.equalsIgnoreCase(COMMAND_CLEAR)) {
+            } else if (input.equalsIgnoreCase(Command.CLEAR.getValue())) {
                 tasks.clear();
                 saveTasksToFile(tasks);
                 System.out.println("Rucia: All tasks have been cleared.");
-            } else if (input.startsWith(COMMAND_ADD)) {
-                String taskDescription = input.substring(COMMAND_ADD.length());
+            } else if (input.startsWith(Command.ADD.getValue())) {
+                String taskDescription = input.substring(Command.ADD.getValue().length());
                 tasks.add(new ToDo(taskDescription));
                 saveTasksToFile(tasks);
                 System.out.println("Rucia: Added ToDo task - " + taskDescription);
                 System.out.println("Rucia: You now have " + tasks.size() + " task(s) in your list.");
-            } else if (input.startsWith(COMMAND_DEADLINE)) {
+            } else if (input.startsWith(Command.DEADLINE.getValue())) {
                 try {
-                    String[] parts = input.substring(COMMAND_DEADLINE.length()).split(" /by ");
+                    String[] parts = input.substring(Command.DEADLINE.getValue().length()).split(" /by ");
                     tasks.add(new Deadline(parts[0], parts[1]));
                     saveTasksToFile(tasks);
                     System.out.println("Rucia: Added Deadline task - " + parts[0] + " (by: " + parts[1] + ")");
@@ -81,9 +99,9 @@ public class Rucia {
                 } catch (Exception e) {
                     System.out.println("Rucia: Invalid format. Use: deadline <task> /by <date>");
                 }
-            } else if (input.startsWith(COMMAND_EVENT)) {
+            } else if (input.startsWith(Command.EVENT.getValue())) {
                 try {
-                    String[] parts = input.substring(COMMAND_EVENT.length()).split(" /from ");
+                    String[] parts = input.substring(Command.EVENT.getValue().length()).split(" /from ");
                     String description = parts[0];
                     String[] timeParts = parts[1].split(" /to ");
                     tasks.add(new Event(description, timeParts[0], timeParts[1]));
@@ -93,7 +111,7 @@ public class Rucia {
                 } catch (Exception e) {
                     System.out.println("Rucia: Invalid format. Use: event <task> /from <start> /to <end>");
                 }
-            } else if (input.equalsIgnoreCase(COMMAND_LIST)) {
+            } else if (input.equalsIgnoreCase(Command.LIST.getValue())) {
                 System.out.println("Rucia: Here are your tasks:");
                 for (int i = 0; i < tasks.size(); i++) {
                     System.out.println((i + 1) + ". " + tasks.get(i));
@@ -101,9 +119,9 @@ public class Rucia {
                 if (tasks.isEmpty()) {
                     System.out.println("No tasks added yet.");
                 }
-            } else if (input.startsWith(COMMAND_MARK)) {
+            } else if (input.startsWith(Command.MARK.getValue())) {
                 try {
-                    int index = Integer.parseInt(input.substring(COMMAND_MARK.length())) - 1;
+                    int index = Integer.parseInt(input.substring(Command.MARK.getValue().length())) - 1;
                     if (index >= 0 && index < tasks.size()) {
                         tasks.get(index).markAsDone();
                         saveTasksToFile(tasks);
@@ -114,9 +132,9 @@ public class Rucia {
                 } catch (NumberFormatException e) {
                     System.out.println("Rucia: Please enter a valid task number.");
                 }
-            } else if (input.startsWith(COMMAND_UNMARK)) {
+            } else if (input.startsWith(Command.UNMARK.getValue())) {
                 try {
-                    int index = Integer.parseInt(input.substring(COMMAND_UNMARK.length())) - 1;
+                    int index = Integer.parseInt(input.substring(Command.UNMARK.getValue().length())) - 1;
                     if (index >= 0 && index < tasks.size()) {
                         tasks.get(index).markAsNotDone();
                         saveTasksToFile(tasks);
@@ -127,9 +145,9 @@ public class Rucia {
                 } catch (NumberFormatException e) {
                     System.out.println("Rucia: Please enter a valid task number.");
                 }
-            } else if (input.startsWith(COMMAND_DELETE)) {
+            } else if (input.startsWith(Command.DELETE.getValue())) {
                 try {
-                    int index = Integer.parseInt(input.substring(COMMAND_DELETE.length())) - 1;
+                    int index = Integer.parseInt(input.substring(Command.DELETE.getValue().length())) - 1;
                     if (index >= 0 && index < tasks.size()) {
                         Task removedTask = tasks.remove(index);
                         saveTasksToFile(tasks);
@@ -154,6 +172,11 @@ public class Rucia {
         scanner.close();
     }
 
+    /**
+     * Saves the current list of tasks to a file.
+     *
+     * @param tasks The list of tasks to be saved.
+     */
     private static void saveTasksToFile(ArrayList<Task> tasks) {
         try {
             File file = new File(DATA_FILE);
@@ -170,6 +193,11 @@ public class Rucia {
         }
     }
 
+    /**
+     * Loads tasks from the data file.
+     *
+     * @return The list of tasks loaded from the file.
+     */
     private static ArrayList<Task> loadTasksFromFile() {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -190,6 +218,12 @@ public class Rucia {
         return tasks;
     }
 
+    /**
+     * Parses a task from a string representation.
+     *
+     * @param line The string representation of the task.
+     * @return The parsed Task object.
+     */
     private static Task parseTask(String line) {
         String type = line.substring(1, 2);
         boolean isDone = line.charAt(4) == 'X';
