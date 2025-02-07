@@ -6,7 +6,7 @@ import java.time.format.DateTimeParseException;
 
 public class Task {
     private String type; // "T" = To-Do, "D" = Deadline, "E" = Events
-    private String task;
+    private String description;
     private boolean status; // false = not done, true = done
     private String details; // Info for Event tasks
     private LocalDate deadline; // Info for Deadline tasks
@@ -16,7 +16,7 @@ public class Task {
 
     public Task(String type, String task, String details) {
         this.type = type;
-        this.task = task;
+        this.description = task;
         this.status = false;
         this.details = details;
 
@@ -27,6 +27,10 @@ public class Task {
                 System.out.println("Invalid date format! Please use yyyy-MM-dd (e.g., 2019-10-15).");
             }
         }
+    }
+
+    public String getTaskDescription() {
+        return this.description;
     }
 
     public void mark() {
@@ -42,16 +46,16 @@ public class Task {
         String taskStatus = status ? "[X]" : "[ ]";
         if (type.equals("D")) {
             String taskDetails = details != null ? " (by: " + deadline.format(OUTPUT_FORMATTER) + ")" : "";
-            return "[" + type + "]" + taskStatus + " " + task + taskDetails;
+            return "[" + type + "]" + taskStatus + " " + description + taskDetails;
         } else {
             String taskDetails = details != null ? " " + details : "";
-            return "[" + type + "]" + taskStatus + " " + task + (taskDetails);
+            return "[" + type + "]" + taskStatus + " " + description + (taskDetails);
         }
     }
 
     // Writing to file
     public String toFileFormat() {
-        return type + " | " + (status ? "[X]" : "[ ]") + " | " + task + (details != null ? " | " + details : "");
+        return type + " | " + (status ? "[X]" : "[ ]") + " | " + description + (details != null ? " | " + details : "");
     }
 
     // Loading from file
