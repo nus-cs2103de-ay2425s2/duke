@@ -5,8 +5,8 @@ import PawPal.utils.TaskList;
 import PawPal.utils.Printer;
 
 /**
- * Parses and processes user input for the PawPal.core.PawPal chatbot.
- * Determines the command type and delegates actions to the {@link TaskList}.
+ * Parses and processes user input for the PawPal chatbot.
+ * Determines the command type and delegates actions to the TaskList.
  */
 class Parser {
 
@@ -14,9 +14,9 @@ class Parser {
     private final Printer printer;
 
     /**
-     * Constructs a new {@code PawPal.core.Parser} instance.
+     * Constructs a new Parser instance.
      *
-     * @param taskList The {@link TaskList} responsible for managing PawPal.core.PawPal.tasks.
+     * @param taskList The TaskList responsible for managing PawPal.tasks.
      */
     public Parser(TaskList taskList) {
         this.taskList = taskList;

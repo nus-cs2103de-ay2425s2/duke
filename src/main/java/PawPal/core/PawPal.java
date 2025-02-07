@@ -7,14 +7,14 @@ import PawPal.utils.TaskList;
 import PawPal.utils.Storage;
 
 /**
- * The main class for the PawPal.core.PawPal chatbot application.
- * PawPal.core.PawPal allows users to manage PawPal.core.PawPal.tasks such as ToDo, Deadline, and Event PawPal.core.PawPal.tasks.
+ * The main class for the PawPal chatbot application.
+ * PawPal allows users to manage tasks such as ToDo, Deadline, and Event tasks.
  * It interacts with the user via the command line.
  */
 public class PawPal {
 
     /**
-     * The entry point of the PawPal.core.PawPal application.
+     * The entry point of the PawPal application.
      *
      * @param args Command-line arguments (not used).
      */

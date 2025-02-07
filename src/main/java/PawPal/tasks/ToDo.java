@@ -7,7 +7,7 @@ package PawPal.tasks;
 public class ToDo extends Task {
 
     /**
-     * Constructs a new {@code ToDo} task.
+     * Constructs a new ToDo task.
      *
      * @param description The description of the ToDo task.
      */
