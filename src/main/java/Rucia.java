@@ -46,16 +46,19 @@ public class Rucia {
                 System.out.println("4) list - View all your tasks.");
                 System.out.println("5) mark <number> - Mark the corresponding task as complete.");
                 System.out.println("6) unmark <number> - Mark the corresponding task as incomplete.");
-                System.out.println("7) bye - Exit the chatbot.");
+                System.out.println("7) delete <number> - Delete the corresponding task from the list.");
+                System.out.println("8) bye - Exit the chatbot.");
             } else if (input.startsWith("add ")) {
                 String taskDescription = input.substring(4);
                 tasks.add(new ToDo(taskDescription));
                 System.out.println("Rucia: Added ToDo task - " + taskDescription);
+                System.out.println("Rucia: You now have " + tasks.size() + " task(s) in your list.");
             } else if (input.startsWith("deadline ")) {
                 try {
                     String[] parts = input.substring(9).split(" /by ");
                     tasks.add(new Deadline(parts[0], parts[1]));
                     System.out.println("Rucia: Added Deadline task - " + parts[0] + " (by: " + parts[1] + ")");
+                    System.out.println("Rucia: You now have " + tasks.size() + " task(s) in your list.");
                 } catch (Exception e) {
                     System.out.println("Rucia: Invalid format. Use: deadline <task> /by <date>");
                 }
@@ -66,6 +69,7 @@ public class Rucia {
                     String[] timeParts = parts[1].split(" /to ");
                     tasks.add(new Event(description, timeParts[0], timeParts[1]));
                     System.out.println("Rucia: Added Event task - " + description + " (from: " + timeParts[0] + " to: " + timeParts[1] + ")");
+                    System.out.println("Rucia: You now have " + tasks.size() + " task(s) in your list.");
                 } catch (Exception e) {
                     System.out.println("Rucia: Invalid format. Use: event <task> /from <start> /to <end>");
                 }
@@ -95,6 +99,19 @@ public class Rucia {
                     if (index >= 0 && index < tasks.size()) {
                         tasks.get(index).markAsNotDone();
                         System.out.println("Rucia: Marked as not done - " + tasks.get(index));
+                    } else {
+                        System.out.println("Rucia: Invalid task number.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Rucia: Please enter a valid task number.");
+                }
+            } else if (input.startsWith("delete ")) {
+                try {
+                    int index = Integer.parseInt(input.substring(7)) - 1;
+                    if (index >= 0 && index < tasks.size()) {
+                        Task removedTask = tasks.remove(index);
+                        System.out.println("Rucia: Deleted task - " + removedTask);
+                        System.out.println("Rucia: You now have " + tasks.size() + " task(s) in your list.");
                     } else {
                         System.out.println("Rucia: Invalid task number.");
                     }
