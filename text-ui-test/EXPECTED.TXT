@@ -3,6 +3,7 @@ Hello! I'm Rucia
 How can I assist you today?
 Send "Help" or "?" for instructions on how to use me!
 ========================================
+Rucia: All tasks have been cleared.
 Rucia: Here is how you can use me:
 1) add <task> - Add a new ToDo task to your list.
 2) deadline <task> /by <date> - Add a Deadline task.
@@ -11,7 +12,8 @@ Rucia: Here is how you can use me:
 5) mark <number> - Mark the corresponding task as complete.
 6) unmark <number> - Mark the corresponding task as incomplete.
 7) delete <number> - Delete the corresponding task from the list.
-8) bye - Exit the chatbot.
+8) clear - Clear all tasks from the list.
+9) bye - Exit the chatbot.
 Rucia: Added ToDo task - Buy groceries
 Rucia: You now have 1 task(s) in your list.
 Rucia: Added ToDo task - Read book
