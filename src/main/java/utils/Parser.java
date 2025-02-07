@@ -4,8 +4,8 @@ package utils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import tasks.Task;
+import tasks.TaskList;
 import tasks.ToDo;
 import tasks.Deadline;
 import tasks.Event;
@@ -14,7 +14,7 @@ import ui.Ui;
 public class Parser {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
 
-    public static void parseCommand(String input, ArrayList<Task> tasks, Ui ui) {
+    public static void parseCommand(String input, TaskList taskList, Ui ui) {
         if (input.equalsIgnoreCase("bye")) {
             ui.showExit();
             System.exit(0);
@@ -31,15 +31,15 @@ public class Parser {
             ui.showMessage("9) clear - Clear all tasks from the list.");
             ui.showMessage("10) bye - Exit the chatbot.");
         } else if (input.equalsIgnoreCase("clear")) {
-            tasks.clear();
-            Storage.saveTasksToFile(tasks);
+            taskList.clearTasks();
+            Storage.saveTasksToFile(taskList.getTasks());
             ui.showMessage("All tasks have been cleared.");
         } else if (input.startsWith("add ")) {
             String taskDescription = input.substring(4);
-            tasks.add(new ToDo(taskDescription));
-            Storage.saveTasksToFile(tasks);
+            taskList.addTask(new ToDo(taskDescription));
+            Storage.saveTasksToFile(taskList.getTasks());
             ui.showMessage("Added ToDo task - " + taskDescription);
-            ui.showMessage("You now have " + tasks.size() + " task(s) in your list.");
+            ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
         } else if (input.startsWith("deadline ")) {
             try {
                 String[] parts = input.substring(9).split(" /by ");
@@ -48,10 +48,10 @@ public class Parser {
                     dateTimeString += " 1200";
                 }
                 LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, DATE_TIME_FORMATTER);
-                tasks.add(new Deadline(parts[0], dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma"))));
-                Storage.saveTasksToFile(tasks);
+                taskList.addTask(new Deadline(parts[0], dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma"))));
+                Storage.saveTasksToFile(taskList.getTasks());
                 ui.showMessage("Added Deadline task - " + parts[0] + " (by: " + dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + ")");
-                ui.showMessage("You now have " + tasks.size() + " task(s) in your list.");
+                ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
             } catch (DateTimeParseException e) {
                 ui.showError("Invalid date format. Use: dd/MM/yyyy HHmm (e.g., 02/03/2019 1800)");
             } catch (Exception e) {
@@ -75,10 +75,10 @@ public class Parser {
                 }
                 LocalDateTime toDateTime = LocalDateTime.parse(toDateTimeString, DATE_TIME_FORMATTER);
 
-                tasks.add(new Event(description, fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")), toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma"))));
-                Storage.saveTasksToFile(tasks);
+                taskList.addTask(new Event(description, fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")), toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma"))));
+                Storage.saveTasksToFile(taskList.getTasks());
                 ui.showMessage("Added Event task - " + description + " (from: " + fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + " to: " + toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + ")");
-                ui.showMessage("You now have " + tasks.size() + " task(s) in your list.");
+                ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
             } catch (DateTimeParseException e) {
                 ui.showError("Invalid date format. Use: dd/MM/yyyy HHmm (e.g., 02/03/2019 1800)");
             } catch (Exception e) {
@@ -86,19 +86,19 @@ public class Parser {
             }
         } else if (input.equalsIgnoreCase("list")) {
             ui.showMessage("Here are your tasks:");
-            for (int i = 0; i < tasks.size(); i++) {
-                ui.showMessage((i + 1) + ". " + tasks.get(i));
+            for (int i = 0; i < taskList.getSize(); i++) {
+                ui.showMessage((i + 1) + ". " + taskList.getTask(i));
             }
-            if (tasks.isEmpty()) {
+            if (taskList.getSize() == 0) {
                 ui.showMessage("No tasks added yet.");
             }
         } else if (input.startsWith("mark ")) {
             try {
                 int index = Integer.parseInt(input.substring(5)) - 1;
-                if (index >= 0 && index < tasks.size()) {
-                    tasks.get(index).markAsDone();
-                    Storage.saveTasksToFile(tasks);
-                    ui.showMessage("Marked as done - " + tasks.get(index));
+                if (index >= 0 && index < taskList.getSize()) {
+                    taskList.getTask(index).markAsDone();
+                    Storage.saveTasksToFile(taskList.getTasks());
+                    ui.showMessage("Marked as done - " + taskList.getTask(index));
                 } else {
                     ui.showError("Invalid task number.");
                 }
@@ -108,10 +108,10 @@ public class Parser {
         } else if (input.startsWith("unmark ")) {
             try {
                 int index = Integer.parseInt(input.substring(7)) - 1;
-                if (index >= 0 && index < tasks.size()) {
-                    tasks.get(index).markAsNotDone();
-                    Storage.saveTasksToFile(tasks);
-                    ui.showMessage("Marked as not done - " + tasks.get(index));
+                if (index >= 0 && index < taskList.getSize()) {
+                    taskList.getTask(index).markAsNotDone();
+                    Storage.saveTasksToFile(taskList.getTasks());
+                    ui.showMessage("Marked as not done - " + taskList.getTask(index));
                 } else {
                     ui.showError("Invalid task number.");
                 }
@@ -121,11 +121,11 @@ public class Parser {
         } else if (input.startsWith("delete ")) {
             try {
                 int index = Integer.parseInt(input.substring(7)) - 1;
-                if (index >= 0 && index < tasks.size()) {
-                    Task removedTask = tasks.remove(index);
-                    Storage.saveTasksToFile(tasks);
+                if (index >= 0 && index < taskList.getSize()) {
+                    Task removedTask = taskList.deleteTask(index);
+                    Storage.saveTasksToFile(taskList.getTasks());
                     ui.showMessage("Deleted task - " + removedTask);
-                    ui.showMessage("You now have " + tasks.size() + " task(s) in your list.");
+                    ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
                 } else {
                     ui.showError("Invalid task number.");
                 }
@@ -136,7 +136,7 @@ public class Parser {
             try {
                 String dateString = input.substring(9).trim();
                 LocalDateTime date = LocalDateTime.parse(dateString + " 0000", DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"));
-                listTasksForDay(tasks, date, ui);
+                listTasksForDay(taskList, date, ui);
             } catch (DateTimeParseException e) {
                 ui.showError("Invalid date format. Use: dd/MM/yyyy (e.g., 02/03/2019)");
             }
@@ -145,10 +145,10 @@ public class Parser {
         }
     }
 
-    private static void listTasksForDay(ArrayList<Task> tasks, LocalDateTime date, Ui ui) {
+    private static void listTasksForDay(TaskList taskList, LocalDateTime date, Ui ui) {
         ui.showMessage("Here are your tasks for " + date.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ":");
         int count = 0;
-        for (Task task : tasks) {
+        for (Task task : taskList.getTasks()) {
             if (task instanceof Deadline) {
                 Deadline deadline = (Deadline) task;
                 if (deadline.getByDateTime().toLocalDate().isEqual(date.toLocalDate())) {
