@@ -10,7 +10,7 @@ public class Task {
     protected boolean isDone;
 
     /**
-     * Constructs a new {@code Task} instance.
+     * Constructs a new Task instance.
      *
      * @param description The description of the task.
      */
