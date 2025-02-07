@@ -1,7 +1,8 @@
-import java.util.Scanner;
+import java.io.IOException;
 
-import utils.TaskManager;
-import utils.Printer;
+import utils.Ui;
+import utils.TaskList;
+import utils.Storage;
 
 /**
  * The main class for the PawPal chatbot application.
@@ -20,16 +21,27 @@ public class PawPal {
     }
 
     private final Parser parser;
-    private final Printer printer;
+    private final Storage storage;
+    private final TaskList taskList;
+    private final Ui ui;
 
     /**
      * Constructs a new PawPal instance.
-     * Initializes the task manager, printer, and parser components.
+     * Initializes the storage, task list, UI, and parser components.
      */
     public PawPal() {
-        TaskManager taskManager = new TaskManager();
-        printer = new Printer();
-        this.parser = new Parser(taskManager);
+        String filePath = "./data/tasks.txt";
+        this.storage = new Storage(filePath);
+        this.taskList = new TaskList();
+        this.ui = new Ui();
+        this.parser = new Parser(taskList);
+
+        // Load tasks from storage
+        try {
+            taskList.getTasks().addAll(storage.loadTasks());
+        } catch (IOException e) {
+            ui.showLoadingError();
+        }
     }
 
     /**
@@ -38,22 +50,27 @@ public class PawPal {
      * The loop exits when the user enters the "bye" command.
      */
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-        String name = "PawPal";
-        printer.printGreeting(name);
+        ui.showGreeting();
 
         // Main input loop
         while (true) {
-            String input = scanner.nextLine().trim();
+            String input = ui.readCommand();
 
             // Exit the application when the user types "bye"
             if (input.equalsIgnoreCase("bye")) {
-                printer.printBye();
+                ui.showBye();
                 break;
             }
 
             // Pass the user input to the parser for processing
             parser.parse(input);
+
+            // Save tasks after each command
+            try {
+                storage.saveTasks(taskList.getTasks());
+            } catch (IOException e) {
+                ui.showSavingError();
+            }
         }
     }
 }

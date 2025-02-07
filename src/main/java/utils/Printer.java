@@ -120,4 +120,18 @@ public class Printer {
     public void printMissingEventDetails() {
         System.out.println("Invalid event! Use: event <description> /from <start> /to <end>");
     }
+
+    /**
+     * Prints an error message when there's an error loading the saved task lists.
+     */
+    public void printLoadingErrorMessage() {
+        System.out.println("There was an error loading the file. Please try again.");
+    }
+
+    /**
+     * Prints an error message when there's saving new tasks into the file.
+     */
+    public void printSavingErrorMessage() {
+        System.out.println("There was an error saving the file. Please try again.");
+    }
 }
