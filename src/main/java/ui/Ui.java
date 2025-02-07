@@ -57,7 +57,6 @@ public class Ui {
      * @return The user's input as a string.
      */
     public String readCommand() {
-        System.out.print("You: ");
         return scanner.nextLine();
     }
 
