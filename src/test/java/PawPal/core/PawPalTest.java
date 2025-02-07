@@ -21,8 +21,8 @@ class PawPalTest {
 
         // Assert
         assertEquals(1, tasks.size(), "Task list should contain one task");
-        assertTrue(tasks.get(0) instanceof Event, "The task should be an instance of Event");
-        assertEquals("[E][ ] Team Meeting from: Feb 10 2025, 2:00 PM to: Feb 10 2025, 4:00 PM", tasks.get(0).toString());
+        assertInstanceOf(Event.class, tasks.getFirst(), "The task should be an instance of Event");
+        assertEquals("[E][ ] Team Meeting from: Feb 10 2025, 2:00 PM to: Feb 10 2025, 4:00 PM", tasks.getFirst().toString());
     }
 
     @Test
