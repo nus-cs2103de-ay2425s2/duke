@@ -1,3 +1,7 @@
+/*
+Handles methods related to the list of tasks
+ */
+
 package davethebrave.task;
 
 import davethebrave.storage.Storage;

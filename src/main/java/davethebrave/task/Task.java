@@ -1,3 +1,7 @@
+/*
+Handles methods related to each individual task
+ */
+
 package davethebrave.task;
 
 import java.time.LocalDate;
