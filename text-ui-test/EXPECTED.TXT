@@ -1,7 +1,35 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-and CS2103DE!
+========================================
+Hello! I'm Rucia
+How can I assist you today?
+Send "Help" or "?" for instructions on how to use me!
+========================================
+Rucia: Here is how you can use me:
+1) add <task> - Add a new ToDo task to your list.
+2) deadline <task> /by <date> - Add a Deadline task.
+3) event <task> /from <start> /to <end> - Add an Event task.
+4) list - View all your tasks.
+5) mark <number> - Mark the corresponding task as complete.
+6) unmark <number> - Mark the corresponding task as incomplete.
+7) bye - Exit the chatbot.
+Rucia: Added ToDo task - Buy groceries
+Rucia: Added ToDo task - Read book
+Rucia: Added Deadline task - Submit assignment (by: Monday)
+Rucia: Added Event task - Team meeting (from: 2pm to: 4pm)
+Rucia: Here are your tasks:
+1. [T][ ] Buy groceries
+2. [T][ ] Read book
+3. [D][ ] Submit assignment (by: Monday)
+4. [E][ ] Team meeting (from: 2pm to: 4pm)
+Rucia: Marked as done - [T][X] Read book
+Rucia: Marked as not done - [T][ ] Read book
+Rucia: Here are your tasks:
+1. [T][ ] Buy groceries
+2. [T][ ] Read book
+3. [D][ ] Submit assignment (by: Monday)
+4. [E][ ] Team meeting (from: 2pm to: 4pm)
+Rucia: Invalid task number.
+Rucia: Invalid task number.
+Rucia: OOPS! I don't recognize that command. Please type "Help" or "?" to see the list of available commands.
+========================================
+Rucia: Bye. Hope to see you again soon!
+========================================
