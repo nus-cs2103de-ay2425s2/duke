@@ -148,7 +148,7 @@ public class User {
         List<Task> foundTasks = new ArrayList<>();
         for (Task task : this.taskList) {
             // case-insensitive search
-            for (int i = 0; i < task.getTaskDetail().length() - keyWord.length(); i++) {
+            for (int i = 0; i < task.getTaskDetail().length(); i++) {
                 if (task.getTaskDetail().regionMatches(true, i, keyWord, 0, keyWord.length())) {
                     foundTasks.add(task);
                     break;
