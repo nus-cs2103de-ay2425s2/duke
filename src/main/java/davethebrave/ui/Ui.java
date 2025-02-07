@@ -28,6 +28,13 @@ public class Ui {
         System.out.println("    ____________________________________________________________");
     }
 
+    public void showCheer() {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("      Keep going - even the best programmers");
+        System.out.println("      started out writing 'Hello World'!");
+        System.out.println("    ____________________________________________________________");
+    }
+
     public void showTaskAdded(List<Task> tasks) {
         System.out.println("    ____________________________________________________________");
         System.out.println("      Got it. I've added this task:");
