@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -11,6 +10,7 @@ import tasks.Task;
 import tasks.ToDo;
 import tasks.Deadline;
 import tasks.Event;
+import ui.Ui;
 
 /**
  * Rucia is a personal assistant chatbot that helps users with basic commands.
@@ -53,48 +53,40 @@ public class Rucia {
      * @param args Command-line arguments (not used).
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Ui ui = new Ui();
         ArrayList<Task> tasks = loadTasksFromFile();
-        boolean isInteractive = System.console() != null; // Check if running interactively
 
         // Greeting message
-        System.out.println("========================================");
-        System.out.println("Hello! I'm Rucia");
-        System.out.println("How can I assist you today?");
-        System.out.println("Send \"Help\" or \"?\" for instructions on how to use me!");
-        System.out.println("========================================");
+        ui.showWelcome();
 
         // Process user input until "bye" is entered
         while (true) {
-            if (isInteractive) {
-                System.out.print("You: "); // Only print this in interactive mode
-            }
-            String input = scanner.nextLine();
+            String input = ui.readCommand();
 
             if (input.equalsIgnoreCase(Command.BYE.getValue())) {
                 break;
             } else if (input.equalsIgnoreCase(Command.HELP.getValue()) || input.equals("?")) {
-                System.out.println("Rucia: Here is how you can use me:");
-                System.out.println("1) add <task> - Add a new ToDo task to your list.");
-                System.out.println("2) deadline <task> /by <date> - Add a Deadline task. (Format: dd/MM/yyyy HHmm)");
-                System.out.println("3) event <task> /from <start> /to <end> - Add an Event task. (Format: dd/MM/yyyy HHmm)");
-                System.out.println("4) list - View all your tasks.");
-                System.out.println("5) list_day <date> - List all tasks for the specified day. (Format: dd/MM/yyyy)");
-                System.out.println("6) mark <number> - Mark the corresponding task as complete.");
-                System.out.println("7) unmark <number> - Mark the corresponding task as incomplete.");
-                System.out.println("8) delete <number> - Delete the corresponding task from the list.");
-                System.out.println("9) clear - Clear all tasks from the list.");
-                System.out.println("10) bye - Exit the chatbot.");
+                ui.showMessage("Here is how you can use me:");
+                ui.showMessage("1) add <task> - Add a new ToDo task to your list.");
+                ui.showMessage("2) deadline <task> /by <date> - Add a Deadline task. (Format: dd/MM/yyyy HHmm)");
+                ui.showMessage("3) event <task> /from <start> /to <end> - Add an Event task. (Format: dd/MM/yyyy HHmm)");
+                ui.showMessage("4) list - View all your tasks.");
+                ui.showMessage("5) list_day <date> - List all tasks for the specified day. (Format: dd/MM/yyyy)");
+                ui.showMessage("6) mark <number> - Mark the corresponding task as complete.");
+                ui.showMessage("7) unmark <number> - Mark the corresponding task as incomplete.");
+                ui.showMessage("8) delete <number> - Delete the corresponding task from the list.");
+                ui.showMessage("9) clear - Clear all tasks from the list.");
+                ui.showMessage("10) bye - Exit the chatbot.");
             } else if (input.equalsIgnoreCase(Command.CLEAR.getValue())) {
                 tasks.clear();
                 saveTasksToFile(tasks);
-                System.out.println("Rucia: All tasks have been cleared.");
+                ui.showMessage("All tasks have been cleared.");
             } else if (input.startsWith(Command.ADD.getValue())) {
                 String taskDescription = input.substring(Command.ADD.getValue().length());
                 tasks.add(new ToDo(taskDescription));
                 saveTasksToFile(tasks);
-                System.out.println("Rucia: Added ToDo task - " + taskDescription);
-                System.out.println("Rucia: You now have " + tasks.size() + " task(s) in your list.");
+                ui.showMessage("Added ToDo task - " + taskDescription);
+                ui.showMessage("You now have " + tasks.size() + " task(s) in your list.");
             } else if (input.startsWith(Command.DEADLINE.getValue())) {
                 try {
                     String[] parts = input.substring(Command.DEADLINE.getValue().length()).split(" /by ");
@@ -105,12 +97,12 @@ public class Rucia {
                     LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, DATE_TIME_FORMATTER);
                     tasks.add(new Deadline(parts[0], dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma"))));
                     saveTasksToFile(tasks);
-                    System.out.println("Rucia: Added Deadline task - " + parts[0] + " (by: " + dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + ")");
-                    System.out.println("Rucia: You now have " + tasks.size() + " task(s) in your list.");
+                    ui.showMessage("Added Deadline task - " + parts[0] + " (by: " + dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + ")");
+                    ui.showMessage("You now have " + tasks.size() + " task(s) in your list.");
                 } catch (DateTimeParseException e) {
-                    System.out.println("Rucia: Invalid date format. Use: dd/mm/yyyy HHmm (e.g., 02/03/2019 1800)");
+                    ui.showError("Invalid date format. Use: dd/MM/yyyy HHmm (e.g., 02/03/2019 1800)");
                 } catch (Exception e) {
-                    System.out.println("Rucia: Invalid format. Use: deadline <task> /by <date>");
+                    ui.showError("Invalid format. Use: deadline <task> /by <date>");
                 }
             } else if (input.startsWith(Command.EVENT.getValue())) {
                 try {
@@ -132,20 +124,20 @@ public class Rucia {
 
                     tasks.add(new Event(description, fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")), toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma"))));
                     saveTasksToFile(tasks);
-                    System.out.println("Rucia: Added Event task - " + description + " (from: " + fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + " to: " + toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + ")");
-                    System.out.println("Rucia: You now have " + tasks.size() + " task(s) in your list.");
+                    ui.showMessage("Added Event task - " + description + " (from: " + fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + " to: " + toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + ")");
+                    ui.showMessage("You now have " + tasks.size() + " task(s) in your list.");
                 } catch (DateTimeParseException e) {
-                    System.out.println("Rucia: Invalid date format. Use: dd/mm/yyyy HHmm (e.g., 02/03/2019 1800)");
+                    ui.showError("Invalid date format. Use: dd/MM/yyyy HHmm (e.g., 02/03/2019 1800)");
                 } catch (Exception e) {
-                    System.out.println("Rucia: Invalid format. Use: event <task> /from <start> /to <end>");
+                    ui.showError("Invalid format. Use: event <task> /from <start> /to <end>");
                 }
             } else if (input.equalsIgnoreCase(Command.LIST.getValue())) {
-                System.out.println("Rucia: Here are your tasks:");
+                ui.showMessage("Here are your tasks:");
                 for (int i = 0; i < tasks.size(); i++) {
-                    System.out.println((i + 1) + ". " + tasks.get(i));
+                    ui.showMessage((i + 1) + ". " + tasks.get(i));
                 }
                 if (tasks.isEmpty()) {
-                    System.out.println("No tasks added yet.");
+                    ui.showMessage("No tasks added yet.");
                 }
             } else if (input.startsWith(Command.MARK.getValue())) {
                 try {
@@ -153,12 +145,12 @@ public class Rucia {
                     if (index >= 0 && index < tasks.size()) {
                         tasks.get(index).markAsDone();
                         saveTasksToFile(tasks);
-                        System.out.println("Rucia: Marked as done - " + tasks.get(index));
+                        ui.showMessage("Marked as done - " + tasks.get(index));
                     } else {
-                        System.out.println("Rucia: Invalid task number.");
+                        ui.showError("Invalid task number.");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Rucia: Please enter a valid task number.");
+                    ui.showError("Please enter a valid task number.");
                 }
             } else if (input.startsWith(Command.UNMARK.getValue())) {
                 try {
@@ -166,12 +158,12 @@ public class Rucia {
                     if (index >= 0 && index < tasks.size()) {
                         tasks.get(index).markAsNotDone();
                         saveTasksToFile(tasks);
-                        System.out.println("Rucia: Marked as not done - " + tasks.get(index));
+                        ui.showMessage("Marked as not done - " + tasks.get(index));
                     } else {
-                        System.out.println("Rucia: Invalid task number.");
+                        ui.showError("Invalid task number.");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Rucia: Please enter a valid task number.");
+                    ui.showError("Please enter a valid task number.");
                 }
             } else if (input.startsWith(Command.DELETE.getValue())) {
                 try {
@@ -179,13 +171,13 @@ public class Rucia {
                     if (index >= 0 && index < tasks.size()) {
                         Task removedTask = tasks.remove(index);
                         saveTasksToFile(tasks);
-                        System.out.println("Rucia: Deleted task - " + removedTask);
-                        System.out.println("Rucia: You now have " + tasks.size() + " task(s) in your list.");
+                        ui.showMessage("Deleted task - " + removedTask);
+                        ui.showMessage("You now have " + tasks.size() + " task(s) in your list.");
                     } else {
-                        System.out.println("Rucia: Invalid task number.");
+                        ui.showError("Invalid task number.");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Rucia: Please enter a valid task number.");
+                    ui.showError("Please enter a valid task number.");
                 }
             } else if (input.startsWith(Command.LIST_DAY.getValue())) {
                 try {
@@ -193,19 +185,15 @@ public class Rucia {
                     LocalDateTime date = LocalDateTime.parse(dateString + " 0000", DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"));
                     listTasksForDay(tasks, date);
                 } catch (DateTimeParseException e) {
-                    System.out.println("Rucia: Invalid date format. Use: dd/mm/yyyy (e.g., 02/03/2019)");
+                    ui.showError("Invalid date format. Use: dd/MM/yyyy (e.g., 02/03/2019)");
                 }
             } else {
-                System.out.println("Rucia: OOPS! I don't recognize that command. Please type \"Help\" or \"?\" to see the list of available commands.");
+                ui.showError("I don't recognize that command. Please type \"Help\" or \"?\" to see the list of available commands.");
             }
         }
 
         // Exit message
-        System.out.println("========================================");
-        System.out.println("Rucia: Bye. Hope to see you again soon!");
-        System.out.println("========================================");
-
-        scanner.close();
+        ui.showExit();
     }
 
     /**
