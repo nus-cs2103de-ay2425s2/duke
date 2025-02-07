@@ -1,22 +1,36 @@
 package tasks;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * Represents a task with a deadline.
  * Extends the Task class by adding a deadline field.
  */
 public class Deadline extends Task {
-
-    protected String deadline;
+    private LocalDateTime deadlineDateTime;
+    private String rawDeadline;
+    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
     /**
-     * Constructs a new {@code Deadline} task.
+     * Constructs a new Deadline task.
      *
      * @param description The description of the deadline task.
      * @param deadline    The date or time by which the task must be completed.
      */
     public Deadline(String description, String deadline) {
         super(description);
-        this.deadline = deadline;
+        try {
+            // Attempt to parse deadline as a date-time string
+            this.deadlineDateTime = LocalDateTime.parse(deadline, INPUT_FORMAT);
+            this.rawDeadline = null;  // Clear raw if parsed successfully
+        } catch (DateTimeParseException e) {
+            // If parsing fails, store as raw string
+            this.rawDeadline = deadline;
+            this.deadlineDateTime = null;
+        }
     }
 
     /**
@@ -26,6 +40,10 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadline + " )";
+        if (deadlineDateTime != null) {
+            return "[D]" + super.toString() + " (by: " + deadlineDateTime.format(OUTPUT_FORMAT) + ")";
+        } else {
+            return "[D]" + super.toString() + " (by: " + rawDeadline + ")";
+        }
     }
 }

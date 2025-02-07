@@ -1,16 +1,26 @@
 package tasks;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * Represents a task that has a specific time range (start and end).
- * Extends the {@link Task} class by adding start and end times.
+ * Extends the Task class by adding start and end times.
  */
 public class Event extends Task {
 
-    protected String start;
-    protected String end;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
+    private String rawStart;
+    private String rawEnd;
+
+    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+
 
     /**
-     * Constructs a new {@code Event} task.
+     * Constructs a new Event task.
      *
      * @param description The description of the event task.
      * @param start       The starting time of the event.
@@ -18,8 +28,24 @@ public class Event extends Task {
      */
     public Event(String description, String start, String end) {
         super(description);
-        this.start = start;
-        this.end = end;
+
+        // Attempt to parse start time
+        try {
+            this.startDateTime = LocalDateTime.parse(start, INPUT_FORMAT);
+            this.rawStart = null;
+        } catch (DateTimeParseException e) {
+            this.startDateTime = null;
+            this.rawStart = start;
+        }
+
+        // Attempt to parse end time
+        try {
+            this.endDateTime = LocalDateTime.parse(end, INPUT_FORMAT);
+            this.rawEnd = null;
+        } catch (DateTimeParseException e) {
+            this.endDateTime = null;
+            this.rawEnd = end;
+        }
     }
 
     /**
@@ -29,6 +55,9 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " from: " + start + " to: " + end + ")";
+        String startStr = (startDateTime != null) ? startDateTime.format(OUTPUT_FORMAT) : rawStart;
+        String endStr = (endDateTime != null) ? endDateTime.format(OUTPUT_FORMAT) : rawEnd;
+
+        return "[E]" + super.toString() + " from: " + startStr + " to: " + endStr;
     }
 }
