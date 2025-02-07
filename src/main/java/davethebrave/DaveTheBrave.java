@@ -1,3 +1,7 @@
+/*
+Handles the main logic of running the program and scanning user input
+ */
+
 package davethebrave;
 
 import davethebrave.ui.Ui;

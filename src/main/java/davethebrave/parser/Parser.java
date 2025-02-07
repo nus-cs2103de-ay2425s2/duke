@@ -1,3 +1,7 @@
+/*
+Parses user commands into TaskManager operations to execute and generate output
+ */
+
 package davethebrave.parser;
 
 import davethebrave.task.TaskManager;

@@ -1,3 +1,7 @@
+/*
+Handles the storing and loading of the list of task from local file
+ */
+
 package davethebrave.storage;
 
 import davethebrave.task.Task;

@@ -1,3 +1,7 @@
+/*
+Handles the formatting of basic display messages to be called by TaskManager and Main classes
+ */
+
 package davethebrave.ui;
 
 import davethebrave.task.Task;
