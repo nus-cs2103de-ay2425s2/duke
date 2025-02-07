@@ -1,7 +1,9 @@
+import java.io.IOException;
 import java.util.Scanner;
 
-import utils.TaskManager;
+import utils.TaskList;
 import utils.Printer;
+import utils.Storage;
 
 /**
  * The main class for the PawPal chatbot application.
@@ -21,15 +23,19 @@ public class PawPal {
 
     private final Parser parser;
     private final Printer printer;
+    private final TaskList taskList;
+    private final Storage storage;
 
     /**
      * Constructs a new PawPal instance.
      * Initializes the task manager, printer, and parser components.
      */
     public PawPal() {
-        TaskManager taskManager = new TaskManager();
-        printer = new Printer();
-        this.parser = new Parser(taskManager);
+        String filePath = "./data/tasks.txt";
+        this.storage = new Storage(filePath);
+        this.taskList = new TaskList();
+        this.printer = new Printer();
+        this.parser = new Parser(taskList);
     }
 
     /**
@@ -54,6 +60,12 @@ public class PawPal {
 
             // Pass the user input to the parser for processing
             parser.parse(input);
+
+            try {
+                storage.saveTasks(taskList.getTasks());
+            } catch (IOException e) {
+                System.out.println("Error saving tasks: " + e.getMessage());
+            }
         }
     }
 }

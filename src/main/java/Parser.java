@@ -1,23 +1,23 @@
 import utils.Command;
-import utils.TaskManager;
+import utils.TaskList;
 import utils.Printer;
 
 /**
  * Parses and processes user input for the PawPal chatbot.
- * Determines the command type and delegates actions to the {@link TaskManager}.
+ * Determines the command type and delegates actions to the {@link TaskList}.
  */
 class Parser {
 
-    private final TaskManager taskManager;
+    private final TaskList taskList;
     private final Printer printer;
 
     /**
      * Constructs a new {@code Parser} instance.
      *
-     * @param taskManager The {@link TaskManager} responsible for managing tasks.
+     * @param taskList The {@link TaskList} responsible for managing tasks.
      */
-    public Parser(TaskManager taskManager) {
-        this.taskManager = taskManager;
+    public Parser(TaskList taskList) {
+        this.taskList = taskList;
         this.printer = new Printer();
     }
 
@@ -30,7 +30,7 @@ class Parser {
         Command command = parseCommand(input);
         switch (command) {
         case LIST:
-            taskManager.listTasks();
+            taskList.listTasks();
             break;
         case MARK:
             processMarkCommand(input, true);
@@ -85,9 +85,9 @@ class Parser {
             }
             int taskNumber = Integer.parseInt(parts[1].trim());
             if (mark) {
-                taskManager.markTask(taskNumber);
+                taskList.markTask(taskNumber);
             } else {
-                taskManager.unmarkTask(taskNumber);
+                taskList.unmarkTask(taskNumber);
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             printer.printInvalidTaskNumber();
@@ -106,7 +106,7 @@ class Parser {
                 throw new NumberFormatException();
             }
             int taskNumber = Integer.parseInt(parts[1].trim());
-            taskManager.deleteTask(taskNumber);
+            taskList.deleteTask(taskNumber);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             printer.printInvalidTaskNumber();
         }
@@ -122,7 +122,7 @@ class Parser {
         if (description.isEmpty()) {
             printer.printMissingToDoDetails();
         } else {
-            taskManager.addToDo(description);
+            taskList.addToDo(description);
         }
     }
 
@@ -138,7 +138,7 @@ class Parser {
         }
         String[] parts = input.substring(9).split(" /by ", 2);
         if (parts.length == 2) {
-            taskManager.addDeadline(parts[0].trim(), parts[1].trim());
+            taskList.addDeadline(parts[0].trim(), parts[1].trim());
         } else {
             printer.printMissingDeadlineDetails();
         }
@@ -156,7 +156,7 @@ class Parser {
         }
         String[] parts = input.substring(6).split(" /from | /to ", 3);
         if (parts.length == 3) {
-            taskManager.addEvent(parts[0].trim(), parts[1].trim(), parts[2].trim());
+            taskList.addEvent(parts[0].trim(), parts[1].trim(), parts[2].trim());
         } else {
             printer.printMissingEventDetails();
         }
