@@ -20,6 +20,7 @@ public class Rucia {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
+        boolean isInteractive = System.console() != null; // Check if running interactively
 
         // Greeting message
         System.out.println("========================================");
@@ -30,13 +31,15 @@ public class Rucia {
 
         // Process user input until "bye" is entered
         while (true) {
-            System.out.print("You: ");
+            if (isInteractive) {
+                System.out.print("You: "); // Only print this in interactive mode
+            }
             String input = scanner.nextLine();
 
             if (input.equalsIgnoreCase("bye")) {
                 break;
             } else if (input.equalsIgnoreCase("help") || input.equals("?")) {
-                System.out.println("Rucia: Here’s how you can use me:");
+                System.out.println("Rucia: Here is how you can use me:");
                 System.out.println("1) add <task> - Add a new ToDo task to your list.");
                 System.out.println("2) deadline <task> /by <date> - Add a Deadline task.");
                 System.out.println("3) event <task> /from <start> /to <end> - Add an Event task.");
