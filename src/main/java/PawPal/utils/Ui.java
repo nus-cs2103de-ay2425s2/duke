@@ -1,8 +1,9 @@
 package PawPal.utils;
 
-import PawPal.tasks.Task;
 import java.util.List;
 import java.util.Scanner;
+
+import PawPal.tasks.Task;
 
 /**
  * Handles interactions with the user, including displaying messages and reading input.

@@ -1,8 +1,8 @@
 package PawPal.utils;
 
-import PawPal.tasks.*;
-
 import java.util.List;
+
+import PawPal.tasks.*;
 
 /**
  * Handles printing of various messages and task-related outputs to the console.
