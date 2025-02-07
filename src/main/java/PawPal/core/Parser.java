@@ -1,5 +1,8 @@
 package PawPal.core;
 
+import java.util.List;
+
+import PawPal.tasks.Task;
 import PawPal.utils.Command;
 import PawPal.utils.TaskList;
 import PawPal.utils.Printer;
@@ -51,6 +54,9 @@ class Parser {
             break;
         case DELETE:
             processDeleteCommand(input);
+            break;
+        case FIND:
+            processFindCommand(input);
             break;
         default:
             printer.printInvalidCommand();
@@ -165,6 +171,16 @@ class Parser {
             taskList.addEvent(parts[0].trim(), parts[1].trim(), parts[2].trim());
         } else {
             printer.printMissingEventDetails();
+        }
+    }
+
+    private void processFindCommand(String input) {
+        String keyword = input.substring(4).trim();
+        if (keyword.isEmpty()) {
+            printer.printMissingToDoDetails();
+        } else {
+            List<Task> matchingTasks = taskList.findTasks(keyword);
+            printer.printMatchingTasks(matchingTasks);
         }
     }
 }
