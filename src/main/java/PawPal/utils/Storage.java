@@ -1,13 +1,13 @@
 package PawPal.utils;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import PawPal.tasks.Task;
 import PawPal.tasks.Deadline;
 import PawPal.tasks.Event;
 import PawPal.tasks.ToDo;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Handles loading and saving PawPal.core.PawPal.tasks from and to a file.
