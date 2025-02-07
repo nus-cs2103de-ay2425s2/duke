@@ -37,22 +37,6 @@ public class Task {
         this.status = false;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public String getTask() {
-        return task;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
     @Override
     public String toString() {
         String taskStatus = status ? "[X]" : "[ ]";
