@@ -1,5 +1,6 @@
 package PawPal.core;
 
+import java.io.IOException;
 import java.util.List;
 
 import PawPal.tasks.Task;
@@ -57,6 +58,9 @@ class Parser {
             break;
         case FIND:
             processFindCommand(input);
+            break;
+        case CHEER:
+            processCheerCommand(input);
             break;
         default:
             printer.printInvalidCommand();
@@ -181,6 +185,15 @@ class Parser {
         } else {
             List<Task> matchingTasks = taskList.findTasks(keyword);
             printer.printMatchingTasks(matchingTasks);
+        }
+    }
+
+    private void processCheerCommand(String input) {
+        try {
+            String message = taskList.getRandomQuote();
+            printer.printCheerMessage(message);
+        } catch (IOException e) {
+            printer.printInvalidCommand();
         }
     }
 }

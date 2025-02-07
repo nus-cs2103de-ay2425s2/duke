@@ -151,4 +151,15 @@ public class Printer {
         System.out.println("____________________________________________________________");
     }
 
+    public void printCheerMessage(String message) {
+        System.out.println(message);
+    }
+
+    public String printEmptyCheerFile(){
+        return "No cheers found! :(";
+    }
+
+    public String printFileNotFound() {
+        return "I can't find the file you are looking for! :(";
+    }
 }

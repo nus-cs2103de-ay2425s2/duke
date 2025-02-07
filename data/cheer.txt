@@ -1,0 +1,6 @@
+Keep going – even the best programmers started out writing 'Hello World'!
+Your code might crash, but you won't!
+Debugging is like being a detective in a crime movie where you are also the murderer.
+One bug at a time, one solution closer.
+Never stop learning – the tech world moves fast, and so should you.
+A bad day coding beats a good day doing anything else.
