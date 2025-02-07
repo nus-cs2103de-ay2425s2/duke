@@ -1,2 +1,4 @@
 [T][ ] buy bread
-[T][X] run
+[T][ ] run
+[D][ ] run (by: sunday 6pm)
+[T][X] gym

@@ -1,18 +1,20 @@
+package PawPal.core;
+
 import java.io.IOException;
 
-import utils.Ui;
-import utils.TaskList;
-import utils.Storage;
+import PawPal.utils.Ui;
+import PawPal.utils.TaskList;
+import PawPal.utils.Storage;
 
 /**
- * The main class for the PawPal chatbot application.
- * PawPal allows users to manage tasks such as ToDo, Deadline, and Event tasks.
+ * The main class for the PawPal.core.PawPal chatbot application.
+ * PawPal.core.PawPal allows users to manage PawPal.core.PawPal.tasks such as ToDo, Deadline, and Event PawPal.core.PawPal.tasks.
  * It interacts with the user via the command line.
  */
 public class PawPal {
 
     /**
-     * The entry point of the PawPal application.
+     * The entry point of the PawPal.core.PawPal application.
      *
      * @param args Command-line arguments (not used).
      */
@@ -26,26 +28,19 @@ public class PawPal {
     private final Ui ui;
 
     /**
-     * Constructs a new PawPal instance.
+     * Constructs a new PawPal.core.PawPal instance.
      * Initializes the storage, task list, UI, and parser components.
      */
     public PawPal() {
         String filePath = "./data/tasks.txt";
         this.storage = new Storage(filePath);
-        this.taskList = new TaskList();
+        this.taskList = new TaskList(storage);
         this.ui = new Ui();
         this.parser = new Parser(taskList);
-
-        // Load tasks from storage
-        try {
-            taskList.getTasks().addAll(storage.loadTasks());
-        } catch (IOException e) {
-            ui.showLoadingError();
-        }
     }
 
     /**
-     * Runs the main loop of the PawPal chatbot.
+     * Runs the main loop of the PawPal.core.PawPal chatbot.
      * Continuously reads user input, processes commands, and prints responses.
      * The loop exits when the user enters the "bye" command.
      */
@@ -65,7 +60,6 @@ public class PawPal {
             // Pass the user input to the parser for processing
             parser.parse(input);
 
-            // Save tasks after each command
             try {
                 storage.saveTasks(taskList.getTasks());
             } catch (IOException e) {
