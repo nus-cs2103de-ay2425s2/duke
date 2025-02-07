@@ -1,0 +1,7 @@
+// Display ASCII art
+System.out.println("______ _   _ _____ _____  ___  ");
+System.out.println("| ___ \\ | | /  __ \\_   _|/ _ \\ ");
+System.out.println("| |_/ / | | | /  \\/ | | / /_\\ \\");
+System.out.println("|    /| | | | |     | | |  _  |");
+System.out.println("| |\\ \\| |_| | \\__/\\_| |_| | | |");
+System.out.println("\\_| \\_|\\___/ \\____/\\___/\\_| |_/");

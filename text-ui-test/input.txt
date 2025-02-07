@@ -1,0 +1,18 @@
+clear
+help
+add Buy groceries
+add Read book
+deadline Submit assignment /by Monday
+event Team meeting /from 2pm /to 4pm
+list
+mark 2
+unmark 2
+list
+delete 3
+list
+delete 1
+delete 5
+mark 5
+unmark 0
+invalid command
+bye
