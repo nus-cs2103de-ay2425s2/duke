@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
 public class RuciaTest {
@@ -187,10 +188,6 @@ public class RuciaTest {
         taskList.addTask(new ToDo("Buy Bread"));
 
         String input = "find Bread";
-        String commandType = CommandIdentifier.identify(input);
-        Command command = CommandParser.parse(input, commandType, storage);
-
-        command.execute(taskList, ui);
 
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(ui, times(2)).showMessage(captor.capture());
@@ -198,5 +195,19 @@ public class RuciaTest {
 
         assertEquals("Tasks found with the keyword: Bread", capturedMessages.get(0));
         assertEquals("[T][ ] Buy Bread", capturedMessages.get(1));
+        verify(ui, times(1)).showMessage(captor.capture());
+        List<String> capturedMessages = captor.getAllValues();
+    }
+    
+    public void testCheerCommand() throws IOException {
+        String input = "cheer";
+        String commandType = CommandIdentifier.identify(input);
+        Command command = CommandParser.parse(input, commandType, storage);
+
+        command.execute(taskList, ui);
+
+        // Check that a message was shown (the exact message will be random)
+        assertEquals(1, capturedMessages.size());
+        assertFalse(capturedMessages.get(0).isEmpty());
     }
 }

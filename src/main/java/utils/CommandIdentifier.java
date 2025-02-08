@@ -40,6 +40,8 @@ public class CommandIdentifier {
             return "list_day";
         } else if (input.startsWith("find")) { // Add this line
             return "find";
+        } else if (input.trim().equalsIgnoreCase("cheer")) { // Add this line
+            return "cheer";
         } else {
             return "unknown";
         }

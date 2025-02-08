@@ -66,6 +66,8 @@ public class CommandParser {
                     throw new IllegalArgumentException("Keyword cannot be empty. Use: find <keyword>");
                 }
                 return new FindCommand(keyword);
+            case "cheer": // Add this case
+                return new CheerCommand();
             default:
                 throw new IllegalArgumentException("Unknown command type.");
         }
