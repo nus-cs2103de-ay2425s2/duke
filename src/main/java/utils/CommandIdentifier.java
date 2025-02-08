@@ -38,6 +38,8 @@ public class CommandIdentifier {
             return "delete";
         } else if (input.startsWith("list_day")) {
             return "list_day";
+        } else if (input.startsWith("find")) { // Add this line
+            return "find";
         } else {
             return "unknown";
         }
