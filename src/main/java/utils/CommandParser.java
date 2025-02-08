@@ -37,10 +37,13 @@ public class CommandParser {
                 return new MarkCommand(input, storage);
             case "unmark":
                 return new UnmarkCommand(input, storage);
-//            case "delete":
-//                return new DeleteCommand(input, storage);
-//            case "list_day":
-//                return new ListDayCommand(input);
+            case "delete":
+                return new DeleteCommand(input, storage);
+            case "list_day":
+                return new ListDayCommand(input);
+            case "help":
+            case "?":
+                return new HelpCommand();
             default:
                 throw new IllegalArgumentException("Unknown command type.");
         }
