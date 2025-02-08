@@ -1,47 +1,56 @@
 // src/main/java/utils/Storage.java
 package utils;
 
+import tasks.Deadline;
+import tasks.Event;
 import tasks.Task;
-import tasks.TaskList;
+import tasks.ToDo;
 
-import java.io.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Storage {
-    private String filePath;
-    private static final String DEFAULT_FILE_PATH = "./data/tasks.txt";
-
-    public Storage() {
-        this.filePath = DEFAULT_FILE_PATH;
-    }
+    private final String filePath;
 
     public Storage(String filePath) {
-        this.filePath = (filePath == null || filePath.isEmpty()) ? DEFAULT_FILE_PATH : filePath;
+        this.filePath = filePath;
     }
 
-    public ArrayList<Task> loadTasksFromFile() {
+    public void saveTasksToFile(List<Task> tasks) throws IOException {
+        List<String> lines = new ArrayList<>();
+        for (Task task : tasks) {
+            lines.add(task.toFileString());
+        }
+        Files.write(Paths.get(filePath), lines);
+    }
+
+    public ArrayList<Task> loadTasksFromFile() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    tasks.add(Task.parse(line));
-                }
+        List<String> lines = Files.readAllLines(Paths.get(filePath));
+        for (String line : lines) {
+            String[] parts = line.split(" \\| ");
+            String type = parts[0];
+            boolean isDone = parts[1].equals("1");
+            String description = parts[2];
+
+            switch (type) {
+                case "T":
+                    tasks.add(new ToDo(description));
+                    break;
+                case "D":
+                    long byTimestamp = Long.parseLong(parts[3]);
+                    tasks.add(new Deadline(description, byTimestamp));
+                    break;
+                case "E":
+                    long fromTimestamp = Long.parseLong(parts[3]);
+                    long toTimestamp = Long.parseLong(parts[4]);
+                    tasks.add(new Event(description, fromTimestamp, toTimestamp));
+                    break;
             }
-        } catch (IOException e) {
-            System.err.println("Error loading tasks from file: " + e.getMessage());
         }
         return tasks;
-    }
-
-    public void saveTasksToFile(ArrayList<Task> tasks) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            for (Task task : tasks) {
-                writer.write(task.toFileString());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            System.err.println("Error saving tasks to file: " + e.getMessage());
-        }
     }
 }

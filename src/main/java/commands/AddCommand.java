@@ -5,6 +5,7 @@ import tasks.TaskList;
 import tasks.ToDo;
 import ui.Ui;
 import utils.Storage;
+import java.io.IOException;
 
 public class AddCommand implements Command {
     private String taskDescription;
@@ -18,7 +19,11 @@ public class AddCommand implements Command {
     @Override
     public void execute(TaskList taskList, Ui ui) {
         taskList.addTask(new ToDo(taskDescription));
-        storage.saveTasksToFile(taskList.getTasks());
+        try {
+            storage.saveTasksToFile(taskList.getTasks());
+        } catch (IOException e) {
+            ui.showMessage("Error saving tasks to file: " + e.getMessage());
+        }
         ui.showMessage("Added ToDo task - " + taskDescription);
         ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
     }

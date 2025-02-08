@@ -2,15 +2,21 @@
 package tasks;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
-    protected String by;
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy, h:mma");
+    protected long byTimestamp;
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
 
     public Deadline(String description, String by) {
         super(description);
-        this.by = by;
+        this.byTimestamp = LocalDateTime.parse(by, DATE_TIME_FORMATTER).toEpochSecond(ZoneOffset.UTC);
+    }
+
+    public Deadline(String description, long byTimestamp) {
+        super(description);
+        this.byTimestamp = byTimestamp;
     }
 
     @Override
@@ -20,15 +26,16 @@ public class Deadline extends Task {
 
     @Override
     public String toFileString() {
-        return String.format("%s | %d | %s | %s", getType(), isDone ? 1 : 0, description, by);
+        return String.format("%s | %d | %s | %d", getType(), isDone ? 1 : 0, description, byTimestamp);
     }
 
     @Override
     public String toString() {
-        return String.format("[%s][%s] %s (by: %s)", getType(), isDone ? "X" : " ", description, by);
+        LocalDateTime byDateTime = LocalDateTime.ofEpochSecond(byTimestamp, 0, ZoneOffset.UTC);
+        return String.format("[%s][%s] %s (by: %s)", getType(), isDone ? "X" : " ", description, byDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")));
     }
 
     public LocalDateTime getByDateTime() {
-        return LocalDateTime.parse(by, DATE_TIME_FORMATTER);
+        return LocalDateTime.ofEpochSecond(byTimestamp, 0, ZoneOffset.UTC);
     }
 }

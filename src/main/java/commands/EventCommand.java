@@ -6,7 +6,9 @@ import tasks.Event;
 import ui.Ui;
 import utils.Storage;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -37,8 +39,12 @@ public class EventCommand implements Command {
             }
             LocalDateTime toDateTime = LocalDateTime.parse(toDateTimeString, DATE_TIME_FORMATTER);
 
-            taskList.addTask(new Event(description, fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")), toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma"))));
-            storage.saveTasksToFile(taskList.getTasks());
+            taskList.addTask(new Event(description, fromDateTime.toEpochSecond(ZoneOffset.UTC), toDateTime.toEpochSecond(ZoneOffset.UTC)));
+            try {
+                storage.saveTasksToFile(taskList.getTasks());
+            } catch (IOException e) {
+                ui.showMessage("Error saving tasks to file: " + e.getMessage());
+            }
             ui.showMessage("Added Event task - " + description + " (from: " + fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + " to: " + toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + ")");
             ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
         } catch (DateTimeParseException e) {
