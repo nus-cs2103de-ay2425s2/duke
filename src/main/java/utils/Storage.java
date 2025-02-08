@@ -75,20 +75,29 @@ public class Storage {
             boolean isDone = parts[1].equals("1");
             String description = parts[2];
 
+            Task task;
             switch (type) {
                 case "T":
-                    tasks.add(new ToDo(description));
+                    task = new ToDo(description);
                     break;
                 case "D":
                     long byTimestamp = Long.parseLong(parts[3]);
-                    tasks.add(new Deadline(description, byTimestamp));
+                    task = new Deadline(description, byTimestamp);
                     break;
                 case "E":
                     long fromTimestamp = Long.parseLong(parts[3]);
                     long toTimestamp = Long.parseLong(parts[4]);
-                    tasks.add(new Event(description, fromTimestamp, toTimestamp));
+                    task = new Event(description, fromTimestamp, toTimestamp);
                     break;
+                default:
+                    throw new IllegalArgumentException("Unknown task type: " + type);
             }
+
+            if (isDone) {
+                task.markAsDone();
+            }
+
+            tasks.add(task);
         }
         return tasks;
     }
