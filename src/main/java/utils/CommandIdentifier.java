@@ -7,7 +7,7 @@ public class CommandIdentifier {
             return "bye";
         } else if (input.trim().equalsIgnoreCase("help") || input.trim().equals("?")) {
             return "help";
-        } else if (input.equalsIgnoreCase("clear")) {
+        } else if (input.trim().equalsIgnoreCase("clear")) {
             return "clear";
         } else if (input.startsWith("add")) {
             return "add";

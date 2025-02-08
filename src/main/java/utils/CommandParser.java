@@ -44,6 +44,8 @@ public class CommandParser {
             case "help":
             case "?":
                 return new HelpCommand();
+            case "clear":
+                return new ClearCommand(storage);
             default:
                 throw new IllegalArgumentException("Unknown command type.");
         }
