@@ -179,4 +179,24 @@ public class RuciaTest {
         assertEquals("[D][ ] Submit report (by: Dec 25 2023, 11:59pm)", capturedMessages.get(1));
         assertEquals("[E][ ] Christmas Party (from: Dec 25 2023, 6:00pm to: Dec 25 2023, 9:00pm)", capturedMessages.get(2));
     }
+
+    @Test
+    public void testFindCommand() throws IOException {
+        // Add some tasks to the task list
+        taskList.addTask(new ToDo("Get Breakfast"));
+        taskList.addTask(new ToDo("Buy Bread"));
+
+        String input = "find Bread";
+        String commandType = CommandIdentifier.identify(input);
+        Command command = CommandParser.parse(input, commandType, storage);
+
+        command.execute(taskList, ui);
+
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(ui, times(2)).showMessage(captor.capture());
+        List<String> capturedMessages = captor.getAllValues();
+
+        assertEquals("Tasks found with the keyword: Bread", capturedMessages.get(0));
+        assertEquals("[T][ ] Buy Bread", capturedMessages.get(1));
+    }
 }
