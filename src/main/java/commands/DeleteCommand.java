@@ -33,5 +33,6 @@ public class DeleteCommand implements Command {
             ui.showMessage("Error saving tasks to file: " + e.getMessage());
         }
         ui.showMessage("Deleted task - " + taskDescription);
+        ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
     }
 }
