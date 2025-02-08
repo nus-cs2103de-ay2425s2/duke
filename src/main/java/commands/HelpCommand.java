@@ -19,7 +19,8 @@ public class HelpCommand implements Command {
                 + "7. unmark <task number> - Mark a task as not done\n"
                 + "8. delete <task number> - Delete a task\n"
                 + "9. list_day <dd/MM/yyyy> - List tasks for a specific day\n"
-                + "10. help or ? - Show this help message";
+                + "10. find <keyword> - Find tasks containing the keyword\n" // Add this line
+                + "11. help or ? - Show this help message";
         ui.showMessage(helpMessage);
     }
 }
