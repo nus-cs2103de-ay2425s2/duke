@@ -4,8 +4,19 @@ package commands;
 import tasks.TaskList;
 import ui.Ui;
 
+/**
+ * Represents a command to display all tasks in the task list.
+ * Lists each task with its corresponding index.
+ */
 public class ListCommand implements Command {
 
+    /**
+     * Executes the list command by displaying all tasks in the task list.
+     * If the task list is empty, an appropriate message is shown.
+     *
+     * @param taskList The current task list containing tasks to be displayed.
+     * @param ui       The user interface for displaying the task list.
+     */
     @Override
     public void execute(TaskList taskList, Ui ui) {
         if (taskList.getSize() == 0) {

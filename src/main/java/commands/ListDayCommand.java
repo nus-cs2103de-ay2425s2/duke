@@ -15,9 +15,20 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a command to list tasks scheduled for a specific day.
+ * Filters and displays deadlines and events that occur on the specified date.
+ */
 public class ListDayCommand implements Command {
     private LocalDate date;
 
+    /**
+     * Constructs a ListDayCommand with the specified date input.
+     * Parses the date from the user input.
+     *
+     * @param input The user input containing the date in dd/MM/yyyy format.
+     * @throws IllegalArgumentException if the date format is invalid.
+     */
     public ListDayCommand(String input) {
         try {
             String dateString = input.substring(8).trim();
@@ -27,6 +38,13 @@ public class ListDayCommand implements Command {
         }
     }
 
+    /**
+     * Executes the list day command by filtering tasks scheduled for the specified date.
+     * Displays the list of matching tasks or a message if no tasks are found.
+     *
+     * @param taskList The current task list containing tasks to be filtered.
+     * @param ui       The user interface for displaying the filtered tasks.
+     */
     @Override
     public void execute(TaskList taskList, Ui ui) {
         List<Task> tasksForDay = taskList.getTasks().stream()

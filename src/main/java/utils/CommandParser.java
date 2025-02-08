@@ -3,7 +3,21 @@ package utils;
 
 import commands.*;
 
+/**
+ * Utility class for parsing user input into specific command objects.
+ * Determines the appropriate command to execute based on the input and command type.
+ */
 public class CommandParser {
+
+    /**
+     * Parses the user input and returns the corresponding command object.
+     *
+     * @param input       The user input string.
+     * @param commandType The type of command identified from the input.
+     * @param storage     The storage handler for saving task-related changes.
+     * @return The command object corresponding to the input.
+     * @throws IllegalArgumentException if the input format is invalid or the command type is unknown.
+     */
     public static Command parse(String input, String commandType, Storage storage) {
         switch (commandType) {
             case "bye":

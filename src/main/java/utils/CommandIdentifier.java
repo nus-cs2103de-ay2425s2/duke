@@ -1,7 +1,20 @@
 // src/main/java/utils/CommandIdentifier.java
 package utils;
 
+/**
+ * Utility class for identifying commands from user input.
+ * Determines the type of command based on specific keywords.
+ */
 public class CommandIdentifier {
+
+    /**
+     * Identifies the command type from the given user input.
+     *
+     * @param input The user input string.
+     * @return A string representing the identified command type,
+     *         such as "add", "deadline", "event", "list", "mark",
+     *         "unmark", "delete", "list_day", or "unknown" if no match is found.
+     */
     public static String identify(String input) {
         if (input.equalsIgnoreCase("bye")) {
             return "bye";

@@ -13,14 +13,27 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles the storage of tasks to and from a file.
+ * Provides functionality to save and load tasks in a persistent way.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     * Creates the file and necessary directories if they do not exist.
+     *
+     * @param filePath The path to the storage file.
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(System.getProperty("user.dir"), filePath).toString();
         createFileIfNotExists();
     }
 
+    /**
+     * Creates the storage file and its parent directories if they do not exist.
+     */
     private void createFileIfNotExists() {
         Path path = Paths.get(filePath);
         try {
@@ -33,6 +46,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the list of tasks to the storage file.
+     *
+     * @param tasks The list of tasks to save.
+     * @throws IOException If an I/O error occurs while writing to the file.
+     */
     public void saveTasksToFile(List<Task> tasks) throws IOException {
         List<String> lines = new ArrayList<>();
         for (Task task : tasks) {
@@ -41,6 +60,12 @@ public class Storage {
         Files.write(Paths.get(filePath), lines);
     }
 
+    /**
+     * Loads tasks from the storage file.
+     *
+     * @return A list of tasks loaded from the file.
+     * @throws IOException If an I/O error occurs while reading the file.
+     */
     public ArrayList<Task> loadTasksFromFile() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         List<String> lines = Files.readAllLines(Paths.get(filePath));

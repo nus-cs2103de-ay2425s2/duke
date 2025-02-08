@@ -5,8 +5,19 @@ import tasks.TaskList;
 import ui.Ui;
 import utils.Storage;
 
+/**
+ * Represents a command to display help information to the user.
+ * Lists all available commands with brief descriptions.
+ */
 public class HelpCommand implements Command {
 
+    /**
+     * Executes the help command by displaying a list of available commands
+     * along with their descriptions to the user.
+     *
+     * @param taskList The current task list (not used in this command).
+     * @param ui       The user interface for displaying the help message.
+     */
     @Override
     public void execute(TaskList taskList, Ui ui) {
         String helpMessage = "Here are the available commands:\n"
