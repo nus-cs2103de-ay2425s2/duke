@@ -4,12 +4,10 @@ package tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Represents an Event task that starts and ends at specific date/time.
- */
 public class Event extends Task {
-    private String from;
-    private String to;
+    protected String from;
+    protected String to;
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy, h:mma");
 
     public Event(String description, String from, String to) {
         super(description);
@@ -22,18 +20,21 @@ public class Event extends Task {
         return "E";
     }
 
-    public LocalDateTime getFromDateTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mma");
-        return LocalDateTime.parse(from, formatter);
-    }
-
-    public LocalDateTime getToDateTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mma");
-        return LocalDateTime.parse(to, formatter);
+    @Override
+    public String toFileString() {
+        return String.format("%s | %d | %s | %s | %s", getType(), isDone ? 1 : 0, description, from, to);
     }
 
     @Override
     public String toString() {
-        return super.toString() + " (from: " + from + " to: " + to + ")";
+        return String.format("[%s][%s] %s (from: %s to: %s)", getType(), isDone ? "X" : " ", description, from, to);
+    }
+
+    public LocalDateTime getFromDateTime() {
+        return LocalDateTime.parse(from, DATE_TIME_FORMATTER);
+    }
+
+    public LocalDateTime getToDateTime() {
+        return LocalDateTime.parse(to, DATE_TIME_FORMATTER);
     }
 }

@@ -1,3 +1,4 @@
+// src/main/java/tasks/Task.java
 package tasks;
 
 public abstract class Task {
@@ -9,18 +10,50 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public void markAsDone() {
-        this.isDone = true;
+    public static Task parse(String line) {
+        // Implement parsing logic based on the file format
+        // Example: "T | 1 | read book"
+        String[] parts = line.split(" \\| ");
+        String type = parts[0];
+        boolean isDone = parts[1].equals("1");
+        String description = parts[2];
+
+        Task task;
+        switch (type) {
+            case "T":
+                task = new ToDo(description);
+                break;
+            case "D":
+                task = new Deadline(description, parts[3]);
+                break;
+            case "E":
+                task = new Event(description, parts[3], parts[4]);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown task type: " + type);
+        }
+        if (isDone) {
+            task.markAsDone();
+        }
+        return task;
     }
 
-    public void markAsNotDone() {
-        this.isDone = false;
+    public String toFileString() {
+        return String.format("%s | %d | %s", getType(), isDone ? 1 : 0, description);
     }
 
     protected abstract String getType();
 
+    public void markAsDone() {
+        isDone = true;
+    }
+
+    public void markAsNotDone() {
+        isDone = false;
+    }
+
     @Override
     public String toString() {
-        return "[" + getType() + "]" + (isDone ? "[X] " : "[ ] ") + description;
+        return String.format("[%s][%s] %s", getType(), isDone ? "X" : " ", description);
     }
 }

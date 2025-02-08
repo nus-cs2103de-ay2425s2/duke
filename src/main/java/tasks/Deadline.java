@@ -4,11 +4,9 @@ package tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Represents a Deadline task that needs to be done before a specific date/time.
- */
 public class Deadline extends Task {
-    private String by;
+    protected String by;
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy, h:mma");
 
     public Deadline(String description, String by) {
         super(description);
@@ -20,13 +18,17 @@ public class Deadline extends Task {
         return "D";
     }
 
-    public LocalDateTime getByDateTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mma");
-        return LocalDateTime.parse(by, formatter);
+    @Override
+    public String toFileString() {
+        return String.format("%s | %d | %s | %s", getType(), isDone ? 1 : 0, description, by);
     }
 
     @Override
     public String toString() {
-        return super.toString() + " (by: " + by + ")";
+        return String.format("[%s][%s] %s (by: %s)", getType(), isDone ? "X" : " ", description, by);
+    }
+
+    public LocalDateTime getByDateTime() {
+        return LocalDateTime.parse(by, DATE_TIME_FORMATTER);
     }
 }

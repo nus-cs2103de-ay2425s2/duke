@@ -4,6 +4,7 @@ package commands;
 import tasks.TaskList;
 import tasks.Event;
 import ui.Ui;
+import utils.Storage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +36,7 @@ public class EventCommand implements Command {
             LocalDateTime toDateTime = LocalDateTime.parse(toDateTimeString, DATE_TIME_FORMATTER);
 
             taskList.addTask(new Event(description, fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")), toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma"))));
+            Storage.saveTasksToFile(taskList.getTasks());
             ui.showMessage("Added Event task - " + description + " (from: " + fromDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + " to: " + toDateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + ")");
             ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
         } catch (DateTimeParseException e) {
