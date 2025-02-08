@@ -8,6 +8,7 @@ import tasks.ToDo;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,20 @@ public class Storage {
     private final String filePath;
 
     public Storage(String filePath) {
-        this.filePath = filePath;
+        this.filePath = Paths.get(System.getProperty("user.dir"), filePath).toString();
+        createFileIfNotExists();
+    }
+
+    private void createFileIfNotExists() {
+        Path path = Paths.get(filePath);
+        try {
+            if (Files.notExists(path)) {
+                Files.createDirectories(path.getParent());
+                Files.createFile(path);
+            }
+        } catch (IOException e) {
+            System.err.println("Error creating file: " + e.getMessage());
+        }
     }
 
     public void saveTasksToFile(List<Task> tasks) throws IOException {
