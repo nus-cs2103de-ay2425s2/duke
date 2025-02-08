@@ -18,8 +18,7 @@ public class Parser {
         Command command = null;
 
         if (input.equalsIgnoreCase("bye")) {
-            ui.showExit();
-            System.exit(0);
+            command = new ByeCommand();
         } else if (input.equalsIgnoreCase("help") || input.equals("?")) {
             ui.showMessage("Here is how you can use me:");
             ui.showMessage("1) add <task> - Add a new ToDo task to your list.");
@@ -73,8 +72,12 @@ public class Parser {
             ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
         } else if (input.startsWith("list_day ")) {
             String dateString = input.substring(9).trim();
-            LocalDateTime date = LocalDateTime.parse(dateString + " 0000", DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"));
-            listTasksForDay(taskList, date, ui);
+            try {
+                LocalDateTime date = LocalDateTime.parse(dateString + " 0000", DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"));
+                listTasksForDay(taskList, date, ui);
+            } catch (DateTimeParseException e) {
+                ui.showError("Invalid date format. Use: dd/MM/yyyy (e.g., 02/03/2019)");
+            }
         } else {
             ui.showError("I don't recognize that command. Please type \"Help\" or \"?\" to see the list of available commands.");
         }
