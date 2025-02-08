@@ -56,6 +56,10 @@ public abstract class Task {
         return description;
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
     @Override
     public String toString() {
         return String.format("[%s][%s] %s", getType(), isDone ? "X" : " ", description);

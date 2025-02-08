@@ -25,12 +25,12 @@ public class CommandParser {
                     throw new IllegalArgumentException("Invalid input format. Use: event <task> /from <start> /to <end>");
                 }
                 return new EventCommand(description, timeParts[0].trim(), timeParts[1].trim(), storage);
-//            case "list":
-//                return new ListCommand(input);
-//            case "mark":
-//                return new MarkCommand(input, storage);
-//            case "unmark":
-//                return new UnmarkCommand(input, storage);
+            case "list":
+                return new ListCommand();
+            case "mark":
+                return new MarkCommand(input, storage);
+            case "unmark":
+                return new UnmarkCommand(input, storage);
 //            case "delete":
 //                return new DeleteCommand(input, storage);
 //            case "list_day":

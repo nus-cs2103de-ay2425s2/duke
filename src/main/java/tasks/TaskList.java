@@ -45,4 +45,28 @@ public class TaskList {
     public void clearTasks() {
         tasks.clear();
     }
+
+    public void markTask(int index) {
+        if (index >= 0 && index < tasks.size()) {
+            tasks.get(index).markAsDone();
+        } else {
+            throw new IndexOutOfBoundsException("Invalid task index");
+        }
+    }
+
+    public void unmarkTask(int index) {
+        if (index >= 0 && index < tasks.size()) {
+            tasks.get(index).markAsNotDone();
+        } else {
+            throw new IndexOutOfBoundsException("Invalid task index");
+        }
+    }
+
+    public boolean isTaskDone(int index) {
+        if (index >= 0 && index < tasks.size()) {
+            return tasks.get(index).isDone();
+        } else {
+            throw new IndexOutOfBoundsException("Invalid task index");
+        }
+    }
 }
