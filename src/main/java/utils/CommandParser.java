@@ -46,6 +46,12 @@ public class CommandParser {
                 return new HelpCommand();
             case "clear":
                 return new ClearCommand(storage);
+            case "find": // Add this case
+                String keyword = input.substring(4).trim();
+                if (keyword.isEmpty()) {
+                    throw new IllegalArgumentException("Keyword cannot be empty. Use: find <keyword>");
+                }
+                return new FindCommand(keyword);
             default:
                 throw new IllegalArgumentException("Unknown command type.");
         }
