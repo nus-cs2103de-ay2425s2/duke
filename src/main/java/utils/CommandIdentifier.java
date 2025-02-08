@@ -25,6 +25,8 @@ public class CommandIdentifier {
             return "delete";
         } else if (input.startsWith("list_day")) {
             return "list_day";
+        } else if (input.trim().equalsIgnoreCase("cheer")) { // Add this line
+            return "cheer";
         } else {
             return "unknown";
         }
