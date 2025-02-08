@@ -5,7 +5,7 @@ public class CommandIdentifier {
     public static String identify(String input) {
         if (input.equalsIgnoreCase("bye")) {
             return "bye";
-        } else if (input.equalsIgnoreCase("help") || input.equals("?")) {
+        } else if (input.trim().equalsIgnoreCase("help") || input.trim().equals("?")) {
             return "help";
         } else if (input.equalsIgnoreCase("clear")) {
             return "clear";
