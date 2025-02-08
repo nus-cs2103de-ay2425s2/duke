@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
 public class RuciaTest {
@@ -178,5 +179,22 @@ public class RuciaTest {
         assertEquals("Tasks for 2023-12-25:", capturedMessages.get(0));
         assertEquals("[D][ ] Submit report (by: Dec 25 2023, 11:59pm)", capturedMessages.get(1));
         assertEquals("[E][ ] Christmas Party (from: Dec 25 2023, 6:00pm to: Dec 25 2023, 9:00pm)", capturedMessages.get(2));
+    }
+
+    @Test
+    public void testCheerCommand() throws IOException {
+        String input = "cheer";
+        String commandType = CommandIdentifier.identify(input);
+        Command command = CommandParser.parse(input, commandType, storage);
+
+        command.execute(taskList, ui);
+
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(ui, times(1)).showMessage(captor.capture());
+        List<String> capturedMessages = captor.getAllValues();
+
+        // Check that a message was shown (the exact message will be random)
+        assertEquals(1, capturedMessages.size());
+        assertFalse(capturedMessages.get(0).isEmpty());
     }
 }
