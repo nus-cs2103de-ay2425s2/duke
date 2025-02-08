@@ -1,1 +1,2 @@
-T | 0 | Test task
+D | 0 | Midterms | 1633089600
+D | 0 | Finals | 1635768000
