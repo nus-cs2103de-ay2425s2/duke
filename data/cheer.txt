@@ -1,0 +1,20 @@
+"Keep going - even the best programmers started out writing 'Hello World'!"
+"Debugging is like being the detective in a crime movie where you are also the murderer."
+"Every great developer you know got there by solving problems they were unqualified to solve until they did it." - Patrick McKenzie
+"First, solve the problem. Then, write the code." - John Johnson
+"Code is like humor. When you have to explain it, it's bad." - Cory House
+"Don't worry if it doesn't work right. If everything did, you'd be out of a job." - Mosher's Law of Software Engineering
+"Programs must be written for people to read, and only incidentally for machines to execute." - Harold Abelson
+"A user interface is like a joke. If you have to explain it, it's not that good."
+"Experience is the name everyone gives to their mistakes." - Oscar Wilde
+"Sometimes it's not about fixing the bug, it's about understanding why it's not a bug in the first place."
+"Good code is its own best documentation." - Steve McConnell
+"Talk is cheap. Show me the code." - Linus Torvalds
+"The best error message is the one that never shows up." - Thomas Fuchs
+"Learning to write programs stretches your mind, and helps you think better." - Bill Gates
+"Make it work, make it right, make it fast." - Kent Beck
+"The most disastrous thing you can ever learn is your first programming language." - Alan Kay
+"Before software can be reusable, it first has to be usable." - Ralph Johnson
+"The best way to predict the future is to invent it." - Alan Kay
+"Simplicity is the soul of efficiency." - Austin Freeman
+"The only way to learn a new programming language is by writing programs in it." - Dennis Ritchie
