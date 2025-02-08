@@ -11,7 +11,11 @@ public class MarkCommand implements Command {
     private Storage storage;
 
     public MarkCommand(String input, Storage storage) {
-        this.taskIndex = Integer.parseInt(input.substring(5).trim()) - 1;
+        try {
+            this.taskIndex = Integer.parseInt(input.substring(4).trim()) - 1;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid input. Please provide a valid task number.");
+        }
         this.storage = storage;
     }
 
