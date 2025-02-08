@@ -13,11 +13,13 @@ import java.time.format.DateTimeParseException;
 public class DeadlineCommand implements Command {
     private String taskDescription;
     private String dateTimeString;
+    private Storage storage;
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
 
-    public DeadlineCommand(String taskDescription, String dateTimeString) {
+    public DeadlineCommand(String taskDescription, String dateTimeString, Storage storage) {
         this.taskDescription = taskDescription;
         this.dateTimeString = dateTimeString;
+        this.storage = storage;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class DeadlineCommand implements Command {
             }
             LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, DATE_TIME_FORMATTER);
             taskList.addTask(new Deadline(taskDescription, dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma"))));
-            Storage.saveTasksToFile(taskList.getTasks());
+            storage.saveTasksToFile(taskList.getTasks());
             ui.showMessage("Added Deadline task - " + taskDescription + " (by: " + dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mma")) + ")");
             ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
         } catch (DateTimeParseException e) {

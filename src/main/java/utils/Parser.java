@@ -13,7 +13,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Parser {
-    public static void parseCommand(String input, TaskList taskList, Ui ui) {
+
+    public static void parseCommand(String input, TaskList taskList, Ui ui, Storage storage) {
         Command command = null;
 
         if (input.equalsIgnoreCase("bye")) {
@@ -33,19 +34,19 @@ public class Parser {
             ui.showMessage("10) bye - Exit the chatbot.");
         } else if (input.equalsIgnoreCase("clear")) {
             taskList.clearTasks();
-            Storage.saveTasksToFile(taskList.getTasks());
+            storage.saveTasksToFile(taskList.getTasks());
             ui.showMessage("All tasks have been cleared.");
         } else if (input.startsWith("add ")) {
             String taskDescription = input.substring(4);
-            command = new AddCommand(taskDescription);
+            command = new AddCommand(taskDescription, storage);
         } else if (input.startsWith("deadline ")) {
             String[] parts = input.substring(9).split(" /by ");
-            command = new DeadlineCommand(parts[0], parts[1].trim());
+            command = new DeadlineCommand(parts[0], parts[1].trim(), storage);
         } else if (input.startsWith("event ")) {
             String[] parts = input.substring(6).split(" /from ");
             String description = parts[0];
             String[] timeParts = parts[1].split(" /to ");
-            command = new EventCommand(description, timeParts[0].trim(), timeParts[1].trim());
+            command = new EventCommand(description, timeParts[0].trim(), timeParts[1].trim(), storage);
         } else if (input.equalsIgnoreCase("list")) {
             ui.showMessage("Here are your tasks:");
             for (int i = 0; i < taskList.getSize(); i++) {
@@ -57,17 +58,17 @@ public class Parser {
         } else if (input.startsWith("mark ")) {
             int index = Integer.parseInt(input.substring(5)) - 1;
             taskList.getTask(index).markAsDone();
-            Storage.saveTasksToFile(taskList.getTasks());
+            storage.saveTasksToFile(taskList.getTasks());
             ui.showMessage("Marked as done - " + taskList.getTask(index));
         } else if (input.startsWith("unmark ")) {
             int index = Integer.parseInt(input.substring(7)) - 1;
             taskList.getTask(index).markAsNotDone();
-            Storage.saveTasksToFile(taskList.getTasks());
+            storage.saveTasksToFile(taskList.getTasks());
             ui.showMessage("Marked as not done - " + taskList.getTask(index));
         } else if (input.startsWith("delete ")) {
             int index = Integer.parseInt(input.substring(7)) - 1;
             Task removedTask = taskList.deleteTask(index);
-            Storage.saveTasksToFile(taskList.getTasks());
+            storage.saveTasksToFile(taskList.getTasks());
             ui.showMessage("Deleted task - " + removedTask);
             ui.showMessage("You now have " + taskList.getSize() + " task(s) in your list.");
         } else if (input.startsWith("list_day ")) {

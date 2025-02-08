@@ -1,3 +1,4 @@
+// src/main/java/rucia/Rucia.java
 package rucia;
 
 import utils.Parser;
@@ -19,7 +20,8 @@ public class Rucia {
      */
     public static void main(String[] args) {
         Ui ui = new Ui();
-        TaskList taskList = new TaskList(Storage.loadTasksFromFile());
+        Storage storage = new Storage();
+        TaskList taskList = new TaskList(storage.loadTasksFromFile());
 
         // Greeting message
         ui.showWelcome();
@@ -27,7 +29,7 @@ public class Rucia {
         // Process user input until "bye" is entered
         while (true) {
             String input = ui.readCommand();
-            Parser.parseCommand(input, taskList, ui);
+            Parser.parseCommand(input, taskList, ui, storage);
         }
     }
 }
