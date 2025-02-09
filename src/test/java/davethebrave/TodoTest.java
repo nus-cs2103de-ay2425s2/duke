@@ -27,21 +27,27 @@ public class TodoTest {
         taskManager = new TaskManager(taskList, storage, ui);
     }
 
-    // Test UI task added display
+    /*
+    Test UI task added display
+     */
     @Test
     public void displayTaskTest() {
         Task myFirstTask = new Task("T", "Complete Assignment", null);
         assertEquals("[T][ ] Complete Assignment", myFirstTask.toString());
     }
 
-    // Test adding task
+    /*
+    Test adding task
+     */
     @Test
     public void addTaskTest() {
         taskManager.addTask("T", "Complete Assignment", null);
         assertEquals(1, taskList.size());
     }
 
-    // Test deleting task
+    /*
+    Test deleting task
+     */
     @Test
     public void deleteTaskTest() {
         taskManager.deleteTask(1);
